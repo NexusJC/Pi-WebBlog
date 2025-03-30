@@ -66,8 +66,6 @@ a {
 
 }
 
-
-
 .header-content__logo-container {
     width: 6.1rem;
     height: 5rem;
@@ -248,6 +246,7 @@ nav a {
         transform: translateX(-20rem);
         box-shadow: .8rem 0 1rem #2b2a2a;
         transition: all 300ms cubic-bezier(1,0,0,1);
+        
     }
 
     .show-lateral {
@@ -287,6 +286,7 @@ nav a {
     .main-wrapper__center-content {
         flex-wrap: wrap;
     }
+
 
     #icon-search {
         display: flex;

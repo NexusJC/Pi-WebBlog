@@ -15,6 +15,12 @@ let box_search = document.getElementById("box-search");
 
 // Función para mostrar el buscador
 function mostrar_buscador(){
+    // Verifica si el tamaño de la pantalla es pequeño (menos de 800px)
+    if (window.innerWidth <= 800) {
+        // Cierra el menú lateral si está abierto
+        document.querySelector('.menu').classList.remove('show-lateral');
+    }
+
     bars_search.style.top="5rem";
     cover_ctn_search.style.display="block";
     inputSearch.focus();
