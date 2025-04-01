@@ -79,7 +79,7 @@ a {
     z-index: 10;
     box-shadow: 0 .5rem 2.5rem #000;
     position: sticky;
-
+    
 }
 
 .header-content__logo-container {
@@ -109,7 +109,7 @@ a {
 
 .main-navbar ul li:first-child {
     margin-left: 5rem;
-    margin-right: 20rem;
+    margin-right: 17rem;
 }
 
 
@@ -149,8 +149,13 @@ nav a {
     left: 0;
 }
 
-.menu nav ul li a i{
-    display: none;
+.menu nav ul li a i {
+    display: inline;
+    font-size: 2.3rem;
+}
+
+#icon-search {
+font-size: 2rem;
 }
 
 #icon-menu {
@@ -175,27 +180,56 @@ nav a {
 }
 
 @media screen and (max-width: 1220px) {
+    /* Header y navbar */
+    .header {
+        padding: 0 1rem; /* Añadimos padding lateral */
+    }
+    
+    .main-navbar ul {
+        flex-wrap: wrap; /* Permite que los items se ajusten */
+        justify-content: space-between; /* Distribución uniforme */
+        padding: 0; /* Espaciado vertical */
+    }
+    
     .main-navbar ul li:first-child {
-        margin-left: 5rem;
-        margin-right: 14rem;
+        margin-left: 5rem !important; /* Reducimos margen */
+        margin-right: auto !important; /* Empuja otros items a la derecha */
     }
-    .header-content, .footer-content,.main-wrapper__center-content {
-        max-width: 80rem;
-        padding: 0 2rem;
+    
+    .main-navbar li {
+        margin: 0.25rem 0.5rem !important; /* Reducimos márgenes */
     }
-    .main-navbar {
+    
+    /* Ajuste para el icono de búsqueda */
+    #ctn-icon-search {
+        right: 1rem;
+    }
+    
+    /* Asegurar que el contenedor ocupe el 100% */
+    .header-content {
         width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    /* Ajuste para el logo */
+    .header-content__logo-container {
+        margin-left: 1rem;
     }
 
-    .main-wrapper__contenido-relacionado {
-        transform: translateX(2.75rem);
+    .main-navbar ul li:first-child {
+        margin-left: 5rem;
+        margin-right: 9rem !important;
     }
+
+    
     
 }
 
+
 @media screen and (max-width: 1020px) {
     .main-navbar ul li:first-child {
-        margin-left: 2rem;
+        margin-left: 5rem;
         margin-right: 7rem;
     }
     .main-wrapper__center-content {
@@ -203,16 +237,22 @@ nav a {
         flex-direction: column;
     }
 
+    article {
+        width: 90%;
+        /* padding: 3rem; */
+        padding-bottom: 5rem;
+        border-radius: .5rem;
+    }
     .main-navbar {
         width: 100%;
     }
 
     .main-wrapper__contenido-relacionado {
-        transform: translateX(2.75rem);
+        transform: translateX(  -5rem);
     }
 
     .main-wrapper__center-content h2{
-        margin-left: 4rem;
+        margin-left: -4rem;
     }
 
     .contenido-relacionado-content {
@@ -222,8 +262,30 @@ nav a {
 
     .contenido-relacionado-content aside {
         max-width: 28rem;
-        margin: 1rem;
+        margin: 0rem;
     }
+    .main-navbar ul li:first-child {
+        margin-left: 5rem;
+        margin-right:1rem !important;
+    }
+
+    #icon-search {
+        margin-left: 0rem ;
+    }
+
+    .main-wrapper__secondary-navbar {
+        margin-left: 5.5rem;
+    }
+
+    article {
+        width: 100%;
+        padding: 0;
+        padding-bottom: 5rem;
+        border-radius: .5rem;
+        margin: 0;
+        transform: translateX(-3.1rem) !important;
+    }
+
 }
 
 @media screen and (max-width: 800px) {
@@ -286,7 +348,10 @@ nav a {
         height: 5rem;
         justify-content: flex-start;
     }
-    
+
+    .menu ul:first-child {
+        margin-top: -3rem;
+    }
     .blog-selected::before {
         width: 0;
     }
@@ -352,8 +417,9 @@ nav a {
     
     article {
         padding: .3rem !important;
+        transform: translateX(3.1rem) !important;
     }
-    
+
     /* Si hay elementos hijos con display inline */
     .main-wrapper__center-content > * {
         display: block ;
@@ -488,6 +554,68 @@ nav a {
     }
 }
 
+@media screen and (max-width: 600px) {
+
+    .main-wrapper__secondary-navbar, .contenido-relacionado--contenedor {
+        transform: translateX(5rem);
+    }
+    .articulo-contenido {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        word-break: break-word;
+    }
+
+    article {
+        width: 78% !important;
+    }
+    article h2, article h3 {
+        margin-left: 1.5rem!important;
+    }
+
+    .contenido-relacionado--contenedor, .secondary-navbar--contenedor {
+        width: 75%!important;
+        
+    }
+
+    .contenido-relacionado--contenedor {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    /* Secondary Navbar */
+    .main-wrapper__secondary-navbar {
+        word-break: break-word;
+        white-space: normal; /* Permite saltos de línea */
+        padding: 0 8px;
+    }
+
+    .footer__grupo1 .box:first-child {
+        display: none ; /* Fuerza la eliminación */
+    }
+
+    .footer__grupo1 {
+    margin-left: 3rem !important;
+    }
+
+
+
+}
+
+@media screen and (max-width: 415px) {
+
+    .main-wrapper__secondary-navbar, .contenido-relacionado--contenedor {
+        transform: translateX(8rem);
+    }
+
+    article {
+        transform: translate(8rem)!important;
+    }
+    
+}
+
 /* BUSQUEDAS SECTION */
 
 .main-navbar i {
@@ -495,7 +623,7 @@ nav a {
 }
 
 .main-navbar--ctn-icon-search {
-    margin-top: .45rem;
+    margin-top: 0rem;
     margin-left: 5rem;
     cursor: pointer;
 
@@ -654,12 +782,12 @@ main {
 }
 
 .main-wrapper__secondary-navbar {
-    flex-grow: .5;
+    flex-grow: .8;
 }
 
 .main-wrapper__secondary-navbar {
     min-width: 3rem;
-    text-align: center;
+    text-align: start;
     background-color: #E8F0E8 ;
 }
 
