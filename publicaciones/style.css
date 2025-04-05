@@ -67,12 +67,7 @@ a {
     text-decoration: none;
 }
 
-.main-wrapper__center-content h2 {
-    margin: 4rem 2rem 2rem 2rem; 
-}
-
 /* HEADER */
-
 
 .header {
     background-color: #003800;
@@ -111,7 +106,7 @@ a {
 
 .main-navbar ul li:first-child {
     margin-left: 5rem;
-    margin-right: 18rem;
+    margin-right: 10rem;
 }
 
 
@@ -269,81 +264,102 @@ font-size: 1.75rem;
     display: none;
 }
 
-#cover-ctn-search {
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    left: 0; 
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 7;
-    top: 0;
-    display: none;
-}
-
-/* PORTADA */
-
-.main-wrapper__container-cover {
-    width: 100%;
-    height: 30rem;
-    position: relative;
-    top: 0rem;
-    background-image: url("../img/background-cover.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.main-wrapper__container-cover::before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: rgba(3, 21, 3, 0.6); 
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-}
-
-.main-wrapper__center-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.container-cover--container-info-cover {
-    max-width: 60rem;
-    height: 30rem;
-    margin: auto;
-    text-align: center;
-    justify-content: center;
-    align-content: center;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    z-index: 6;
-    color: #fff;
-}
-
-.container-cover--container-info-cover h1, .container-cover--container-info-cover p {
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-}
-
-.container-cover--container-info-cover h1 {
-    font-size: 3rem;
-    font-weight: 500;
-    margin-bottom: 2rem;
-}
-
-.container-cover--container-info-cover p {
-    font-size: 1.2rem;
-    font-weight: 300;
-}
-
-.secondary-navbar--contenedor {
-    text-align: start;
-}
-
 /* MAIN SECTION */
+
+.container-del-container-editor {
+    text-align: center;
+}
+.editor--container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: start;
+    width: 90%;
+    display:inline-block;
+    height: 20rem;
+    padding: 1rem;
+}
+
+.mensaje-autor--container {
+    text-align: center;
+}
+
+.mensaje-autor--container textarea{
+    width: 90%;
+    height: 5rem;
+}
+
+.container-del-container-mensaje-autor {
+    width: 90%;
+    height: 10rem;
+}
+
+
+
+.real-input {
+    display: none; /* Oculta el input original */
+}
+
+.img-autor--container {
+    text-align: center;
+}
+
+.boton-img-autor--container {
+    margin-bottom: 1rem;
+}
+
+.img-autor {
+    padding: 10px 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.img-autor--container span {
+    margin-top: 10rem;
+}
+.file-name {
+    margin-left: 10px;
+    color: #666;
+    font-style: italic;
+}
+
+.boton-publicar--container {
+    text-align: center;
+    margin: 3rem 0;
+}.boton-publicar--container button {
+    background-color: rebeccapurple;
+}
+
+.post-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: white;
+}
+
+.post-image {
+    max-width: 100%;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.post-meta {
+    color: #666;
+    font-size: 0.9em;
+    margin: 10px 0;
+}
+
+.post-message {
+    font-style: italic;
+    padding: 10px;
+    background: #f5f5f5;
+    border-left: 3px solid #ccc;
+}
 
 .main-wrapper {
     min-width: 64rem;
@@ -351,8 +367,19 @@ font-size: 1.75rem;
     display: flex;
     flex-grow: 1;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     gap: 0.625rem;
+}
+
+.main-wrapper--content {
+    background-color: #E8F0E8;
+    height: 150rem;
+    margin: auto;
+    margin-top: 0rem;
+}
+
+.main-wrapper--content h2 {
+    scroll-margin-top: 4rem;
 }
 
 aside, main {
@@ -367,230 +394,13 @@ main {
     padding: 0;
 }
 
-
-/* Centrar el contenedor principal */
-.container-post {
-    display: flex; /* Activar flexbox */
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
-    flex-direction: column; /* Asegurar que los elementos estén en columna */
-    margin: 0 auto; /* Centrar el contenedor en la página */
-    padding: 100px; /* Espaciado interno */
-    max-width: 650px; /* Limitar el ancho del contenedor */
-    text-align: center; /* Centrar el texto */
-    position: relative; /* Posicionar elementos hijos absolutamente */
-    overflow: hidden; /* Evitar que el contenido se desborde */
-    padding: 20px; /* Espaciado interno */
-}
-
-/* Contenedor de los posts con desplazamiento infinito */
-.posts {
-    display: flex; /* Activar Flexbox */
-    flex-wrap: nowrap; /* Evitar que los posts se envuelvan a la siguiente línea */
-    gap: 10px; /* Espaciado entre los posts */
-    overflow-x: auto; /* Habilitar desplazamiento horizontal */
-    padding: 20px; /* Espaciado interno */
-    width: 100%; /* Asegurar que ocupe todo el ancho */
-    box-sizing: border-box; /* Incluir padding en el ancho total */
-    scroll-snap-type: x mandatory; /* Activar desplazamiento suave horizontal */
-}
-
-/* Estilo para los posts individuales */
-.post {
-    flex: 0 0 auto; /* Asegurar que los posts no se reduzcan y mantengan su tamaño */
-    width: 300px; /* Ancho fijo para cada post */
-    background: #fff; /* Fondo blanco */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
-    overflow: hidden; /* Evitar que el contenido se desborde */
-    display: flex;
-    flex-direction: column; /* Asegurar que los elementos estén en columna */
-    justify-content: space-between; /* Distribuir espacio entre los elementos */
-    align-items: center; /* Centrar contenido horizontalmente */
-    padding: 50px; /* Espaciado interno */
-    scroll-snap-align: start; /* Alinear cada post al inicio del contenedor */
-}
-
-/* Imagen dentro del post */
-.ctn-img img {
-    width: 100%; /* Asegurar que la imagen ocupe todo el ancho del post */
-    height: 200px; /* Altura fija para la imagen */
-    object-fit: cover; /* Asegurar que la imagen cubra el área sin distorsionarse */
-    border-bottom: 1px solid #ddd; /* Línea separadora debajo de la imagen */
-    margin-bottom: 10px; /* Espaciado inferior */
-    border-radius: 8px; /* Bordes redondeados */
-}
-
-/* Título del post */
-.post h2 {
-    font-size: 1.2rem; /* Tamaño del texto */
-    margin: 10px 0; /* Espaciado superior e inferior */
-    text-align: center; /* Centrar texto */
-}
-
-/* Texto del span */
-.post span {
-    font-size: 0.9rem; /* Tamaño más pequeño */
-    color: #555; /* Color gris */
-    margin-bottom: 10px; /* Espaciado inferior */
-}
-/* Centrar el botón dentro del post */
-.post button {
-    margin: 10px auto; /* Centrar el botón horizontalmente */
-    display: block; /* Asegurar que el botón sea tratado como un bloque */
-    padding: 10px 20px; /* Espaciado interno del botón */
-    background-color: #007BFF; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin bordes */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
-}
-
-.post button:hover {
-    background-color: #0056b3; /* Cambiar color al pasar el mouse */
-}
-
-.container-post + h2, .container-post h2 {
-    font-size: 2rem;
-    color: #388E3C; /* Verde oscuro */
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #A5D6A7; /* Línea decorativa */
-    padding-bottom: 10px;
-}
-
-.post h2 {
-    font-size: 18px; 
-    margin-bottom: 20px;
-    padding: 0 20px;
-}
-
-.post span {
-    font-size: 0.8rem; /* Ajusta el tamaño del texto */
-    color: #555; /* Cambia el color si es necesario */
-    display: block; /* Asegura que se mantenga en bloque */
-    margin-top: 10px; /* Espaciado superior */
-    padding: 0 20px; /* Espaciado interno opcional */
-}
-
-.ctn-tags {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 16px;
-    margin-top: 10px;
-}
-
-.ctn-tags li {
-    list-style: none;
-    font-size: 14px;
-    margin: 4px;
-    padding: 4px 10px;
-    background: #686868;
-    cursor: default;
-}
-
-/*
-.main-wrapper__contenido-relacionado {
+.main-wrapper__secondary-navbar {
     flex-grow: .8;
-    min-width: 10rem;
-}*/
-/* Contenedor principal que incluye el contenido y el aside */
-.main-content {
-    display: flex; /* Activar Flexbox */
-    justify-content: space-between; /* Espaciado entre el contenido principal y el aside */
-    align-items: flex-start; /* Alinear los elementos al inicio verticalmente */
-    gap: 20px; /* Espaciado entre el contenido principal y el aside */
-    margin: 20px auto; /* Centrar el contenedor */
-    max-width: 1200px; /* Limitar el ancho máximo */
-    padding: 20px; /* Espaciado interno */
-    box-sizing: border-box; /* Incluir padding en el ancho total */
-}
-
-/* Estilo para el contenido principal */
-main {
-    flex: 3; /* Ocupa más espacio que el aside */
-    background-color: #f9f9f9; /* Fondo opcional */
-    padding: 20px; /* Espaciado interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra opcional */
-}
-
-/* Estilo para el aside */
-.main-wrapper__contenido-relacionado {
-    flex: 1; /* Ocupa menos espacio que el contenido principal */
-    background-color: #fff; /* Fondo blanco */
-    padding: 20px; /* Espaciado interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra opcional */
-    max-width: 300px; /* Limitar el ancho del aside */
-}
-
-.posts {
-    scrollbar-width: none; /* Ocultar barra de desplazamiento en Firefox */
-}
-
-.posts::-webkit-scrollbar {
-    display: none; /* Ocultar barra de desplazamiento en Chrome, Edge y Safari */
-}
-
-/* Fechas de publicación */
-/* Estilo para las flechas */
-.arrow {
-    position: absolute; /* Posicionar dentro del contenedor */
-    top: 50%; /* Centrar verticalmente */
-    background-color: #007BFF; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin bordes */
-    border-radius: 50%; /* Forma circular */
-    width: 50px; /* Ancho */
-    height: 50px; /* Alto */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer; /* Cambiar el cursor al pasar */
-    z-index: 5; /* Asegurar que estén encima del contenido */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más definida */
-    transition: all 0.3s ease; /* Transición suave para hover */
-}
-
-
-/* Flecha izquierda */
-.left-arrow {
-    left: 5px; /* Ajusta este valor para separarla más a la izquierda */
-}
-
-/* Flecha derecha */
-.right-arrow {
-    right: 5px; /* Ajusta este valor para separarla más a la derecha */
-}
-
-/* Hover en las flechas */
-.arrow:hover {
-    background-color: #0056b3; /* Cambiar color al pasar el mouse */
-    transform: scale(1.1); /* Aumentar tamaño ligeramente */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
-}
-
-/* Icono dentro de las flechas */
-.arrow i {
-    font-size: 1.5rem; /* Tamaño del icono */
-}
-
-.posts {
-    display: flex; /* Alinear los posts en fila */
-    flex-wrap: nowrap; /* Evitar que los posts se envuelvan */
-    overflow: hidden; /* Ocultar el contenido desbordado */
-    scroll-behavior: smooth; /* Desplazamiento suave */
 }
 
 .main-wrapper__secondary-navbar {
-    flex: 1 1 10%;
-    padding: 2rem;
-    padding-top: 0;
-    max-width: 1rem;
-    text-align: center;
+    min-width: 3rem;
+    text-align: start;
     background-color: #E8F0E8 ;
 }
 
@@ -607,26 +417,15 @@ main {
     display: inline-block;
     padding: 0.375rem 0.625rem;
 }
-.main-wrapper__center-content {
-    flex: 2 1 55%; 
-
-}
 
 .main-wrapper__contenido-relacionado {
-    flex: 1 1 20%;
-    padding: 2rem;
-    padding-top: 0;
-
+    flex-grow: .8;
+    min-width: 10rem;
+}
+.contenido-relacionado--contenedor h2, .main-wrapper__secondary-navbar h2 {
+    margin-top: 2.27rem;
 }
 
-.contenido-relacionado-content {
-    flex: 1 1 20%; 
-    
-}
-
-.related-item img {
-    width: 20rem;
-}
 
 /* FOOTER */
 
@@ -700,6 +499,7 @@ main {
 
 /* Importando fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
+
 @media screen and (max-width: 1220px) {
     /* Header y navbar */
     .header {
@@ -713,19 +513,21 @@ main {
     }
     
     .main-navbar ul li:first-child {
-        margin-left: 5rem !important; /* Reducimos margen */
+        margin-left: 3rem !important; /* Reducimos margen */
         margin-right: auto !important; /* Empuja otros items a la derecha */
     }
     
     .main-navbar li {
         margin: 0.25rem 0.5rem !important; /* Reducimos márgenes */
+        
     }
     
     /* Ajuste para el icono de búsqueda */
     #ctn-icon-search {
         right: 1rem;
     }
-    
+
+
     /* Asegurar que el contenedor ocupe el 100% */
     .header-content {
         width: 100%;
@@ -746,6 +548,7 @@ main {
     #icon-search {
         margin-right: 8rem;
     }
+    
     
 }
 
@@ -813,6 +616,10 @@ main {
         margin: 0;
         transform: translateX(-3.1rem) !important;
     }
+    article h2 {
+        margin-left: 3rem;
+        margin-top: 5cqi;
+    }
 
 }
 
@@ -831,7 +638,7 @@ main {
     }
 
     .main-wrapper__contenido-relacionado {
-        transform: translateX(3.1rem)!important;
+        transform: translateX(2.75rem);
     }
 
     .cotainer-all {
@@ -861,7 +668,7 @@ main {
     }
 
     .show-lateral {
-        width: 20rem;
+        width: 17rem;
         transform: translateX(0rem);
 
     
@@ -955,16 +762,15 @@ main {
     
     /* Orden específico (ajusta según necesites) */
     .main-wrapper__secondary-navbar {
-        order: 2 !important;
-        transform: translateX(0rem) !important;
+        order: 2 ;
     }
     
     main {
-        order: 1 !important;
+        order: 1 ;
     }
     
     .main-wrapper__contenido-relacionado {
-        order: 3 !important ;
+        order: 3 ;
     }
     
     /* Contenido relacionado - asegurar apilamiento */
@@ -1004,6 +810,7 @@ main {
         box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Sombra suave para mejor visual */
         border-radius: 8px; /* Bordes redondeados */
 
+
     }
 
     /* Contenido relacionado - ajustes específicos */
@@ -1033,6 +840,55 @@ main {
     article img {
         margin: 1.5rem auto; /* Centramos imágenes */
         max-width: 100%;
+    }
+
+    .main-wrapper__center-content {
+        padding-right: 2rem !important;
+    }
+    
+    main, 
+    .main-wrapper__secondary-navbar,
+    .main-wrapper__contenido-relacionado {
+        padding-right: 2.5rem !important; /* Aumenté el padding derecho */
+        padding-left: 1.5rem !important;
+    }
+
+    /* Ajustes específicos para artículos con más padding derecho */
+    article {
+        width: 100% !important;
+        padding: 1.5rem 2rem 1.5rem 1.5rem !important; /* Top Right Bottom Left */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+    
+    /* Padding adicional para párrafos */
+    article p {
+        max-width: 100%;
+        word-break: break-word;
+        hyphens: auto;
+        padding-right: 0.5rem !important; /* Extra padding derecho para texto */
+    }
+    
+    /* Contenido relacionado - más padding derecho */
+    .contenido-relacionado-content aside {
+        padding: 1.2rem 2rem 1.2rem 1.2rem !important;
+    }
+
+    /* Menú lateral - ajuste de padding */
+    .menu.show-lateral {
+        padding-right: 1rem !important;
+    }
+
+    /* Ajuste para el contenedor principal */
+    .cotainer-all, .move-conainer-all {
+        padding-right: 1rem !important;
+    }
+    
+    /* Elementos de búsqueda */
+    #box-search, #ctn-bars-search, #inputSearch {
+        padding-right: 1.5rem !important;
     }
 }
 
@@ -1084,13 +940,14 @@ main {
 }
 
 @media screen and (max-width: 600px) {
+    
     /* Elimina las transformaciones que desplazan el contenido */
     .main-wrapper__secondary-navbar, 
     .contenido-relacionado--contenedor {
         transform: none !important;
-        transform: translateX(3rem) !important;
     }
 
+    
     /* Ajustes para el footer */
     .footer .footer__grupo1 {
         display: flex;
@@ -1131,20 +988,24 @@ main {
         padding: 1rem !important;
     }
 
+        
+    article {
+        padding: .3rem !important;
+        transform: translateX(.8rem) !important;
+    }
+
     .contenido-relacionado--contenedor, 
     .secondary-navbar--contenedor {
         width: 100% !important;
     }
 
-    .main-wrapper__contenido-relacionado {
-        transform: translateX(2.75rem);
-    }
+
 }
 
 @media screen and (max-width: 415px) {
 
     .main-wrapper__secondary-navbar, .contenido-relacionado--contenedor {
-        transform: translateX(8rem)!important;
+        transform: translateX(8rem);
     }
 
     article {

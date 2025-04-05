@@ -24,11 +24,11 @@
                         <li><div class="header-content__logo-container">
                             <img src="../img/logo-ecolima.png" alt="">
                         </div></li>
-                        <li class="blog-selected"><a class="blog-selected" href="../menú/index.html"> <i class="fa-solid fa-house"></i> Home</a></li>
-                        <li><a href="../about us/aboutUs.html"> <i class="fa-solid fa-people-group"></i> About us</a></li>
-                        <li><a href="../contact/contact.html"> <i class="fa-solid fa-envelope"></i> Contact</a></li>
-                        <li><a href="../login/login.html"> <i class="fa-solid fa-circle-user"></i> Log in</a></li>
-                        <li><div class="main-navbar--ctn-icon-search">
+                        <li class="blog-selected" title="Menú Principal"><a class="blog-selected" href="../../menú/index.html"> <i class="fa-solid fa-house"></i> </a></li>
+                        <li title="¿Quiénes somos?"><a href="../../about us/aboutUs.html"> <i class="fa-solid fa-people-group"></i></a></li>
+                        <li title="¡Contactanos!"><a href="../../contact/contact.html"> <i class="fa-solid fa-envelope"></i></a></li>
+                        <li title="¡Inicia sesión!"><a href="../../login/login.html"> <i class="fa-solid fa-circle-user"></i></a></li>
+                        <li title="Busquedas"><div class="main-navbar--ctn-icon-search">
                             <i class="fa-solid fa-magnifying-glass" id="icon-search"></i>
                         </div></li>
                         
@@ -45,10 +45,10 @@
     </div>
     <!-- Resultados de busqueda  -->
     <ul id="box-search">
-        <li><a href="../blog1/blog1.html"><i class="fa-solid fa-magnifying-glass"></i>Ecosistemas terrestres</a></li>
-        <li><a href="../blog2/blog2.html"><i class="fa-solid fa-magnifying-glass"></i>Los campos</a></li>
-        <li><a href="../blog3/blog3.html"><i class="fa-solid fa-magnifying-glass"></i>Ecosistemas en lagos</a></li>
-        <li><a href="../blog4/blog4.html"><i class="fa-solid fa-magnifying-glass"></i>Habitats de animales</a></li>
+        <li><a href="../posts/blog1/blog1.html" class="fa-solid fa-magnifying-glass"></i>Ecosistemas terrestres</a></li>
+        <li><a href="../posts/blog2/blog2.html"><i class="fa-solid fa-magnifying-glass"></i>Los campos</a></li>
+        <li><a href="../posts/blog3/blog3.html"><i class="fa-solid fa-magnifying-glass"></i>Ecosistemas en lagos</a></li>
+        <li><a href="../posts/blog4/blog4.html"><i class="fa-solid fa-magnifying-glass"></i>Habitats de animales</a></li>
         <li><a href="#b5"><i class="fa-solid fa-magnifying-glass"></i>Blog 5</a></li>
         <li><a href="#b6"><i class="fa-solid fa-magnifying-glass"></i>Blog 6</a></li>
     </ul>
@@ -66,48 +66,143 @@
                 </div>
             </div>
             <!-- Aside de la izquierda -->
-            <aside class="main-wrapper__secondary-navbar">
-                <!-- De momento no sé que poner aquí -->
-            </aside>
+            <!-- <aside class="main-wrapper__secondary-navbar">
+                <div class="secondary-navbar--contenedor">
+                    <h2> <br> Información</h2>
+                <h3>Fecha</h3>
+                <p>29/03/2025</p>
+                <h3>Autor:</h3>
+                <p>Juanito</p>
+                <h3>Tema</h3>
+                <p>Ecosistemas terrestres.</p>
+                <h3>Mensaje</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic recusandae deleniti at perferendis pariatur voluptatibus beatae iste quia dolor maxime. Expedita aspernatur quae perferendis tempore rem, dolore eligendi in. Eos?</p>
+                </div>
+            </aside> -->
             <!-- Contenido central -->
             <div class="main-wrapper__center-content">
                 <main>
-                    <!-- Links a los blogs -->
-                    <h2>Blogs más recientes</h2>
-                    <section class="blog-gallery">
-                        <div class="row">
-                            <div class="blog-item">
-                                <a href="../blog1/blog1.html"><img src="../img/vacas.jpg!d" alt="Imagen 1"></a>
-                                <p>Los Ecosistemas son importantes
-        porque...</p>
+                    <h2>Publicaciones más recientes</h2>
+                    <div class="container-post">
+                        <button class="arrow left-arrow">&lt;</button> <!-- Flecha izquierda -->
+                        <div class="posts">
+                            <div class="post">
+                                <div class="ctn-img">
+                                    <img src="../img/vacas.jpg!d" alt="">
+                                </div>
+                                <h2>Ecosistemas terrestres...</h2>
+                                <span>Fecha de creacion del articulo</span>
+                                <ul class="ctn-tags">
+                                    <li>CSS</li>
+                                    <li>HTML</li>
+                                </ul>
+                                <a href="../posts/blog1/blog1.html"><button>Leer más</button></a>
                             </div>
-                            <div class="blog-item">
-                                <a href="../blog2/blog2.html"><img src="../img/background-cover.jpg" alt="Imagen 1"></a>
-                                <p>Los campos son lugares
-        donde...</p>
-        
+    
+                            <div class="post">
+                                <div class="ctn-img">
+                                    <img src="../img/vacas.jpg!d" alt="">
+                                </div>
+                                <h2>Los campos...</h2>
+                                <span>Fecha de creacion del articulo</span>
+                                <ul class="ctn-tags">
+                                    <li>CSS</li>
+                                    <li>HTML</li>
+                                </ul>
+                                <a href="../posts/blog2/blog2.html"><button>Leer más</button></a>
+                            </div>
+    
+                            <div class="post">
+                                <div class="ctn-img">
+                                    <img src="../img/vacas.jpg!d" alt="">
+                                </div>
+                                <h2>Ecosistemas de lagos...</h2>
+                                <span>Fecha de creacion del articulo</span>
+                                <ul class="ctn-tags">
+                                    <li>CSS</li>
+                                    <li>HTML</li>
+                                </ul>
+                                <a href="../posts/blog3/blog3.html"><button>Leer más</button></a>
+                            </div>
+    
+                            <div class="post">
+                                <div class="ctn-img">
+                                    <img src="../img/vacas.jpg!d" alt="">
+                                </div>
+                                <h2>Blog 1, tema del articulo...</h2>
+                                <span>Fecha de creacion del articulo</span>
+                                <ul class="ctn-tags">
+                                    <li>CSS</li>
+                                    <li>HTML</li>
+                                </ul>
+                                <a href=""><button>Leer más</button></a>
+                            </div>
+    
+                            <div class="post">
+                                <div class="ctn-img">
+                                    <img src="../img/vacas.jpg!d" alt="">
+                                </div>
+                                <h2>Habitats de animales...</h2>
+                                <span>Fecha de creacion del articulo</span>
+                                <ul class="ctn-tags">
+                                    <li>CSS</li>
+                                    <li>HTML</li>
+                                </ul>
+                                <a href="../posts/blog2/blog2.html"><button>Leer más</button></a>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="blog-item">
-                                <a href="../blog3/blog3.html"><img src="../img/background-content.jpg" alt="Imagen 1"></a>
-                                <p>En los Lagos alvergan gran
-        variedad de...</p>
-                            </div>
-                            <div class="blog-item">
-                                <a href="../blog4/blog4.html"><img src="../img/proteger-ecosistemas-e1622287266551.jpg" alt="Imagen 1"></a>
-                                <p>Animales habitan este planeta 
-        hasta en...</p>
-                            </div>
-                        </div>
-                    </section>
+                        <button class="arrow right-arrow">&gt;</button> <!-- Flecha derecha -->
+                    </div>
                 </main>
             </div>
             <!-- Aside de la derecha -->
             <div class="contenido-relacionado-content">
                 <aside class="main-wrapper__contenido-relacionado">
                     <h2>Contenido relacionado</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi voluptate id porro hic rerum velit ducimus! Dignissimos, nostrum? Ullam excepturi dolore mollitia assumenda laborum, illum nobis soluta. Numquam, perferendis illo.</p>
+
+    <div class="related-item">
+        <img src="../img/logo-ecolima.png" alt="">
+        <h4>Voces sin género</h4>
+        <p>Jeffrey Epstein</p>
+        <a href="#">
+            <button>Ver más</button>
+        </a>
+    </div>
+
+    <div class="related-item">
+        <img src="../img/logo-ecolima.png" alt="">
+        <h4>Voces sin género</h4>
+        <p>Jeffrey Epstein</p>
+        <a href="#">
+            <button>Ver más</button>
+        </a>
+    </div>
+
+    <div class="related-item">
+        <img src="../img/logo-ecolima.png" alt="">
+        <h4>Voces sin género</h4>
+        <p>Jeffrey Epstein</p>
+        <a href="#">
+            <button>Ver más</button>
+        </a>
+    </div>
+
+    <div class="related-item">
+        <img src="../img/logo-ecolima.png" alt="">
+        <h4>Voces sin género</h4>
+        <p>Jeffrey Epstein</p>
+        <a href="#">
+            <button>Ver más</button>
+        </a>
+     </div>
+     
+        <div class="related-item">
+            <img src="../img/logo-ecolima.png" alt="">
+            <h4>Voces sin género</h4>
+            <p>Jeffrey Epstein</p>
+            <a href="#">
+                <button>Ver más</button>
+            </a>
                 </aside>
             </div>
         </div>
