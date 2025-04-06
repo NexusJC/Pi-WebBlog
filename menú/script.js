@@ -139,3 +139,30 @@ document.addEventListener("DOMContentLoaded", function () {
     // Iniciar desplazamiento automático
     autoScroll();
 });
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('carousel-posts');
+    try {
+        const response = await fetch('http://localhost:3001/api/posts');
+        const { success, posts } = await response.json();
+
+        if (success) {
+            container.innerHTML = posts.slice(0, 5).map(post => `
+                <div class="post">
+                    <div class="ctn-img">
+                        <img src="${post.imageUrl || '../img/default.jpg'}" alt="Post image">
+                    </div>
+                    <h2>${(post.content || '').replace(/<[^>]+>/g, '').slice(0, 40)}...</h2>
+                    <span>${new Date(post.created_at).toLocaleDateString()}</span>
+                    <ul class="ctn-tags">
+                        <li>Post</li>
+                        <li>Blog</li>
+                    </ul>
+                    <a href="#"><button>Leer más</button></a>
+                </div>
+            `).join('');
+        }
+    } catch (err) {
+        console.error("❌ Error cargando posts en carrusel:", err);
+    }
+});

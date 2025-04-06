@@ -79,6 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Validación básica
                 const mensajeAutor = mensajeAutorInput.value.trim();
                 const editorContent = quill.root.innerHTML.trim();
+                const postTitle = document.getElementById('post-title').value.trim();
+                const postTags = document.getElementById('post-tags').value.trim();
+
                 
                 if (!mensajeAutor || editorContent === '<p><br></p>') {
                     throw new Error('Por favor completa todos los campos requeridos');
@@ -88,8 +91,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const formData = new FormData();
                 formData.append('user_id', '1'); // Cambiar por ID real del usuario logueado
                 formData.append('content', editorContent);
-                // En el event listener del formulario:
-                formData.append('mensaje_autor', mensajeAutorInput.value.trim()); // Cambiado a mensaje_autor
+                formData.append('mensaje_autor', mensajeAutor);
+                formData.append('title', postTitle);
+                formData.append('tags', postTags);
+
+                
+
+                if (!mensajeAutor || editorContent === '<p><br></p>' || !postTitle || !postTags) {
+                    throw new Error('Por favor completa todos los campos requeridos');
+                }
                 
                 // Validar y añadir imagen
                 if (fileInput.files[0]) {
@@ -123,6 +133,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Recargar posts
                 await loadPosts();
+                document.getElementById('post-title').value = '';
+                document.getElementById('post-tags').value = '';
 
             } catch (error) {
                 console.error("Error al enviar el formulario:", error);

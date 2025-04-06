@@ -8,6 +8,11 @@ const path = require("path");
 const app = express();
 const PORT = 3001;
 
+const fs = require('fs');
+const util = require('util');
+const writeFile = util.promisify(fs.writeFile);
+
+
 // Configuración CORS más completa
 
 
@@ -19,14 +24,11 @@ app.use(fileUpload({
     abortOnLimit: true,
     createParentPath: true // Crea directorios automáticamente
 }));
-app.use(cors({
-    origin: 'http://localhost:3000', // Asegúrate que coincida con tu puerto frontend
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-}));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(cors()); // 👈 Permite cualquier origen (solo para desarrollo)
 
+  
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/posts", express.static(path.join(__dirname, "frontend", "posts")));
 // Conexión mejorada a la base de datos usando pool
 const pool = mysql.createPool({
     host: "localhost",
@@ -127,10 +129,10 @@ app.post("/registrar", async (req, res) => {
 // Asegúrate de tener ESTO en tu server.js (después de los middlewares y antes de los manejadores de error)
 app.post('/api/posts', async (req, res) => {
     try {
-        const { user_id, content } = req.body;
+        const { user_id, content, title, tags } = req.body;
         const mensaje_autor = req.body.mensaje_autor;
-        
-        if (!user_id || !content || !mensaje_autor) {
+
+        if (!user_id || !title || !content || !mensaje_autor || !tags) {
             return res.status(400).json({ error: 'Datos incompletos' });
         }
 
@@ -140,28 +142,84 @@ app.post('/api/posts', async (req, res) => {
             const ext = path.extname(image.name);
             const filename = `post_${Date.now()}${ext}`;
             const uploadPath = path.join(__dirname, 'uploads', filename);
-            
+
             await image.mv(uploadPath);
             image_path = `/uploads/${filename}`;
         }
 
-        const [result] = await pool.query(
-            `INSERT INTO posts (user_id, content, mensaje_autor, image_path) 
-             VALUES (?, ?, ?, ?)`,
-            [user_id, content, mensaje_autor, image_path]
+        const [result] = await pool.promise().query(
+            `INSERT INTO posts (user_id, title, content, mensaje_autor, image_path, etiquetas) 
+             VALUES (?, ?, ?, ?, ?, ?)`,
+            [user_id, title, content, mensaje_autor, image_path, tags]
         );
 
-        res.json({
+        const postId = result.insertId;
+        const postFilename = `blog${postId}.html`;
+        const imageSrc = image_path ? `../../..${image_path}` : '../../img/default.jpg';
+
+        const postHTML = `
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <title>${title}</title>
+            <link rel="stylesheet" href="style.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        </head>
+        <body>
+            <header class="header">
+                <!-- Tu navbar aquí -->
+            </header>
+            <div class="main-wrapper">
+                <aside class="main-wrapper__secondary-navbar">
+                    <div class="secondary-navbar--contenedor">
+                        <h2>Información</h2>
+                        <h3>Fecha</h3>
+                        <p>${new Date().toLocaleDateString()}</p>
+                        <h3>Autor</h3>
+                        <p>ID Usuario: ${user_id}</p>
+                        <h3>Tema</h3>
+                        <p>${tags}</p>
+                        <h3>Mensaje</h3>
+                        <p>${mensaje_autor}</p>
+                    </div>
+                </aside>
+                <main>
+                    <div class="main-wrapper__content blog-1">
+                        <article>
+                            <h2>${title}</h2>
+                            <img src="${imageSrc}" alt="Imagen del post" style="max-width: 100%; margin: 20px 0;">
+                            <div>${content}</div>
+                        </article>
+                    </div>
+                </main>
+            </div>
+            <footer class="footer">
+                <!-- Tu footer aquí -->
+            </footer>
+        </body>
+        </html>`;
+
+        const savePath = path.join(__dirname, 'frontend', 'posts', postFilename);
+        console.log("📝 Guardando archivo en:", savePath);
+
+        await writeFile(savePath, postHTML);
+        console.log("✅ Archivo HTML creado correctamente");
+
+        return res.json({ // <- ESTE return evita errores dobles
             success: true,
-            postId: result.insertId,
+            postId,
+            htmlFile: postFilename,
             imagePath: image_path
         });
 
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Error al crear el post' });
+        console.error('❌ Error al crear el post:', error);
+        res.status(500).json({ error: 'Error interno al crear el post' });
     }
 });
+
+
 app.get('/api/posts', async (req, res) => {
     try {
         const [posts] = await pool.promise().query(`
