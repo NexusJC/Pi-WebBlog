@@ -158,47 +158,167 @@ app.post('/api/posts', async (req, res) => {
         const imageSrc = image_path ? `../../..${image_path}` : '../../img/default.jpg';
 
         const postHTML = `
-        <!DOCTYPE html>
-        <html lang="es">
-        <head>
-            <meta charset="UTF-8">
-            <title>${title}</title>
-            <link rel="stylesheet" href="style.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        </head>
-        <body>
-            <header class="header">
-                <!-- Tu navbar aquí -->
-            </header>
-            <div class="main-wrapper">
-                <aside class="main-wrapper__secondary-navbar">
-                    <div class="secondary-navbar--contenedor">
-                        <h2>Información</h2>
-                        <h3>Fecha</h3>
-                        <p>${new Date().toLocaleDateString()}</p>
-                        <h3>Autor</h3>
-                        <p>ID Usuario: ${user_id}</p>
-                        <h3>Tema</h3>
-                        <p>${tags}</p>
-                        <h3>Mensaje</h3>
-                        <p>${mensaje_autor}</p>
-                    </div>
-                </aside>
-                <main>
-                    <div class="main-wrapper__content blog-1">
-                        <article>
-                            <h2>${title}</h2>
-                            <img src="${imageSrc}" alt="Imagen del post" style="max-width: 100%; margin: 20px 0;">
-                            <div>${content}</div>
-                        </article>
-                    </div>
-                </main>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://kit.fontawesome.com/e718b2ee5a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="menu">
+                <nav class="main-navbar">
+                    <ul>
+                        <li>
+                            <div class="header-content__logo-container">
+                                <img src="../../../img/logo-ecolima.png" alt="">
+                            </div>
+                        </li>
+                        <li title="Menú Principal"><a href="../../../menú/index.html"><i class="fa-solid fa-house"></i></a></li>
+                        <li title="Blog" class="blog-selected"><a class="blog-selected" href="#"><i class="fa-solid fa-newspaper"></i></a></li>
+                        <li title="¿Quiénes somos?"><a href="../../../about us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
+                        <li title="¡Contáctanos!"><a href="../../../contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
+                        <li title="¡Inicia sesión!"><a href="../../../login/login.html"><i class="fa-solid fa-circle-user"></i></a></li>
+                        <li title="Búsquedas">
+                            <div class="main-navbar--ctn-icon-search">
+                                <i class="fa-solid fa-magnifying-glass" id="icon-search"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>  
             </div>
-            <footer class="footer">
-                <!-- Tu footer aquí -->
-            </footer>
-        </body>
-        </html>`;
+            <div id="icon-menu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div id="ctn-bars-search">
+        <input type="text" id="inputSearch" placeholder="¿Qué deseas buscar?">
+    </div>
+
+    <ul id="box-search">
+        <li><a href="../../blog1/blog1.html"><i class="fa-solid fa-magnifying-glass"></i>Ecosistemas terrestres</a></li>
+        <li><a href="../../blog2/blog2.html"><i class="fa-solid fa-magnifying-glass"></i>Los campos</a></li>
+        <li><a href="../../blog3/blog3.html"><i class="fa-solid fa-magnifying-glass"></i>Ecosistemas en lagos</a></li>
+        <li><a href="../../blog4/blog4.html"><i class="fa-solid fa-magnifying-glass"></i>Habitats de animales</a></li>
+        <li><a href="#b5"><i class="fa-solid fa-magnifying-glass"></i>Blog 5</a></li>
+        <li><a href="#b6"><i class="fa-solid fa-magnifying-glass"></i>Blog 6</a></li>
+    </ul>
+
+    <div id="cover-ctn-search"></div>
+
+    <div class="main-wrapper">
+        <aside class="main-wrapper__secondary-navbar">
+            <div class="secondary-navbar--contenedor">
+                <h2><br>Información</h2>
+                <h3>Fecha</h3>
+                <p>${new Date().toLocaleDateString()}</p>
+                <h3>Autor</h3>
+                <p>ID Usuario: ${user_id}</p>
+                <h3>Tema</h3>
+                <p>${tags}</p>
+                <h3>Mensaje</h3>
+                <p>${mensaje_autor}</p>
+            </div>
+        </aside>
+        <main>
+            <div class="main-wrapper__content blog-1">
+                <article>
+                    <h2 id="b1">${title}</h2>
+                    <img src="${imageSrc}" alt="Imagen del post" style="max-width: 100%; margin: 20px 0;">
+                    <div>${content}</div>
+                </article>
+            </div>
+        </main>
+        <aside class="main-wrapper__contenido-relacionado">
+                    <h2>Contenido relacionado</h2>
+
+    <div class="related-item">
+        <img src="../img/logo-ecolima.png" alt="">
+        <h4>Voces sin género</h4>
+        <p>Jeffrey Epstein</p>
+        <a href="#">
+            <button>Ver más</button>
+        </a>
+    </div>
+
+    <div class="related-item">
+        <img src="../img/logo-ecolima.png" alt="">
+        <h4>Voces sin género</h4>
+        <p>Jeffrey Epstein</p>
+        <a href="#">
+            <button>Ver más</button>
+        </a>
+    </div>
+
+    <div class="related-item">
+        <img src="../img/logo-ecolima.png" alt="">
+        <h4>Voces sin género</h4>
+        <p>Jeffrey Epstein</p>
+        <a href="#">
+            <button>Ver más</button>
+        </a>
+    </div>
+
+    <div class="related-item">
+        <img src="../img/logo-ecolima.png" alt="">
+        <h4>Voces sin género</h4>
+        <p>Jeffrey Epstein</p>
+        <a href="#">
+            <button>Ver más</button>
+        </a>
+     </div>
+     
+        <div class="related-item">
+            <img src="../img/logo-ecolima.png" alt="">
+            <h4>Voces sin género</h4>
+            <p>Jeffrey Epstein</p>
+            <a href="#">
+                <button>Ver más</button>
+            </a>
+                </aside>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer__grupo1">
+                <div class="box">
+                    <figure>
+                        <a href="#">
+                            <img src="../../../img/logo-ecolima.png" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="box">
+                    <h2>¡Gracias por visitar!</h2>
+                    <p>Conservemos juntos los ecosistemas para un futuro más verde y saludable.</p>
+                </div>
+                <div class="box">
+                    <h2>Síguenos</h2>
+                    <div class="red-social">
+                        <a href="#" class="fa fa-facebook"></a>
+                        <a href="#" class="fa fa-instagram"></a>
+                        <a href="#" class="fa fa-twitter"></a>
+                        <a href="#" class="fa fa-youtube"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__grupo2">
+                <small>© 2025 <b>Ecolima</b> - Todos los Derechos Reservados</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scriptPosts.js"></script>
+</body>
+</html>`;
 
         const savePath = path.join(__dirname, 'frontend', 'posts', postFilename);
         console.log("📝 Guardando archivo en:", savePath);

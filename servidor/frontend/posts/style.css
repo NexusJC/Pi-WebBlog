@@ -590,12 +590,13 @@ main {
     opacity: 1;
 }  
 .main-wrapper__secondary-navbar {
-    flex: 1 1 10%;
+    flex: 1 1 15%;
     padding: 2rem;
     padding-top: 0;
-    max-width: 1rem;
+    max-width: 15rem; /* antes era 1rem */
+    min-width: 8rem;   /* opcional: asegúrate de que tenga un mínimo */
     text-align: center;
-    background-color: #E8F0E8 ;
+    background-color: #E8F0E8;
 }
 
 .main-wrapper__secondary-navbar ul {
