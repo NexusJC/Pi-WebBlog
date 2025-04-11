@@ -13,6 +13,16 @@ inputSearch = document.getElementById("inputSearch");
 box_search = document.getElementById("box-search");
 
 //Funcion para mostrar el buscador 
+document.addEventListener("DOMContentLoaded", () => {
+    const iconMenu = document.getElementById('icon-menu');
+    const menu = document.querySelector('.menu');
+
+    if (iconMenu && menu) {
+        iconMenu.addEventListener('click', function () {
+            menu.classList.toggle('show-lateral');
+        });
+    }
+});
 
 function mostrar_buscador(){
     bars_search.style.top="5rem";
@@ -64,28 +74,65 @@ function buscador_interno() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+    // Carrusel horizontal
     const postsContainer = document.querySelector(".posts");
-    let scrollAmount = 0;
+    if (postsContainer) {
+        const postWidth = postsContainer.querySelector(".post")?.offsetWidth + 20 || 320;
+        let scrollAmount = 0;
 
-    function autoScroll() {
-        const postWidth = postsContainer.querySelector(".post").offsetWidth + 20; // Ancho del post + gap
-        scrollAmount += postWidth;
-
-        // Si llega al final, vuelve al inicio
-        if (scrollAmount >= postsContainer.scrollWidth - postsContainer.offsetWidth) {
-            scrollAmount = 0;
+        function autoScroll() {
+            scrollAmount += postWidth;
+            if (scrollAmount >= postsContainer.scrollWidth - postsContainer.offsetWidth) {
+                scrollAmount = 0;
+            }
+            postsContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
         }
 
-        postsContainer.scrollTo({
-            left: scrollAmount,
-            behavior: "smooth", // Movimiento más fluido
-        });
+        setInterval(autoScroll, 3500);
+
+        const leftArrow = document.querySelector(".left-arrow");
+        const rightArrow = document.querySelector(".right-arrow");
+
+        if (leftArrow && rightArrow) {
+            leftArrow.addEventListener("click", () => {
+                scrollAmount -= postWidth;
+                if (scrollAmount < 0) scrollAmount = 0;
+                postsContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
+            });
+
+            rightArrow.addEventListener("click", () => {
+                scrollAmount += postWidth;
+                if (scrollAmount > postsContainer.scrollWidth - postsContainer.offsetWidth) {
+                    scrollAmount = postsContainer.scrollWidth - postsContainer.offsetWidth;
+                }
+                postsContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
+            });
+        }
     }
 
-    // Ejecutar el desplazamiento automáticamente cada 1 segundo
-    setInterval(autoScroll, 3500);
-});
+    // Contenido relacionado (aside derecho)
+    const relatedContainer = document.querySelector('.related-items-container');
+    const relatedItems = relatedContainer ? relatedContainer.querySelectorAll('.related-item') : [];
+
+    if (relatedContainer && relatedItems.length > 0) {
+        let currentIndex = 0;
+
+        function scrollToItem(index) {
+            const itemHeight = relatedItems[0].offsetHeight + 10;
+            relatedContainer.scrollTo({
+                top: index * itemHeight,
+                behavior: 'smooth',
+            });
+        }
+
+        function autoScrollRelated() {
+            currentIndex = (currentIndex + 1) % relatedItems.length;
+            scrollToItem(currentIndex);
+        }
+
+        setInterval(autoScrollRelated, 6000);
+    }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const postsContainer = document.querySelector(".posts");
@@ -110,7 +157,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         requestAnimationFrame(autoScroll);
+        
     }
+
 
     // Función para desplazarse hacia la izquierda
     leftArrow.addEventListener("click", function () {
@@ -147,22 +196,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         const { success, posts } = await response.json();
 
         if (success) {
-            container.innerHTML = posts.slice(0, 5).map(post => `
-                <div class="post">
-                    <div class="ctn-img">
-                        <img src="${post.imageUrl || '../img/default.jpg'}" alt="Post image">
+            // ⬇️ PONLO AQUÍ
+            console.log("🧪 Posts recibidos del servidor:", posts);
+
+            container.innerHTML = posts.slice(0, 10).map((post, index) => {
+                console.log(`🧱 Renderizando post #${index + 1}:`, post.title || post.content);
+            
+                const etiquetas = Array.isArray(post.etiquetas) ? post.etiquetas : [];
+            
+                return `
+                    <div class="post">
+                        <div class="ctn-img">
+                            <img src="${post.imageUrl || '../img/default.jpg'}" alt="Post image">
+                        </div>
+                        <h2>${(post.content || '').replace(/<[^>]+>/g, '').slice(0, 40)}...</h2>
+                        <span>${new Date(post.created_at).toLocaleDateString()}</span>
+                        <ul class="ctn-tags">
+                            ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
+                        </ul>
+                        <a href="http://localhost:3001/posts/blog${post.id}.html">
+                            <button>Leer más</button>
+                        </a>
                     </div>
-                    <h2>${(post.content || '').replace(/<[^>]+>/g, '').slice(0, 40)}...</h2>
-                    <span>${new Date(post.created_at).toLocaleDateString()}</span>
-                    <ul class="ctn-tags">
-                        <li>Post</li>
-                        <li>Blog</li>
-                    </ul>
-                    <a href="#"><button>Leer más</button></a>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+            
+                        
         }
     } catch (err) {
         console.error("❌ Error cargando posts en carrusel:", err);
     }
 });
+

@@ -376,10 +376,10 @@ main {
     flex-direction: column; /* Asegurar que los elementos estén en columna */
     margin: 0 auto; /* Centrar el contenedor en la página */
     padding: 100px; /* Espaciado interno */
-    max-width: 650px; /* Limitar el ancho del contenedor */
+    max-width: 60rem; /* Limitar el ancho del contenedor */
     text-align: center; /* Centrar el texto */
     position: relative; /* Posicionar elementos hijos absolutamente */
-    overflow: hidden; /* Evitar que el contenido se desborde */
+    overflow: visible   ; /* Evitar que el contenido se desborde */
     padding: 20px; /* Espaciado interno */
 }
 
@@ -525,8 +525,125 @@ main {
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra opcional */
     max-width: 300px; /* Limitar el ancho del aside */
+    display: flex; /* Activar Flexbox */
+    flex-direction: column; /* Alinear los elementos en columna */
+    overflow: hidden; /* Evitar que el contenido se desborde */
+    position: relative; /* Posicionar elementos hijos absolutamente */
+    align-items: center; /* Centrar contenido horizontalmente */
 }
 
+/* Contenedor del carrusel */
+.related-items-container {
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos estén en columna */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+    scroll-snap-type: y mandatory; /* Activa el desplazamiento suave */
+    height: 36rem; /* Altura fija del contenedor */
+    gap: 10px; /* Espaciado entre los elementos */
+    background-color: #f5f5f5; /* Fondo claro para destacar los elementos */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+}
+
+/* Estilo para cada elemento relacionado */
+.related-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    box-sizing: border-box;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para hover */
+}
+
+/* Efecto hover para los elementos relacionados */
+.related-item:hover {
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+}
+
+/* Títulos dentro de los elementos relacionados */
+.related-item h4 {
+    font-size: 1.2rem; /* Tamaño del texto */
+    color: #333; /* Color del texto */
+    margin-bottom: 5px; /* Espaciado inferior */
+}
+
+/* Texto descriptivo dentro de los elementos relacionados */
+.related-item p {
+    font-size: 0.9rem; /* Tamaño del texto */
+    color: #666; /* Color gris */
+    margin-bottom: 10px; /* Espaciado inferior */
+}
+
+
+/* Botones de navegación */
+.carousel-button {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-button:hover {
+    background-color: #0056b3;
+}
+
+/* Opcional: Ajusta el tamaño de las imágenes */
+.related-item img {
+    max-width: 150px; /* Ajusta el tamaño máximo de la imagen */
+    margin-bottom: 10px;
+}
+
+/* Opcional: Estilo para el botón */
+.related-item button {
+    margin-top: 10px;
+    padding: 10px 50px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif; /* Cambia la fuente */
+    font-size: 1rem; /* Ajusta el tamaño del texto */
+    font-weight: bold; /* Hace el texto más grueso */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Sombra en el texto */
+}
+
+.related-item button:hover {
+    background-color: #0056b3;
+}
+
+/* Ocultar la barra de desplazamiento vertical */
+.related-items-container {
+    scrollbar-width: none; /* Ocultar barra en Firefox */
+    -ms-overflow-style: none; /* Ocultar barra en Internet Explorer y Edge */
+}
+
+.related-items-container::-webkit-scrollbar {
+    display: none; /* Ocultar barra en Chrome, Safari y Edge */
+}
+
+
+
+/* Estilo para el contenedor de los elementos relacionados */
 .posts {
     scrollbar-width: none; /* Ocultar barra de desplazamiento en Firefox */
 }
@@ -558,12 +675,12 @@ main {
 
 /* Flecha izquierda */
 .left-arrow {
-    left: 5px; /* Ajusta este valor para separarla más a la izquierda */
+    left: -2.5rem; /* Ajusta este valor para separarla más a la izquierda */
 }
 
 /* Flecha derecha */
 .right-arrow {
-    right: 5px; /* Ajusta este valor para separarla más a la derecha */
+    right: -2.5rem; /* Ajusta este valor para separarla más a la derecha */
 }
 
 /* Hover en las flechas */
@@ -581,7 +698,7 @@ main {
 .posts {
     display: flex; /* Alinear los posts en fila */
     flex-wrap: nowrap; /* Evitar que los posts se envuelvan */
-    overflow: hidden; /* Ocultar el contenido desbordado */
+    overflow-x: auto; /* Ocultar el contenido desbordado */
     scroll-behavior: smooth; /* Desplazamiento suave */
 }
 
