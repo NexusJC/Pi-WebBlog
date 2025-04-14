@@ -7,6 +7,8 @@ const path = require("path");
 const fs = require("fs");
 const util = require("util");
 const writeFile = util.promisify(fs.writeFile);
+const sanitizeHtml = require("sanitize-html");
+
 
 const app = express();
 const PORT = 3001;
@@ -20,10 +22,14 @@ app.use(fileUpload({
     abortOnLimit: true,
     createParentPath: true
 }));
+app.use('/publicaciones', express.static(path.join(__dirname, 'publicaciones')));
+
 
 // Archivos estáticos
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/posts", express.static(path.join(__dirname, "frontend", "posts")));
+
+
 
 // Conexión a base de datos
 const pool = mysql.createPool({
@@ -131,11 +137,33 @@ app.post("/restablecer-contrasena", async (req, res) => {
 // 🔹 Crear nuevo post
 app.post('/api/posts', async (req, res) => {
     try {
-        const { user_id, content, title, tags } = req.body;
-        const mensaje_autor = req.body.mensaje_autor;
+        const { user_id, content, title, tags, mensaje_autor } = req.body;
+        // Limpia el HTML, pero permite <a> con href seguro
+        let rawReferencias = req.body.referencias || "";
+// Detectar links en texto y envolverlos con <a>
+        rawReferencias = rawReferencias.replace(
+        /(https?:\/\/[^\s]+)/g,
+        (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
+        );
+
+        const referencias = sanitizeHtml(rawReferencias, {
+            allowedTags: ['a', 'p', 'br', 'ul', 'li', 'strong', 'em'],
+            allowedAttributes: {
+                'a': ['href', 'target', 'rel']
+            },
+            allowedSchemes: ['http', 'https']
+        });
+        
 
         if (!user_id || !title || !content || !mensaje_autor || !tags) {
             return res.status(400).json({ error: 'Datos incompletos' });
+        }
+
+        let parsedTags = [];
+        try {
+            parsedTags = JSON.parse(tags);
+        } catch (e) {
+            console.warn("⚠️ Etiquetas mal formateadas:", tags);
         }
 
         let image_path = null;
@@ -149,11 +177,13 @@ app.post('/api/posts', async (req, res) => {
             image_path = `/uploads/${filename}`;
         }
 
-        const [result] = await pool.promise().query(
-            `INSERT INTO posts (user_id, title, content, mensaje_autor, image_path, etiquetas) 
-             VALUES (?, ?, ?, ?, ?, ?)`,
-            [user_id, title, content, mensaje_autor, image_path, tags]
-        );
+
+        const query = `
+            INSERT INTO posts 
+            (user_id, content, mensaje_autor, image_path, created_at, title, etiquetas, referencias)
+            VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)
+        `;
+        const [result] = await pool.promise().execute(query, [user_id, content, mensaje_autor, image_path, title, tags, referencias]);
 
         const postId = result.insertId;
         const postFilename = `blog${postId}.html`;
@@ -225,7 +255,7 @@ app.post('/api/posts', async (req, res) => {
                 <h3>Autor</h3>
                 <p>ID Usuario: ${user_id}</p>
                 <h3>Tema</h3>
-                <p>${tags}</p>
+                <p>${parsedTags.map(tag => tag.value).join(', ')}</p>
                 <h3>Mensaje</h3>
                 <p>${mensaje_autor}</p>
             </div>
@@ -237,6 +267,12 @@ app.post('/api/posts', async (req, res) => {
                     <img src="${imageSrc}" alt="Imagen del post" style="max-width: 100%; margin: 20px 0;">
                     <div>${content}</div>
                 </article>
+                <section class="referencias">
+                    <h3>Referencias</h3>
+                    <div>${ referencias || 'Ninguna referencia proporcionada.'}</div>
+                </section>
+
+
             </div>
         </main>
         <aside class="main-wrapper__contenido-relacionado">
@@ -347,7 +383,6 @@ app.post('/api/posts', async (req, res) => {
         res.status(500).json({ error: 'Error interno al crear el post' });
     }
 });
-
 
 // 🔹 Obtener todos los posts
 app.get('/api/posts', async (req, res) => {

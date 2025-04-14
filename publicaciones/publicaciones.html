@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" />
     
 
     <script src="https://kit.fontawesome.com/e718b2ee5a.js" crossorigin="anonymous"></script>
@@ -56,11 +57,6 @@
     <div id="cover-ctn-search"></div>
 
     <div class="main-wrapper">
-        <aside class="main-wrapper__secondary-navbar">
-            <div class="secondary-navbar--contenedor">
-                
-            </div>
-        </aside>
         <main>
             <div class="main-wrapper__content blog-1">
                 <!-- FORMULARIO -->
@@ -75,6 +71,11 @@
                         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
                         </div>
                     </div>
+                    <h3>Referencias</h3>
+                    <div class="referencias--container">
+                        <textarea placeholder="Escribe tus referencias aquí..." name="referencias" id="referencias"></textarea>
+                    </div>
+
                     <h3>Mensaje del autor:</h3>
                     <div class="mensaje-autor--container">
                         <textarea placeholder="Escribe un mensaje para los lectores 😊..." name="mensaje_autor" id="mensaje-autor"></textarea>
@@ -90,21 +91,24 @@
                     </div>
                     
                     <h3>Etiquetas</h3>
-                    <input type="text" id="post-tags" placeholder="Ej: naturaleza,medio ambiente,lagos" required>
-                    <div class="boton-publicar--container">
-                        <button type="submit">Publicar</button>
+                    <input name="tags" id="post-tags" placeholder="Ej: naturaleza, biodiversidad, clima">
+                    <div class="boton-preview--container">
+                        <button type="button" id="btn-preview">👁️ Vista previa</button>
                     </div>
+                    
+                    <div id="preview-modal" style="display:none; position:fixed; inset:0; background:white; z-index:10000;">
+                        <button id="btn-close-preview" style="position:absolute; top:10px; right:10px; z-index:10001;">✖ Cerrar</button>
+                        <iframe id="iframe-preview" style="width:100%; height:100%; border:none;"></iframe>
+                        <button id="btn-confirm-publish" style="position:absolute; bottom:20px; right:20px;">✅ Publicar</button>
+                    </div>
+                    
+                    <button type="submit" class="btn-post">Publicar</button>
+
                     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
                 </form>
             </div>
             
         </main>
-        
-        <aside class="main-wrapper__contenido-relacionado">
-            <div class="contenido-relacionado--contenedor">
-
-            </div>
-        </aside>
     </div>
     <footer class="footer">
         <div class="footer-content">
@@ -141,5 +145,6 @@
 </div>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="scriptPublicaciones.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 </body>
 </html>

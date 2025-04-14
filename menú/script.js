@@ -202,14 +202,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.innerHTML = posts.slice(0, 10).map((post, index) => {
                 console.log(`🧱 Renderizando post #${index + 1}:`, post.title || post.content);
             
-                const etiquetas = Array.isArray(post.etiquetas) ? post.etiquetas : [];
+                let etiquetas = [];
+
+                try {
+                    const parsed = JSON.parse(post.etiquetas);
+                    if (Array.isArray(parsed)) {
+                        etiquetas = parsed.map(item => item.value);
+                    }
+                } catch (err) {
+                    console.warn('⚠️ No se pudo parsear etiquetas:', post.etiquetas);
+                }
+
             
                 return `
                     <div class="post">
                         <div class="ctn-img">
                             <img src="${post.imageUrl || '../img/default.jpg'}" alt="Post image">
                         </div>
-                        <h2>${(post.content || '').replace(/<[^>]+>/g, '').slice(0, 40)}...</h2>
+                        <h2>${post.title || 'Sin título'}</h2>
+
                         <span>${new Date(post.created_at).toLocaleDateString()}</span>
                         <ul class="ctn-tags">
                             ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
