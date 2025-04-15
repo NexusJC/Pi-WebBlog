@@ -10,7 +10,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-image: url(../img/mikuuu.jpg);
+    background-image: url(2.png.jpg);
     background-size: cover;
 }
 
@@ -22,7 +22,6 @@ body {
     max-width: 900px;
     transition: all 1s ease;
     margin: 10px;
-    /*border: solid thin red*/
 }
 
 .information {
@@ -164,7 +163,8 @@ body {
     position: absolute;
     transform: translateY(-300%);
 }
-/*PERSONALIZACION DE MIS ALERTAS Y MENSAJES*/
+
+/*PERSONALIZACION DE MIS ALERTAS Y MENSAJES */
 .form div .alerta {
     width: 290px;
     text-align: left;
@@ -173,9 +173,45 @@ body {
     font-size: .8rem;
 }
 
-.from > .alerta-error{
+.form > .alerta-error,
+.form > .alerta-exito {
     display: none;
 }
+
+.form .alertaError {
+    display: block;
+    background-color: #F66060;
+    padding: .5rem 1rem;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: .8rem;
+}
+
+.form .alertaExito {
+    display: block;
+    background-color: #0ca828;
+    padding: .5rem 1rem;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: .8rem;
+}
+
+.form .error {
+    outline: solid 2px #9d2222;
+}
+
+
+/*PERSONALIZACION DE MIS ALERTAS Y MENSAJES*/
+
+.form div .alerta {
+    width: 290px;
+    text-align: left;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    font-size: .8rem;
+}
+
+.from > .alerta-error,
 .from > .alerta-exito {
     display: none;
 }
@@ -198,6 +234,10 @@ body {
     font-size: .8rem;
 }
 
+.form .error{
+    outline: solid 2px #9d2222;
+}
+
 /*RESPONSIVE FORM*/
 @media screen and (max-width:750px) {
     html {
@@ -207,7 +247,7 @@ body {
 
 @media screen and (max-width:580px) {
     html {
-        font-size: 14px;
+        font-size: 15px;
     }
 
     .container-form {
@@ -229,42 +269,4 @@ body {
         border-bottom-left-radius: 20px;
         border-top-right-radius: 0px;
     }
-}
-/* css de recuperar contraseña */
-.form-recover input[type="email"] {
-    width: 100%;
-    padding: 15px;
-    background-color: #fff;
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    color: #333;
-}
-
-.form-recover input[type="submit"] {
-    background-color: #9191bd;
-    color: #fff;
-    border-radius: 20px;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    margin-top: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
-}
-
-.form-recover input[type="submit"]:hover {
-    background-color: #7a7a9a;
-}
-
-/* css de volver al login */
-.forgot-password {
-    display: block;
-    margin-top: 1px;
-    font-size: 14px;
-    color: #007bff;
-    text-decoration: none;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
 }

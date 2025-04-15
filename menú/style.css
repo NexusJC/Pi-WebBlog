@@ -73,7 +73,6 @@ a {
 
 /* HEADER */
 
-
 .header {
     background-color: #003800;
     position: sticky;
@@ -138,9 +137,6 @@ nav a {
     text-decoration: none;
 }
 
-.main-navbar  .blog-selected {
-    color: #6B8E23;
-}
 
 .blog-selected::before{
     content: '';
@@ -184,9 +180,10 @@ font-size: 1.75rem;
 
 /* BUSQUEDAS SECTION */
 
-.main-navbar i {
-    color: #e5dede;
+.main-navbar li[title="Busquedas"] {
+    color: #ffffff; /* Cambia el color del texto a blanco */
 }
+
 
 .main-navbar--ctn-icon-search {
     margin-top: 0rem;
