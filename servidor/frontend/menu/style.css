@@ -527,6 +527,7 @@ main {
     overflow: hidden; /* Evitar que el contenido se desborde */
     position: relative; /* Posicionar elementos hijos absolutamente */
     align-items: center; /* Centrar contenido horizontalmente */
+    height: 50rem;
 }
 
 /* Contenedor del carrusel */

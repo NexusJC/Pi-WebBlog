@@ -28,6 +28,14 @@ app.use('/publicaciones', express.static(path.join(__dirname, 'publicaciones')))
 // Archivos estáticos
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/posts", express.static(path.join(__dirname, "frontend", "posts")));
+app.use("/img", express.static(path.join(__dirname, "frontend", "img")));
+app.use("/css", express.static(path.join(__dirname, "frontend", "css")));
+app.use("/js", express.static(path.join(__dirname, "frontend", "js")));
+app.use("/menu", express.static(path.join(__dirname, "frontend", "menu")));
+app.use("/about us", express.static(path.join(__dirname, "frontend", "about us")));
+app.use("/contact", express.static(path.join(__dirname, "frontend", "contact")));
+app.use("/login", express.static(path.join(__dirname, "frontend", "login")));
+
 
 
 
@@ -134,6 +142,24 @@ app.post("/restablecer-contrasena", async (req, res) => {
     }
 });
 
+app.post('/like/:id', async (req, res) => {
+    const postId = req.params.id;
+  
+    try {
+      // Incrementar likes
+      await pool.promise().query('UPDATE posts SET likes = likes + 1 WHERE id = ?', [postId]);
+  
+      // Obtener nuevo número de likes
+      const [rows] = await pool.promise().query('SELECT likes FROM posts WHERE id = ?', [postId]);
+  
+      res.json({ likes: rows[0].likes });
+    } catch (err) {
+      console.error('❌ Error en endpoint de likes:', err);
+      res.status(500).json({ error: 'Error al actualizar los likes' });
+    }
+  });
+  
+
 // 🔹 Crear nuevo post
 app.post('/api/posts', async (req, res) => {
     try {
@@ -196,7 +222,7 @@ app.post('/api/posts', async (req, res) => {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/posts/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://kit.fontawesome.com/e718b2ee5a.js" crossorigin="anonymous"></script>
 </head>
@@ -209,14 +235,14 @@ app.post('/api/posts', async (req, res) => {
                     <ul>
                         <li>
                             <div class="header-content__logo-container">
-                                <img src="../../../img/logo-ecolima.png" alt="">
+                                <img src="/img/logo-ecolima.png" alt="">
                             </div>
                         </li>
-                        <li title="Menú Principal"><a href="../../../menú/index.html"><i class="fa-solid fa-house"></i></a></li>
+                        <li title="Menú Principal"><a href="/menu/index.html"><i class="fa-solid fa-house"></i></a></li>
                         <li title="Blog" class="blog-selected"><a class="blog-selected" href="#"><i class="fa-solid fa-newspaper"></i></a></li>
-                        <li title="¿Quiénes somos?"><a href="../../../about us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
-                        <li title="¡Contáctanos!"><a href="../../../contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
-                        <li title="¡Inicia sesión!"><a href="../../../login/login.html"><i class="fa-solid fa-circle-user"></i></a></li>
+                        <li title="¿Quiénes somos?"><a href="/about us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
+                        <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
+                        <li title="¡Inicia sesión!"><a href="/login/login.html"><i class="fa-solid fa-circle-user"></i></a></li>
                         <li title="Búsquedas">
                             <div class="main-navbar--ctn-icon-search">
                                 <i class="fa-solid fa-magnifying-glass" id="icon-search"></i>
@@ -248,7 +274,7 @@ app.post('/api/posts', async (req, res) => {
 
     <div class="main-wrapper">
         <aside class="main-wrapper__secondary-navbar">
-            <div class="secondary-navbar--contenedor">
+            <div class="secondary-navbar--contenedor post" data-id="${postId}">
                 <h2><br>Información</h2>
                 <h3>Fecha</h3>
                 <p>${new Date().toLocaleDateString()}</p>
@@ -258,6 +284,9 @@ app.post('/api/posts', async (req, res) => {
                 <p>${parsedTags.map(tag => tag.value).join(', ')}</p>
                 <h3>Mensaje</h3>
                 <p>${mensaje_autor}</p>
+                <button class="like-button">
+                ❤️ <span class="like-count">0</span>
+                </button>
             </div>
         </aside>
         <main>
@@ -337,7 +366,7 @@ app.post('/api/posts', async (req, res) => {
                 <div class="box">
                     <figure>
                         <a href="#">
-                            <img src="../../../img/logo-ecolima.png" alt="">
+                            <img src="/img/logo-ecolima.png" alt="">
                         </a>
                     </figure>
                 </div>
@@ -361,7 +390,7 @@ app.post('/api/posts', async (req, res) => {
         </div>
     </footer>
 
-    <script src="scriptPosts.js"></script>
+    <script src="/posts/scriptPosts.js"></script>
 </body>
 </html>`;
 

@@ -92,6 +92,32 @@ document.addEventListener("DOMContentLoaded", () => {
             scrollToItem(currentIndex);
         }
 
-        setInterval(autoScrollRelated, 3000); // cada 3 segundos
+        setInterval(autoScrollRelated, 6000); // cada 3 segundos
     }
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const postDiv = document.querySelector(".post");
+    const postId = postDiv.dataset.id;
+    const likeCountSpan = postDiv.querySelector(".like-count");
+    const likeButton = postDiv.querySelector(".like-button");
+
+    // 1. Cargar likes al iniciar
+    fetch(`http://localhost:3001/api/posts/${postId}/likes`)
+      .then(res => res.json())
+      .then(data => {
+        likeCountSpan.textContent = data.likes;
+      })
+      .catch(err => console.error("❌ Error al obtener likes:", err));
+
+    // 2. Dar like al hacer clic
+    likeButton.addEventListener("click", () => {
+      fetch(`http://localhost:3001/like/${postId}`, {
+        method: "POST"
+      })
+      .then(res => res.json())
+      .then(data => {
+        likeCountSpan.textContent = data.likes;
+      })
+      .catch(err => console.error("❌ Error al dar like:", err));
+    });
+  });
