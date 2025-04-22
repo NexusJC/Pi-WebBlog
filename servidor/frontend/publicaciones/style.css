@@ -33,23 +33,107 @@ h1 {
 }
 
 h2 {
-    font-size: 2rem;
-    color: #388E3C; 
-    font-weight: 600;
-    border-bottom: 2px solid #A5D6A7; 
-    padding-bottom: 5px;
-    margin-top: 30px;
+    font-size: 2.5rem;
+    font-weight: 700;
     text-align: center;
+    color: transparent;
+    background: linear-gradient(90deg, #2e7d32, #66bb6a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-transform: uppercase;
+    position: relative;
+    margin: 3rem 0 1.5rem;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    letter-spacing: 1.2px;
 }
 
-h3 {
-    font-size: 1.5rem;
-    color: #4CAF50;
-    font-weight: 500;
-    margin-top: 20px;
-    text-transform: uppercase; 
-    margin-left: 5rem;
+/* Subrayado animado */
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 4px;
+    background: linear-gradient(to right, #81c784, #388e3c);
+    border-radius: 2px;
+    animation: underlineGrow 1.2s ease-out 0.4s forwards;
 }
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Animación del subrayado */
+@keyframes underlineGrow {
+    to {
+        width: 80px;
+    }
+}
+
+
+
+h3 {
+    font-size: 1.4rem;
+    color: #2e7d32;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    border-left: 6px solid #a5d6a7;
+    padding-left: 1rem;
+    transition: all 0.3s ease;
+}
+
+h3:hover {
+    color: #1b5e20;
+    border-left-color: #66bb6a;
+}
+
+/* H4 - Para subtítulos importantes */
+h4 {
+    font-size: 1.25rem;
+    color: #388e3c;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 1.5rem 0 0.5rem;
+    border-left: 4px solid #a5d6a7;
+    padding-left: 1rem;
+    letter-spacing: 1px;
+}
+
+/* H5 - Para secciones secundarias o notas */
+h5 {
+    font-size: 1.1rem;
+    color: #4caf50;
+    font-weight: 500;
+    margin: 1.2rem 0 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 3px dashed #c8e6c9;
+    text-transform: capitalize;
+}
+
+/* H6 - Para aclaraciones, detalles o mini títulos */
+h6 {
+    font-size: 1rem;
+    color: #66bb6a;
+    font-weight: 400;
+    font-style: italic;
+    margin: 1rem 0 0.5rem;
+    text-align: left;
+    letter-spacing: 0.5px;
+}
+
 
 p {
     /* Propiedades compatibles con todos los navegadores */
@@ -360,13 +444,10 @@ font-size: 1.75rem;
 
 .mensaje-autor--container {
     text-align: center;
-    margin: 0 2rem;
+    margin: 0 auto;
+    width: 100%;
 }
 
-.mensaje-autor--container textarea, .referencias--container textarea{
-    width: 90%;
-    height: 5rem;
-}
 
 .container-del-container-mensaje-autor {
     width: 90%;
@@ -481,6 +562,244 @@ main {
     flex-grow: 2;
     padding: 0;
 }
+
+/* FORMULARIO DE PUBLICACIÓN MODERNO */
+.main-wrapper__content form {
+    background-color: #ffffff;
+    padding: 3rem;
+    margin: 2rem auto;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 65%;
+}
+
+.main-wrapper__content h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #2E7D32;
+    margin-bottom: 2rem;
+}
+
+.main-wrapper__content h3 {
+    font-size: 1.3rem;
+    color: #4CAF50;
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+#postForm input[type="text"],
+#postForm textarea,
+#postForm input[type="file"],
+#postForm input[name="tags"] {
+    width: 86%;
+     background-color: #f9f9f9 !important; /* ← Color unificado */
+    margin: 1rem 4rem;
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+#postForm input:focus,
+#postForm textarea:focus {
+    border-color: #66bb6a;
+    box-shadow: 0 0 0 2px #d1f0d3; /* Sombra sutil tipo highlight */
+    outline: none;
+}
+
+.editor--container {
+    margin: 1rem auto;
+    border-radius:8px;
+    padding: 1rem;
+    height: 25rem;
+    width: 90%;
+}
+
+/* Contenedor visual del editor (la caja completa) */
+.editor--container {
+    width: 86%;
+    margin: 1rem 4rem;
+    padding: 0;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Estilo del área de edición de Quill */
+.ql-container {
+    background-color: #f9f9f9 !important;
+    border: none !important;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Estilo de la barra de herramientas */
+.ql-toolbar {
+    background-color: #f9f9f9 !important;
+    border: none !important;
+    border-bottom: 1px solid #ccc;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Borde verde cuando el editor está enfocado (truco con .ql-container focus-within) */
+.editor--container:focus-within {
+    border: 1px solid #66bb6a;
+    box-shadow: 0 0 0 2px #d1f0d3; /* Sombra sutil tipo highlight */
+}
+
+
+/* Área donde se escribe */
+.ql-editor {
+    min-height: 250px;
+    padding: 1rem;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+}
+
+
+.img-autor {
+    background-color: #43a047;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.img-autor:hover {
+    background-color: #2e7d32;
+}
+
+
+.file-name {
+    display: inline-block;
+    margin-top: 0.8rem;
+    color: #555;
+    font-style: italic;
+}
+
+.boton-preview--container,
+.boton-publicar--container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+#btn-preview,
+.btn-post {
+    background-color: #43a047;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#btn-preview:hover,
+.btn-post:hover {
+    background-color: 	#2e7d32;
+}
+
+#preview-modal {
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+#btn-close-preview,
+#btn-confirm-publish {
+    background-color: #388E3C;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#btn-close-preview:hover,
+#btn-confirm-publish:hover {
+    background-color: #2E7D32;
+}
+
+#postForm textarea {
+    min-height: 5rem;
+    max-height: auto;
+    resize: none;
+    background-color: #f3fdf4;
+    border: 1px solid #cce1d0;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    overflow-y: auto;
+}
+
+#postForm textarea:focus {
+    border-color: #66bb6a;
+    box-shadow: 0 0 0 2px #d1f0d3; /* Sombra sutil tipo highlight */
+    background-color: #ecfaee;
+    outline: none;
+}
+
+/* Contenedor del campo Tagify */
+.tagify {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    width: 70%;
+    margin: 1rem 4rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Foco (cuando estás escribiendo en el campo) */
+.tagify--focus {
+    border-color: #66bb6a !important;
+    box-shadow: 0 0 0 2px #d1f0d3;
+}
+
+/* Texto sugerido (el dropdown) */
+.tagify__dropdown {
+    border-radius: 0 0 12px 12px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* Elementos individuales de sugerencia */
+.tagify__dropdown__item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.tagify__dropdown__item:hover {
+    background-color: #3b6e43;
+}
+
+/* Tags ya seleccionados */
+.tagify__tag {
+    background-color: #e0f5e4;
+    color: #2E7D32;
+    border-radius: 8px;
+    padding: 0.3rem 0.8rem;
+    margin: 0.25rem;
+    font-weight: 500;
+}
+
 
 /* FOOTER */
 
