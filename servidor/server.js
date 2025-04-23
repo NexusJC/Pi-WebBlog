@@ -22,8 +22,6 @@ app.use(fileUpload({
     abortOnLimit: true,
     createParentPath: true
 }));
-app.use('/publicaciones', express.static(path.join(__dirname, 'publicaciones')));
-
 
 // Archivos estáticos
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -32,11 +30,16 @@ app.use("/img", express.static(path.join(__dirname, "frontend", "img")));
 app.use("/css", express.static(path.join(__dirname, "frontend", "css")));
 app.use("/js", express.static(path.join(__dirname, "frontend", "js")));
 app.use("/menu", express.static(path.join(__dirname, "frontend", "menu")));
-app.use("/about us", express.static(path.join(__dirname, "frontend", "about us")));
+app.use("/about-us", express.static(path.join(__dirname, "frontend", "about-us")));
 app.use("/contact", express.static(path.join(__dirname, "frontend", "contact")));
 app.use("/login", express.static(path.join(__dirname, "frontend", "login")));
-
-
+// Rutas de secciones/páginas
+app.use("/menu", express.static(path.join(__dirname, "frontend", "menu")));
+app.use("/about-us", express.static(path.join(__dirname, "frontend", "about-us")));
+app.use("/contact", express.static(path.join(__dirname, "frontend", "contact")));
+app.use("/login", express.static(path.join(__dirname, "frontend", "login")));
+app.use("/posts", express.static(path.join(__dirname, "frontend", "posts")));
+app.use("/publicaciones", express.static(path.join(__dirname, "frontend", "publicaciones")));
 
 
 // Conexión a base de datos
@@ -240,7 +243,7 @@ app.post('/api/posts', async (req, res) => {
                         </li>
                         <li title="Menú Principal"><a href="/menu/index.html"><i class="fa-solid fa-house"></i></a></li>
                         <li title="Blog" class="blog-selected"><a class="blog-selected" href="#"><i class="fa-solid fa-newspaper"></i></a></li>
-                        <li title="¿Quiénes somos?"><a href="/about us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
+                        <li title="¿Quiénes somos?"><a href="/about-us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
                         <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
                         <li title="¡Inicia sesión!"><a href="/login/login.html"><i class="fa-solid fa-circle-user"></i></a></li>
                         <li title="Búsquedas">
