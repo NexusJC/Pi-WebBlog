@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // Función para ocultar el menú lateral al hacer clic fuera de él
 
-
 document.addEventListener('DOMContentLoaded', function() {
     // Elementos del DOM
     const postForm = document.getElementById('postForm');
@@ -37,7 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const mensajeAutorInput = document.getElementById('mensaje-autor');
     const fileNameElement = document.querySelector('.file-name');
     const imgAutorBtn = document.querySelector('.img-autor');
+    let userId = 1;
+
+    
     let isSubmitting = false;
+    let permitirPublicar = false; 
+
 
 
     const previewStyles = `
@@ -69,28 +73,145 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-    font-size: 2.5rem; 
-    color: #2E7D32; 
-    font-weight: bold;
+    font-size: 3.8rem;
+    font-weight: 800;
+    color: #ffffff;
     text-align: center;
-    margin-bottom: 20px;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 3rem 0;
+    padding: 1rem 2rem;
+    text-shadow:
+        0 -10px 20px rgba(255, 255, 255, 0.25), /* leve luz superior */
+        0 4px 12px rgba(0, 0, 0, 0.5); /* sombra inferior */
+    animation: floatIn 1.2s ease-out forwards;
+    opacity: 0;
+}
+
+/* Franja blanca difusa por debajo */
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50rem; /* ← Aquí puedes poner el tamaño que quieras */
+    height: 8px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 80%);
+    filter: blur(6px);
+    border-radius: 50%;
+    opacity: 0;
+    animation: glowFade 1.2s ease-out 0.6s forwards;
+}
+
+
+/* Animación del texto */
+@keyframes floatIn {
+    0% {
+        transform: translateY(-40px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Animación de la franja */
+@keyframes glowFade {
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.1);
+    }
 }
 
 h2 {
-    font-size: 2rem;
-    color: #388E3C; 
-    font-weight: 600;
-    border-bottom: 2px solid #A5D6A7; 
-    padding-bottom: 5px;
-    margin-top: 30px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: transparent;
+    background: linear-gradient(90deg, #2e7d32, #66bb6a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-transform: uppercase;
+    position: relative;
+    margin: 3rem 0 1.5rem;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    letter-spacing: 1.2px;
 }
 
+/* Animación de entrada */
+@keyframes fadeInUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Animación del subrayado */
+@keyframes underlineGrow {
+    to {
+        width: 28rem;
+    }
+}
+
+
+
 h3 {
-    font-size: 1.5rem;
-    color: #4CAF50;
+    font-size: 1.4rem;
+    color: #2e7d32;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    border-left: 6px solid #a5d6a7;
+    padding-left: 1rem;
+    transition: all 0.3s ease;
+}
+
+h3:hover {
+    color: #1b5e20;
+    border-left-color: #66bb6a;
+}
+
+/* H4 - Para subtítulos importantes */
+h4 {
+    font-size: 1.25rem;
+    color: #388e3c;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 1.5rem 0 0.5rem;
+    border-left: 4px solid #a5d6a7;
+    padding-left: 1rem;
+    letter-spacing: 1px;
+}
+
+/* H5 - Para secciones secundarias o notas */
+h5 {
+    font-size: 1.1rem;
+    color: #4caf50;
     font-weight: 500;
-    margin-top: 20px;
-    text-transform: uppercase; 
+    margin: 1.2rem 0 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 3px dashed #c8e6c9;
+    text-transform: capitalize;
+}
+
+/* H6 - Para aclaraciones, detalles o mini títulos */
+h6 {
+    font-size: 1rem;
+    color: #66bb6a;
+    font-weight: 400;
+    font-style: italic;
+    margin: 1rem 0 0.5rem;
+    text-align: left;
+    letter-spacing: 0.5px;
 }
 
 p {
@@ -1321,7 +1442,9 @@ main {
         const content = quill.root.innerHTML.trim();
         const title = document.getElementById('post-title').value.trim();
         const referencias = document.getElementById('referencias')?.value.trim() || '';
-        const tags = tagify.value.map(tag => tag.value).join(', ');
+        const tags = JSON.stringify(tagify.value); // Formato JSON correcto
+
+
         const fecha = new Date().toLocaleDateString();
     
         let imageSrc = '../img/default.jpg';
@@ -1398,19 +1521,6 @@ main {
         }
     });
     
-    // Cerrar vista previa
-    document.getElementById('btn-close-preview').addEventListener('click', () => {
-        document.getElementById('preview-modal').style.display = 'none';
-        postForm.requestSubmit();
-    });
-    
-    // Publicar desde vista previa
-    document.getElementById('btn-confirm-publish').addEventListener('click', () => {
-        document.getElementById('preview-modal').style.display = 'none';
-        postForm.requestSubmit();
-    });
-    
-    
     // Inicializar Tagify
     const tagInput = document.getElementById('post-tags');
     const tagify = new Tagify(tagInput, {
@@ -1422,28 +1532,6 @@ main {
     });
 
     // Inicializar Quill Editor
-    const quill = new Quill("#editor", {
-        theme: "snow",
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote', 'code-block'],
-                [{ 'header': [2, 3, 4, 5, 6, false] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }],
-                ['link', 'image'],
-                ['video'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'align': [] }],
-                
-                ['clean']
-            ]
-        },
-        placeholder: 'Escribe tu contenido aquí...',
-        bounds: document.getElementById('editor')
-    });
-
-    quill.root.setAttribute("spellcheck", "true");
 
 
     // Manejador de selección de archivos
@@ -1487,92 +1575,113 @@ main {
         });
     }
 
-    // Envío del formulario
-    if (postForm) {
-        postForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            if (isSubmitting) return; // ✅ Evita doble envío
-            isSubmitting = true;
-            const submitBtn = postForm.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
-
-            try {
-                // Validación básica
-                const mensajeAutor = mensajeAutorInput.value.trim();
-                const editorContent = quill.root.innerHTML.trim();
-                const postTitle = document.getElementById('post-title').value.trim();
-                const postTags = document.getElementById('post-tags').value.trim();
+    const quill = new Quill("#editor", {
+        theme: "snow",
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline', 'strike'],
+                ['blockquote', 'code-block'],
+                [{ 'header': [2, 3, 4, 5, 6, false] }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'script': 'sub'}, { 'script': 'super' }],
+                ['link', 'image'],
+                ['video'],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'align': [] }],
                 
-                
-                if (!mensajeAutor || editorContent === '<p><br></p>') {
-                    throw new Error('Por favor completa todos los campos requeridos');
-                }
+                ['clean']
+            ]
+        },
+        placeholder: 'Escribe tu contenido aquí...',
+        bounds: document.getElementById('editor')
+    });
 
-                // Crear FormData
-                const formData = new FormData();
-                formData.append('user_id', '1'); // Cambiar por ID real del usuario logueado
-                formData.append('content', editorContent);
-                formData.append('mensaje_autor', mensajeAutor);
-                formData.append('title', postTitle);
-                formData.append('tags', postTags);
-                const referencias = document.getElementById('referencias').value.trim();
-                formData.append('referencias', referencias);
+    quill.root.setAttribute("spellcheck", "true");
 
 
+    document.getElementById('btn-close-preview').addEventListener('click', () => {
+        permitirPublicar = false;
+        const modal = document.getElementById('preview-modal');
+        const iframe = document.getElementById('iframe-preview');
+    
+        modal.style.display = 'none';
+        iframe.src = ''; // ⚠️ Esto limpia el iframe para evitar conflictos
+    });
+    document.getElementById('btn-confirm-publish').addEventListener('click', () => {
+        permitirPublicar = true;
+    
+        // Puedes cerrar el modal si así se desea:
+        const modal = document.getElementById('preview-modal');
+        modal.style.display = 'none';
+    });
+    
+    
+    postForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+    
+        if (!permitirPublicar) {
+            console.warn("🚫 Publicación bloqueada: no se confirmó desde vista previa");
+            return;
+        }
+    
+        
+        if (isSubmitting) return;
+        isSubmitting = true;
+    
+        const submitBtn = postForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
+    
+        try {
+            const title = document.getElementById('post-title').value.trim();
+            const mensajeAutor = mensajeAutorInput.value.trim();
+            const referencias = document.getElementById('referencias')?.value.trim() || '';
+            const tags = tagify.value.map(tag => tag.value); 
+            const content = quill.root.innerHTML.trim();
+            
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('mensaje_autor', mensajeAutor);
+            formData.append('referencias', referencias);
+            formData.append('tags', JSON.stringify(tags));
+            formData.append('content', content);
+            formData.append('user_id', userId);
 
-                
-
-                if (!mensajeAutor || editorContent === '<p><br></p>' || !postTitle || !postTags) {
-                    throw new Error('Por favor completa todos los campos requeridos');
-                }
-                
-                // Validar y añadir imagen
-                if (fileInput.files[0]) {
-                    if (fileInput.files[0].size > 5 * 1024 * 1024) {
-                        throw new Error('La imagen no debe exceder los 5MB');
-                    }
-                    formData.append('image', fileInput.files[0]);
-                }
-
-                // Enviar datos al servidor
-                const response = await fetch('http://localhost:3001/api/posts', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Error en el servidor');
-                }
-
-                const data = await response.json();
-
-                // Éxito - resetear formulario
-                showAlert('✅ Post creado exitosamente!', 'success');
-                quill.root.innerHTML = '';
-                mensajeAutorInput.value = '';
-                fileInput.value = '';
+            
+            if (fileInput.files[0]) {
+                formData.append('image', fileInput.files[0]);
+            }
+            
+            const response = await fetch('http://localhost:3001/api/posts', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showAlert('✅ Publicación exitosa', 'success');
+                postForm.reset();
+                quill.setContents([]); // limpia el contenido
+                document.getElementById('preview')?.remove();
                 fileNameElement.textContent = 'No hay imagen seleccionada';
-                const preview = document.getElementById('preview');
-                if (preview) preview.style.display = 'none';
-                
-                // Recargar posts
-                await loadPosts();
-                document.getElementById('post-title').value = '';
-                document.getElementById('post-tags').value = '';
-
-            } catch (error) {
-                console.error("Error al enviar el formulario:", error);
-                showAlert(`❌ ${error.message}`, 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-                isSubmitting = false; // ✅ Permite futuros envíos
-            }        
-        });
-    }
+                loadPosts(); // vuelve a cargar los posts
+            } else {
+                throw new Error(result.message || 'No se pudo publicar');
+            }
+            
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error);
+            showAlert(`❌ ${error.message}`, 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            isSubmitting = false;
+        }
+    });
+    
+    
 
     // Cargar posts al iniciar
     loadPosts();
@@ -1635,14 +1744,14 @@ function showAlert(message, type = 'info') {
 
 // Advertencia al salir con cambios no guardados
 window.addEventListener('beforeunload', (e) => {
-    const quill = document.querySelector('#editor') ? new Quill('#editor') : null;
     const mensajeAutor = document.getElementById('mensaje-autor')?.value.trim();
+    const editorContent = document.querySelector('#editor .ql-editor')?.innerHTML.trim();
     const hasFile = document.getElementById('real-input')?.files.length > 0;
-    
-    const hasContent = (quill && quill.root.innerHTML.trim() !== '<p><br></p>') || 
-                    (mensajeAutor && mensajeAutor !== '') || 
-                    hasFile;
-    
+
+    const hasContent = (editorContent && editorContent !== '<p><br></p>') ||
+                       (mensajeAutor && mensajeAutor !== '') ||
+                       hasFile;
+
     if (hasContent) {
         e.preventDefault();
         e.returnValue = 'Tienes cambios no guardados. ¿Seguro que quieres salir?';

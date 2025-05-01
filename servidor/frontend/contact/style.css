@@ -339,14 +339,51 @@ font-size: 1.75rem;
     gap: 0.625rem;
 }
 
-.main-content {
+/*.main-content {
     background-color: #E8F0E8;
     height: auto;
     margin: auto;
     margin-top: 0rem;
-    padding: 10rem 23rem;
-    
+    padding: 5rem 10rem;
+}*/
+
+.main-content {
+    font-family: 'Open Sans', sans-serif; /* Fuente moderna y legible */
+    font-size: 1.2rem; /* Tamaño de texto adecuado */
+    line-height: 1.8; /* Espaciado entre líneas */
+    color: #333; /* Color de texto oscuro para mejor contraste */
+    text-align: justify; /* Justifica el texto para una apariencia más profesional */
 }
+
+.main-content {
+    background-color: #F9F9F9; /* Fondo claro */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 3rem; /* Espaciado interno */
+    margin: 2rem auto; /* Centra el contenido */
+    max-width: 800px; /* Limita el ancho para mejor legibilidad */
+}
+
+.main-content a {
+    color: #2E7D32; /* Color verde para resaltar */
+    text-decoration: underline; /* Subraya los enlaces */
+    font-weight: bold; /* Destaca los enlaces */
+}
+
+.main-content a:hover {
+    color: #1B5E20; /* Cambia el color al pasar el cursor */
+}
+
+.main-content h3 {
+    font-family: 'Roboto', sans-serif; /* Cambia la fuente */
+    font-size: 2.5rem; /* Ajusta el tamaño */
+    font-weight: 900; /* Aplica un peso de negrita más fuerte */
+    color: #1B5E20; /* Cambia el color */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1.5px; /* Espaciado entre letras */
+    text-align: center; /* Centra el texto */
+}
+
 
 article {
     width: 90%;
@@ -1112,3 +1149,13 @@ main {
     }
     
 }
+
+
+@media screen and (max-width: 768px) {
+    .main-content {
+        padding: 2rem; /* Reduce el padding en pantallas pequeñas */
+        font-size: 1rem; /* Ajusta el tamaño del texto */
+    }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');

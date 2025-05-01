@@ -212,7 +212,9 @@ app.post('/api/posts', async (req, res) => {
             (user_id, content, mensaje_autor, image_path, created_at, title, etiquetas, referencias)
             VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)
         `;
-        const [result] = await pool.promise().execute(query, [user_id, content, mensaje_autor, image_path, title, tags, referencias]);
+        const formattedTags = JSON.stringify(parsedTags.map(tag => ({ value: tag })));
+const [result] = await pool.promise().execute(query, [user_id, content, mensaje_autor, image_path, title, formattedTags, referencias]);
+
 
         const postId = result.insertId;
         const postFilename = `blog${postId}.html`;

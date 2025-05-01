@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="ctn-img">
                             <img src="${post.imageUrl || '../img/default.jpg'}" alt="Post image">
                         </div>
-                        <h2>${post.title || 'Sin título'}</h2>
+                        <h3>${post.title || 'Sin título'}</h3>
 
                         <span>${new Date(post.created_at).toLocaleDateString()}</span>
                         <ul class="ctn-tags">
