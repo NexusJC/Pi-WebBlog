@@ -286,6 +286,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                 <h3>Autor</h3>
                 <p>ID Usuario: ${user_id}</p>
                 <h3>Tema</h3>
+                <p>${title}</p>
                 <p>${parsedTags.map(tag => tag.value).join(', ')}</p>
                 <h3>Mensaje</h3>
                 <p>${mensaje_autor}</p>
@@ -298,7 +299,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
             <div class="main-wrapper__content blog-1">
                 <article>
                     <h2 id="b1">${title}</h2>
-                    <img src="${imageSrc}" alt="Imagen del post" style="max-width: 100%; margin: 20px 0;">
+                    <img src="${imageSrc}" alt="Imagen del post" class="post-image">
                     <div>${content}</div>
                 </article>
                 <section class="referencias">

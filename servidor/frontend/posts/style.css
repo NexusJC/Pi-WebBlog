@@ -553,6 +553,22 @@ main {
     color: #555; /* Color gris */
     margin-bottom: 10px; /* Espaciado inferior */
 }
+
+.post-image {
+    display: block;
+    max-width: 80%;
+    height: auto;
+    margin: 2rem auto; /* centrado vertical y horizontal */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* sombra suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-image:hover {
+    transform: scale(1.02); /* leve aumento al pasar el mouse */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); /* sombra más intensa al hacer hover */
+}
+
+
 /* Centrar el botón dentro del post */
 .post button {
     margin: 10px auto; /* Centrar el botón horizontalmente */
@@ -666,6 +682,10 @@ main {
     overflow: hidden; /* Evitar que el contenido se desborde */
     position: relative; /* Posicionar elementos hijos absolutamente */
     align-items: center; /* Centrar contenido horizontalmente */
+}
+
+.main-wrapper__contenido-relacionado h2 {
+    font-size: 2rem;
 }
 
 /* Contenedor del carrusel */
@@ -828,6 +848,10 @@ main {
     min-width: 8rem;   /* opcional: asegúrate de que tenga un mínimo */
     text-align: center;
     background-color: #E8F0E8;
+}
+
+.main-wrapper__secondary-navbar h2 {
+    font-size: 2rem;
 }
 
 .main-wrapper__secondary-navbar ul {

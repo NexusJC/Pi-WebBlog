@@ -1124,6 +1124,11 @@ main {
         transform: translateX(20rem);
 
     }
+
+    .post-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
     .menu {
         width: 20rem;
         height: 100vh;
@@ -1442,7 +1447,8 @@ main {
         const content = quill.root.innerHTML.trim();
         const title = document.getElementById('post-title').value.trim();
         const referencias = document.getElementById('referencias')?.value.trim() || '';
-        const tags = JSON.stringify(tagify.value); // Formato JSON correcto
+        const tagsArray = tagify.value.map(tag => tag.value);
+        const tags = tagsArray.join(', '); 
 
 
         const fecha = new Date().toLocaleDateString();
@@ -1497,10 +1503,16 @@ main {
         </header>
     
         <main style="padding: 2rem; max-width: 1000px; margin: auto;">
-            <h1>${title}</h1>
+            <h2>${title}</h2>
             <p><strong>Fecha:</strong> ${fecha}</p>
             <p><strong>Mensaje del autor:</strong> ${mensajeAutor}</p>
-            <img src="${imageSrc}" style="max-width: 100%; margin: 20px 0;" />
+            <img src="${imageSrc}" style="max-width: 80%; margin: 20px 0;display: block;
+            max-width: 80%;
+            height: auto;
+            margin: 2rem auto; /* centrado vertical y horizontal */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* sombra suave */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            " />
             <div>${content}</div>
             <section class="referencias" style="margin-top: 2rem;">
                 <h3>Referencias</h3>
@@ -1614,6 +1626,12 @@ main {
         const modal = document.getElementById('preview-modal');
         modal.style.display = 'none';
     });
+
+    document.querySelector('.btn-post').addEventListener('click', () => {
+        permitirPublicar = true;
+        postForm.requestSubmit(); // dispara el submit del formulario
+      });
+      
     
     
     postForm.addEventListener('submit', async function(e) {
