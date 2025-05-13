@@ -7,6 +7,9 @@ body {
     min-height: 100vh;
     justify-content: center;
     background-color: #E0E8E0; 
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9); /* Degradado verde claro */
+    font-family: 'Roboto', sans-serif; /* Fuente moderna */
+    color: #333; /* Color del texto */
 }
 
 div, body, header, nav, ul, footer {
@@ -339,14 +342,271 @@ font-size: 1.75rem;
     gap: 0.625rem;
 }
 
-.main-content {
+/*.main-content {
     background-color: #E8F0E8;
     height: auto;
     margin: auto;
     margin-top: 0rem;
     padding: 10rem 23rem;
     
+}*/
+
+.main-content {
+    max-width: 1200px; /* Aumenta el ancho máximo */
+    width: 90%; /* Ocupa el 90% del ancho de la ventana */
+    margin: 1rem auto; /* Centra el contenido horizontalmente */
+    padding: 3rem; /* Agrega espacio interno */
+    background-color: #f9f9f9; /* Fondo claro para destacar */
+    border-radius: 10px; /* Bordes redondeados para un diseño moderno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para profundidad */
 }
+
+.main-content a {
+    color: #2E7D32; /* Color verde para resaltar */
+    text-decoration: underline; /* Subraya los enlaces */
+    font-weight: bold; /* Destaca los enlaces */
+}
+
+.main-content a:hover {
+    color: #1B5E20; /* Cambia el color al pasar el cursor */
+}
+
+.main-content h2 {
+    font-family: 'Roboto', sans-serif; /* Cambia la fuente */
+    font-size: 2.5rem; /* Ajusta el tamaño */
+    font-weight: 900; /* Aplica un peso de negrita más fuerte */
+    color: #1B5E20; /* Cambia el color */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 1.5px; /* Espaciado entre letras */
+    text-align: center; /* Centra el texto */
+}
+
+/*Imagen con texto*/
+
+.about-us-container {
+    display: flex; /* Organiza los elementos en una fila */
+    align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
+    gap: 2rem; /* Espaciado entre la imagen y el texto */
+    margin-top: 2rem; /* Espaciado superior */
+}
+
+.about-us-image {
+    width: 40%; /* La imagen ocupa el 40% del ancho del contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.about-us-text {
+    width: 60%; /* El texto ocupa el 60% del ancho del contenedor */
+    display: flex;
+    flex-direction: column; /* Organiza el contenido en columna */
+    justify-content: center; /* Centra el texto verticalmente */
+}
+
+.about-us-text p {
+    font-size: 1.2rem; /* Tamaño del texto */
+    line-height: 1.8; /* Espaciado entre líneas */
+    color: #333; /* Color del texto */
+    text-align: justify; /* Justifica el texto */
+    margin: 0; /* Elimina márgenes adicionales */
+}
+
+/* lista de valores */
+
+.main-content {
+    max-width: 1200px;
+    margin: 1rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-us-values {
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem; /* Espaciado inferior */
+}
+
+.about-us-values h3 {
+    font-size: 1.5rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.about-us-values ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Diseño responsivo */
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+}
+
+.about-us-values li {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.about-us-values li i {
+    font-size: 2rem;
+    color: #050705;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.about-us-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.about-us-image {
+    width: 40%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-us-text {
+    width: 60%;
+}
+
+.about-us-text p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #333;
+    text-align: justify;
+}
+
+.about-us-values h3 {
+    font-size: 2rem; /* Aumenta el tamaño del texto */
+    color: #4CAF50; /* Color verde */
+    font-weight: 900; /* Aplica un grosor más fuerte */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    text-align: center; /* Centra el texto */
+    letter-spacing: 1.5px; /* Agrega espaciado entre letras */
+    margin-bottom: 1.5rem; /* Espaciado inferior */
+}
+
+/* Equipo */
+
+.team-section {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Diseño responsivo */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.team-member {
+    text-align: center;
+    max-width: 200px;
+}
+
+.team-member img {
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member img:hover {
+    transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
+}
+
+.team-member h4 {
+    margin-top: 1rem; /* Espaciado superior */
+    font-size: 1.2rem; /* Tamaño del texto */
+    color: #333; /* Color del texto */
+    font-weight: bold; /* Aplica negritas */
+    font-family: Arial, sans-serif; /* Cambia la fuente a Arial */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    text-align: center; /* Centra el texto */
+    letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+.team-section h3 {
+    font-size: 2rem; /* Aumenta el tamaño del texto */
+    color: #4CAF50; /* Color verde */
+    font-weight: 900; /* Aplica un grosor más fuerte */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    text-align: center; /* Centra el texto */
+    letter-spacing: 1.5px; /* Agrega espaciado entre letras */
+    margin-bottom: 1.5rem; /* Espaciado inferior */
+}
+
+.team-member p {
+    font-size: 1rem; /* Tamaño del texto */
+    color: #777; /* Color del texto */
+    font-weight: bold; /* Aplica negritas */
+    font-family: Arial, sans-serif; /* Cambia la fuente a Arial */
+    text-align: center; /* Centra el texto */
+    margin-top: 0.5rem; /* Espaciado superior */
+}
+
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Diseño responsivo */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.team-member img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member img:hover {
+    transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+}
+
+/*Animaciones*/
+
+.about-us-container, .about-us-values, .team-section {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Btn */
+
+.btn-action {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 1.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-action:hover {
+    background-color: #388E3C;
+}
+
+/* fin de content*/
 
 article {
     width: 90%;
@@ -1110,4 +1370,25 @@ main {
         transform: translate(8rem)!important;
     }
     
+}
+
+
+@media (max-width: 768px) {
+    .about-us-container {
+        flex-direction: column; /* Cambia a diseño vertical */
+        align-items: center;
+    }
+
+    .about-us-image {
+        width: 100%; /* La imagen ocupa todo el ancho */
+        margin-bottom: 1rem;
+    }
+
+    .about-us-text {
+        width: 100%; /* El texto ocupa todo el ancho */
+    }
+
+    .team-container {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
 }

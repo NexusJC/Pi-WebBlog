@@ -241,7 +241,7 @@ a {
 
 .main-navbar ul li:first-child {
     margin-left: 5rem;
-    margin-right: 18rem;
+    margin-right: 10rem;
 }
 
 
@@ -470,7 +470,8 @@ font-size: 1.75rem;
     height: 100vh;
     position: fixed;
     left: 0; 
-    background: rgb(255, 255, 255);
+    background: rgba(0,0,0, 0.5); /* blanco con 80% de opacidad */
+
     z-index: 7;
     top: 0;
     display: none;

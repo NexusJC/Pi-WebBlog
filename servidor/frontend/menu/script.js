@@ -1,78 +1,124 @@
 // BUSCADOR DE CONTENIDO
+// Declarar elementos importantes del buscador
+const bars_search = document.getElementById("ctn-bars-search");
+const cover_ctn_search = document.getElementById("cover-ctn-search");
+const inputSearch = document.getElementById("inputSearch");
+const box_search = document.getElementById("box-search");
 
-//Ejecutando funciones
+// Eventos principales
 document.getElementById("icon-search").addEventListener("click", mostrar_buscador);
-document.getElementById("cover-ctn-search").addEventListener("click", ocultar_buscador); 
+document.getElementById("cover-ctn-search").addEventListener("click", ocultar_buscador);
+inputSearch.addEventListener("keyup", buscador_interno);
 
-
-
-// Declarando variables 
-bars_search = document.getElementById("ctn-bars-search");
-cover_ctn_search = document.getElementById("cover-ctn-search");
-inputSearch = document.getElementById("inputSearch");
-box_search = document.getElementById("box-search");
-
-//Funcion para mostrar el buscador 
-document.addEventListener("DOMContentLoaded", () => {
-    const iconMenu = document.getElementById('icon-menu');
-    const menu = document.querySelector('.menu');
-
-    if (iconMenu && menu) {
-        iconMenu.addEventListener('click', function () {
-            menu.classList.toggle('show-lateral');
-        });
-    }
-});
-
-function mostrar_buscador(){
-    bars_search.style.top="5rem";
-    cover_ctn_search.style.display="block";
+// Función que muestra el buscador
+function mostrar_buscador() {
+    bars_search.style.top = "5rem";
+    cover_ctn_search.style.display = "block";
     inputSearch.focus();
-
-    if (inputSearch.value === ""){
-        box_search.style.display ="none";
+    if (inputSearch.value === "") {
+        box_search.style.display = "none";
     }
 }
 
-//Funcion para ocultar el buscador
+// Función que oculta el buscador
+function ocultar_buscador() {
+    bars_search.style.top = "-10rem";
+    cover_ctn_search.style.display = "none";
+    inputSearch.value = "";
+    box_search.style.display = "none";
+}
 
-function ocultar_buscador(){
-    bars_search.style.top="-10rem";
-    cover_ctn_search.style.display="none";
-    inputSearch.value="";
-    inputSearch.value ="";
-    box_search.style.display="none";
+// Cargar todos los posts y añadir al buscador con contenido
+async function cargarPostsEnBuscador() {
+    try {
+        const response = await fetch("http://localhost:3001/api/posts");
+        const data = await response.json();
+
+        if (data.success) {
+            box_search.innerHTML = ""; // Limpiar antes de cargar
+
+            data.posts.forEach(post => {
+                let tags = [];
+try {
+    if (Array.isArray(post.etiquetas)) {
+        tags = post.etiquetas;
+    } else if (typeof post.etiquetas === 'string') {
+        // separa por coma si tiene varias etiquetas en un solo string
+        tags = post.etiquetas.split(',').map(t => t.trim());
+    }
+} catch (e) {
+    console.warn("❌ Etiqueta malformada:", post.etiquetas);
+}
+
+                agregarPostAlBuscador(post.id, post.title, post.content, tags);
+            });
+        }
+    } catch (error) {
+        console.error("❌ Error al cargar posts:", error);
+    }
+}
+
+// Agrega un post al buscador
+function agregarPostAlBuscador(postId, title, content = "", tags = []) {
+    const tagList = Array.isArray(tags)
+        ? tags.map(tag => typeof tag === 'string' ? tag.toLowerCase() : tag.value?.toLowerCase())
+        : [];
+
+    const contentTextOnly = content
+        .replace(/<[^>]+>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase();
+
+    const li = document.createElement("li");
+    li.setAttribute("data-title", title.toLowerCase());
+    li.setAttribute("data-content", contentTextOnly);
+    li.setAttribute("data-tags", tagList.join(" "));
+
+   li.innerHTML = `
+    <a href="/posts/blog${postId}.html">
+        <i class="fa-solid fa-magnifying-glass"></i> ${title}
+    </a>
+`;
+
+
+    li.querySelector("a").addEventListener("click", ocultar_buscador);
+    box_search.appendChild(li);
 }
 
 
-// Creando filtrado de busqueda 
-
-document.getElementById("inputSearch").addEventListener("keyup", buscador_interno);
-
+// Filtra resultados en vivo
 function buscador_interno() {
-    filter = inputSearch.value.toUpperCase();
-    li = box_search.getElementsByTagName("li");
+    const filter = inputSearch.value.toLowerCase();
+    const li = box_search.getElementsByTagName("li");
 
-    // Recorriendo elementos a filtrar mediante los "li"
-    for (i = 0; i < li.length; i++){
-        a = li[i].getElementsByTagName("a")[0];
-        textValue = a.textContent || a.innerText;
+    let found = false;
 
-        if(textValue.toUpperCase().indexOf(filter) > -1){
+    for (let i = 0; i < li.length; i++) {
+        const title = li[i].getAttribute("data-title") || "";
+        const content = li[i].getAttribute("data-content") || "";
+        const tags = li[i].getAttribute("data-tags") || "";
+
+        if (
+            title.includes(filter) || 
+            content.includes(filter) || 
+            tags.includes(filter)
+        ) {
             li[i].style.display = "";
-            box_search.style.display ="block";
-
-            if (inputSearch.value === ""){
-                box_search.style.display ="none";
-            }
-
-            a.addEventListener("click", ocultar_buscador);
-
+            found = true;
         } else {
             li[i].style.display = "none";
         }
     }
+
+    box_search.style.display = found ? "block" : "none";
 }
+
+// Iniciar carga automática de posts al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    cargarPostsEnBuscador();
+});
+
 
     // Carrusel horizontal
     const postsContainer = document.querySelector(".posts");

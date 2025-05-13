@@ -7,6 +7,9 @@ body {
     min-height: 100vh;
     justify-content: center;
     background-color: #E0E8E0; 
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9); /* Degradado verde claro */
+    font-family: 'Roboto', sans-serif; /* Fuente moderna */
+    color: #333; /* Color del texto */
 }
 
 div, body, header, nav, ul{
@@ -347,21 +350,15 @@ font-size: 1.75rem;
     padding: 5rem 10rem;
 }*/
 
-.main-content {
-    font-family: 'Open Sans', sans-serif; /* Fuente moderna y legible */
-    font-size: 1.2rem; /* Tamaño de texto adecuado */
-    line-height: 1.8; /* Espaciado entre líneas */
-    color: #333; /* Color de texto oscuro para mejor contraste */
-    text-align: justify; /* Justifica el texto para una apariencia más profesional */
-}
 
 .main-content {
-    background-color: #F9F9F9; /* Fondo claro */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    padding: 3rem; /* Espaciado interno */
-    margin: 2rem auto; /* Centra el contenido */
-    max-width: 800px; /* Limita el ancho para mejor legibilidad */
+    max-width: 1200px; /* Aumenta el ancho máximo */
+    width: 90%; /* Ocupa el 90% del ancho de la ventana */
+    margin: 1rem auto; /* Centra el contenido horizontalmente */
+    padding: 3rem; /* Agrega espacio interno */
+    background-color: #f9f9f9; /* Fondo claro para destacar */
+    border-radius: 10px; /* Bordes redondeados para un diseño moderno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para profundidad */
 }
 
 .main-content a {
@@ -374,16 +371,225 @@ font-size: 1.75rem;
     color: #1B5E20; /* Cambia el color al pasar el cursor */
 }
 
-.main-content h3 {
+.main-content h2 {
     font-family: 'Roboto', sans-serif; /* Cambia la fuente */
     font-size: 2.5rem; /* Ajusta el tamaño */
-    font-weight: 900; /* Aplica un peso de negrita más fuerte */
+    font-weight: 1000; /* Aplica un peso de negrita más fuerte */
     color: #1B5E20; /* Cambia el color */
     text-transform: uppercase; /* Convierte el texto a mayúsculas */
     letter-spacing: 1.5px; /* Espaciado entre letras */
     text-align: center; /* Centra el texto */
 }
 
+/*Mejora visual del texto*/
+/*<p>*/
+
+.main-content p {
+    font-size: 1.2rem; /* Aumenta el tamaño del texto */
+    line-height: 1.8; /* Mejora el espaciado entre líneas */
+    color: #333; /* Cambia el color del texto a un tono más oscuro */
+    text-align: justify; /* Justifica el texto para un diseño más limpio */
+    margin-bottom: 1.5rem; /* Agrega espacio entre párrafos */
+    padding: 0 1rem; /* Agrega un poco de espacio interno */
+    font-family: 'Roboto', sans-serif; /* Usa una fuente moderna y legible */
+}
+
+.main-content p strong {
+    color: #4CAF50; /* Resalta texto en negrita con un color verde */
+    font-weight: bold; /* Asegura que el texto sea más destacado */
+}
+
+.main-content p em {
+    font-style: italic; /* Aplica cursiva al texto enfatizado */
+    color: #388E3C; /* Cambia el color del texto enfatizado */
+}
+
+/*Agregar los iconos de las redes sociales*/
+
+.social-icons {
+    display: flex;
+    justify-content: center; /* Centra los íconos */
+    gap: 5rem; /* Espaciado entre los íconos */
+    margin: 2rem 0; /* Margen superior e inferior */
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.social-icons a img {
+    width: 40px; /* Ajusta el tamaño de los íconos */
+    height: 40px; /* Asegura que todos tengan la misma altura */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transición suave */
+}
+
+.social-icons a img:hover {
+    transform: scale(1.5); /* Aumenta el tamaño al pasar el cursor */
+    opacity: 0.8; /* Reduce la opacidad al pasar el cursor */
+}
+
+.social-icons a img {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/*contact*/
+/*Viene el mapa y los anputs*/
+
+.main-content .contact .row {
+    display: flex; /* Organiza los elementos en una fila */
+    flex-wrap: wrap; /* Permite que los elementos se apilen en pantallas pequeñas */
+    gap: 2rem; /* Espaciado entre el mapa y el formulario */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
+    margin-top: 2rem; /* Espaciado superior */
+}
+
+.main-content .contact .row .map {
+    flex: 1 1 50%; /* El mapa ocupa el 50% del ancho disponible */
+    max-width: 50%; /* Limita el ancho máximo */
+    height: 500px; /* Ajusta la altura del mapa */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    object-fit: cover; /* Mantiene la proporción del contenido */
+}
+
+.main-content .contact .row form {
+    flex: 1 1 45%; /* El formulario ocupa el 45% del ancho disponible */
+    max-width: 40%; /* Limita el ancho máximo */
+    padding: 2rem; /* Espaciado interno */
+    background-color: #f9f9f9; /* Fondo claro */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+.main-content .contact .row form h3 {
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    font-size: 2rem; /* Tamaño del texto */
+    color: #155e1a; /* Color del texto */
+    font-weight: bold; /* Aplica negritas */
+    margin-top: 0; /* Elimina el margen superior */
+    margin-bottom: 1rem; /* Ajusta el margen inferior */
+    text-align: center; /* Centra el texto */
+}
+
+.main-content .contact .row form .inputBox{
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    background: var(--bg);
+    border: var(--border);
+}
+
+.main-content .contact .row form .inputBox input {
+    width: 90%; /* Reduce el ancho */
+    padding: 1rem; /* Reduce el padding interno */
+    font-size: 1.2rem; /* Ajusta el tamaño del texto */
+    color: #333; /* Cambia el color del texto */
+    background: #f9f9f9; /* Fondo claro */
+    border: 1px solid #7c7c7c; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    outline: none; /* Elimina el borde azul al enfocar */
+    transition: all 0.3s ease; /* Transición suave */
+}
+
+.main-content .contact .row form .inputBox input:focus {
+    border-color: #4CAF50; /* Cambia el color del borde al enfocar */
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3); /* Sombra más intensa */
+    background: #fff; /* Fondo blanco al enfocar */
+}
+
+.main-content .contact .row form .inputBox span {
+    color: #000000; /* Cambia el color del texto del label */
+    font-size: 1.2rem; /* Ajusta el tamaño del texto */
+    padding-left: 1rem; /* Espaciado entre el label y el input */
+}
+
+.main-content .contact .row form input[type="submit"] {
+    background-color: #4CAF50; /* Color de fondo verde */
+    color: #fff; /* Color del texto blanco */
+    font-size: 1.2rem; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    padding: 1rem 2rem; /* Espaciado interno */
+    border: none; /* Sin bordes */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease; /* Transición suave para efectos */
+    display: inline-block; /* Asegura que el botón se comporte como un elemento en línea */
+    margin-top: 2rem; /* Espaciado superior */
+    text-align: left; /* Alinea el botón al lado izquierdo */
+}
+
+/*Submit*/
+/*Mejora visual del boton*/
+
+.main-content .contact .row form {
+    text-align: center; /* Centra el contenido dentro del formulario */
+}
+
+.main-content .contact .row form input[type="submit"] {
+    background-color: #000000; /* Color de fondo verde */
+    color: #fff; /* Color del texto blanco */
+    font-size: 1.2rem; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    padding: 1rem 2rem; /* Espaciado interno */
+    border: none; /* Sin bordes */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease; /* Transición suave para efectos */
+    display: inline-block; /* Asegura que el botón se comporte como un elemento en línea */
+    margin-top: 2rem; /* Espaciado superior para separarlo de los inputs */
+}
+
+.main-content .contact .row form input[type="submit"]:hover {
+    background-color: #388E3C; /* Color más oscuro al pasar el cursor */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    transform: translateY(-2px); /* Efecto de elevación */
+}
+
+.main-content .contact .row form input[type="submit"]:active {
+    background-color: #2E7D32; /* Color más oscuro al hacer clic */
+    transform: translateY(0); /* Restablece la posición */
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); /* Sombra más pequeña */
+}
+
+/*Animacion de antrada*/
+
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/**/
 
 article {
     width: 90%;
