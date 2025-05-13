@@ -218,6 +218,8 @@ p {
     /* Propiedades compatibles con todos los navegadores */
     hyphens: auto;
     word-wrap: break-word;
+
+    
     
     /* Nueva propiedad con prefijo para Chrome/Edge */
     text-wrap: pretty; 
@@ -527,7 +529,7 @@ aside, main {
 }
 
 main {
-    min-width: 18.75rem;
+    min-width: 15.75rem;
     flex-grow: 2;
     padding: 0;
 }
@@ -694,7 +696,7 @@ main {
 main {
     flex: 3; /* Ocupa más espacio que el aside */
     background-color: #f9f9f9; /* Fondo opcional */
-    padding: 20px; /* Espaciado interno */
+    padding: 100px; /* Espaciado interno */
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra opcional */
 }
@@ -1502,7 +1504,7 @@ main {
             </div>
         </header>
     
-        <main style="padding: 2rem; max-width: 1000px; margin: auto;">
+        <main style="padding: 7rem; max-width: 1000px; margin: auto;">
             <h2>${title}</h2>
             <p><strong>Fecha:</strong> ${fecha}</p>
             <p><strong>Mensaje del autor:</strong> ${mensajeAutor}</p>

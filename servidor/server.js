@@ -24,7 +24,12 @@ app.use(fileUpload({
 }));
 
 // Archivos estáticos
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(
+  "/admin",
+  express.static(path.join(__dirname, "frontend", "panel-de-administracion"))
+);
 app.use("/posts", express.static(path.join(__dirname, "frontend", "posts")));
 app.use("/img", express.static(path.join(__dirname, "frontend", "img")));
 app.use("/css", express.static(path.join(__dirname, "frontend", "css")));
@@ -417,6 +422,30 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
         console.error('❌ Error al crear el post:', error);
         res.status(500).json({ error: 'Error interno al crear el post' });
     }
+});
+
+
+app.delete('/api/posts/:id', async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    // Borra de la base de datos
+    await pool.promise().execute('DELETE FROM posts WHERE id = ?', [postId]);
+
+    // Opcional: borrar el archivo HTML
+    const htmlPath = path.join(__dirname, 'frontend', 'posts', `blog${postId}.html`);
+    try {
+      await fs.promises.unlink(htmlPath);
+      console.log(`🗑️ Archivo blog${postId}.html eliminado`);
+    } catch (err) {
+      console.warn(`⚠️ Archivo blog${postId}.html no encontrado o ya eliminado`);
+    }
+
+    res.json({ success: true, message: 'Post eliminado' });
+  } catch (error) {
+    console.error('❌ Error al eliminar el post:', error);
+    res.status(500).json({ success: false, error: 'Error al eliminar el post' });
+  }
 });
 
 // 🔹 Obtener todos los posts
