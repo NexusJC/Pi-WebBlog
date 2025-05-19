@@ -241,42 +241,82 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('http://localhost:3001/api/posts');
         const { success, posts } = await response.json();
 
-        if (success) {
-            // ⬇️ PONLO AQUÍ
-            console.log("🧪 Posts recibidos del servidor:", posts);
+if (success) {
+    console.log("🧪 Posts recibidos del servidor:", posts);
 
-            container.innerHTML = posts.slice(0, 10).map((post, index) => {
-                console.log(`🧱 Renderizando post #${index + 1}:`, post.title || post.content);
-            
-                let etiquetas = [];
+    // ========================
+    // 🌀 Sección del Carrusel
+    // ========================
+    const carruselHTML = posts.slice(0, 10).map((post, index) => {
+        console.log(`🧱 Carrusel post #${index + 1}:`, post.title || post.content);
+        
+        let etiquetas = [];
+        try {
+            const parsed = JSON.parse(post.etiquetas);
+            if (Array.isArray(parsed)) {
+                etiquetas = parsed.map(item => item.value);
+            }
+        } catch (err) {
+            console.warn('⚠️ No se pudo parsear etiquetas:', post.etiquetas);
+        }
 
-                try {
-                    const parsed = JSON.parse(post.etiquetas);
-                    if (Array.isArray(parsed)) {
-                        etiquetas = parsed.map(item => item.value);
-                    }
-                } catch (err) {
-                    console.warn('⚠️ No se pudo parsear etiquetas:', post.etiquetas);
-                }
+        return `
+            <div class="post">
+                <div class="ctn-img">
+                    <img src="${post.imageUrl || '../img/default.jpg'}" alt="Post image">
+                </div>
+                <h3>${post.title || 'Sin título'}</h3>
+                <span>${new Date(post.created_at).toLocaleDateString()}</span>
+                <ul class="ctn-tags">
+                    ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
+                </ul>
+                <a href="http://localhost:3001/posts/blog${post.id}.html">
+                    <button>Leer más</button>
+                </a>
+            </div>
+        `;
+    }).join('');
 
-            
-                return `
-                    <div class="post">
-                        <div class="ctn-img">
-                            <img src="${post.imageUrl || '../img/default.jpg'}" alt="Post image">
-                        </div>
-                        <h3>${post.title || 'Sin título'}</h3>
+    document.getElementById('carousel-posts').innerHTML = carruselHTML;
 
-                        <span>${new Date(post.created_at).toLocaleDateString()}</span>
-                        <ul class="ctn-tags">
-                            ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
-                        </ul>
-                        <a href="http://localhost:3001/posts/blog${post.id}.html">
-                            <button>Leer más</button>
-                        </a>
-                    </div>
-                `;
-            }).join('');
+    // ================================
+    // 📚 Sección "Todos los Posts"
+    // ================================
+    const allPostsContainer = document.getElementById("all-posts");
+    const remainingPosts = posts.slice(10); // Del 11 en adelante
+
+    const todosHTML = remainingPosts.map(post => {
+        let etiquetas = [];
+        try {
+            const parsed = JSON.parse(post.etiquetas);
+            if (Array.isArray(parsed)) {
+                etiquetas = parsed.map(item => item.value);
+            }
+        } catch (err) {
+            console.warn('⚠️ Etiquetas malformadas:', post.etiquetas);
+        }
+
+        return `
+            <div class="post-card">
+                <img src="${post.imageUrl || '../img/default.jpg'}" alt="${post.title || 'Post'}">
+                <h3>${post.title || 'Sin título'}</h3>
+                <span>${new Date(post.created_at).toLocaleDateString()}</span>
+                <ul class="ctn-tags">
+                    ${etiquetas.map(tag => `<li>${tag}</li>`).join('')}
+                </ul>
+                <a href="http://localhost:3001/posts/blog${post.id}.html">
+                    <button>Leer más</button>
+                </a>
+            </div>
+        `;
+    }).join('');
+
+    if (allPostsContainer) {
+        allPostsContainer.innerHTML = todosHTML;
+    }
+}
+        else {
+            console.warn("⚠️ No se pudo cargar el carrusel, respuesta no exitosa:", success);
             
                         
         }

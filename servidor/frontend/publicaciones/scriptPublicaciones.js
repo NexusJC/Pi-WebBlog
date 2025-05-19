@@ -1657,7 +1657,24 @@ main {
             const title = document.getElementById('post-title').value.trim();
             const mensajeAutor = mensajeAutorInput.value.trim();
             const referencias = document.getElementById('referencias')?.value.trim() || '';
-            const tags = tagify.value.map(tag => tag.value); 
+            let tags = [];
+try {
+    tags = JSON.parse(tagify.value).map(tag => tag.value).filter(t => t && t.trim());
+} catch (err) {
+    showAlert("⚠️ Error al parsear las etiquetas:", err);
+    tags = [];
+}
+
+if (tags.length === 0) {
+    showAlert("⚠️ Debes ingresar al menos una etiqueta válida.", "error");
+    
+    // Agrega animación al input para mayor feedback:
+    tagInput.classList.add("shake");
+    setTimeout(() => tagInput.classList.remove("shake"), 500);
+    
+    return;
+}
+
             const content = quill.root.innerHTML.trim();
             
             const formData = new FormData();
