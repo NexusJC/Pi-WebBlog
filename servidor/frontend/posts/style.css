@@ -670,35 +670,41 @@ main {
 }
 
 /* Estilo para el aside */
+/* Estilo para el aside */
 .main-wrapper__contenido-relacionado {
-    flex: 1; /* Ocupa menos espacio que el contenido principal */
-    background-color: #fff; /* Fondo blanco */
-    padding: 20px; /* Espaciado interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra opcional */
-    max-width: 300px; /* Limitar el ancho del aside */
-    display: flex; /* Activar Flexbox */
-    flex-direction: column; /* Alinear los elementos en columna */
-    overflow: hidden; /* Evitar que el contenido se desborde */
-    position: relative; /* Posicionar elementos hijos absolutamente */
-    align-items: center; /* Centrar contenido horizontalmente */
-}
-
-.main-wrapper__contenido-relacionado h2 {
-    font-size: 2rem;
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    align-items: center;
+    height: 50rem;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
 }
 
 /* Contenedor del carrusel */
 .related-items-container {
     display: flex;
-    flex-direction: column; /* Asegura que los elementos estén en columna */
-    overflow-y: auto; /* Habilita el desplazamiento vertical */
-    scroll-snap-type: y mandatory; /* Activa el desplazamiento suave */
-    height: 36rem; /* Altura fija del contenedor */
-    gap: 10px; /* Espaciado entre los elementos */
-    background-color: #f5f5f5; /* Fondo claro para destacar los elementos */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    flex-direction: column;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    height: 36rem;
+    gap: 10px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.related-items-container::-webkit-scrollbar {
+    display: none;
 }
 
 /* Estilo para cada elemento relacionado */
@@ -710,35 +716,58 @@ main {
     padding: 50px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
-    width: 100%; /* Asegura que ocupe todo el ancho */
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
     box-sizing: border-box;
-    background-color: #ffffff; /* Fondo blanco */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para hover */
 }
-
-/* Efecto hover para los elementos relacionados */
 .related-item:hover {
-    transform: scale(1.05); /* Aumenta ligeramente el tamaño */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-/* Títulos dentro de los elementos relacionados */
+.related-item img {
+    width: 20rem;
+    max-width: 150px;
+    margin-bottom: 10px;
+}
 .related-item h4 {
-    font-size: 1.2rem; /* Tamaño del texto */
-    color: #333; /* Color del texto */
-    margin-bottom: 5px; /* Espaciado inferior */
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 5px;
 }
-
-/* Texto descriptivo dentro de los elementos relacionados */
 .related-item p {
-    font-size: 0.9rem; /* Tamaño del texto */
-    color: #666; /* Color gris */
-    margin-bottom: 10px; /* Espaciado inferior */
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+.related-item button {
+    margin-top: 10px;
+    padding: 10px 50px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+.related-item button:hover {
+    background-color: #0056b3;
 }
 
+/* Para ocultar scrollbars si es necesario */
+.related-items-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.related-items-container::-webkit-scrollbar {
+    display: none;
+}
 
 /* Botones de navegación */
 .carousel-button {

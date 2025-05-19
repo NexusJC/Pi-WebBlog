@@ -1629,10 +1629,34 @@ main {
         modal.style.display = 'none';
     });
 
-    document.querySelector('.btn-post').addEventListener('click', () => {
-        permitirPublicar = true;
-        postForm.requestSubmit(); // dispara el submit del formulario
-      });
+document.querySelector('.btn-post').addEventListener('click', () => {
+    let tags = [];
+    try {
+        tags = tagify.getCleanValue().map(tag => tag.value).filter(t => t && t.trim());
+    } catch (err) {
+        showAlert("⚠️ Error al procesar las etiquetas.", "error");
+        return;
+    }
+
+    if (tags.length === 0) {
+        showAlert("⚠️ Debes ingresar al menos una etiqueta válida.", "error");
+        tagInput.classList.add("shake");
+        setTimeout(() => tagInput.classList.remove("shake"), 500);
+        return;
+    }
+
+    
+    if (!fileInput.files || fileInput.files.length === 0) {
+        showAlert("⚠️ Debes seleccionar una imagen antes de publicar.", "error");
+        fileInput.classList.add("shake");
+        setTimeout(() => fileInput.classList.remove("shake"), 500);
+        return;
+    }
+
+    permitirPublicar = true;
+    postForm.requestSubmit();
+});
+
       
     
     
@@ -1659,21 +1683,22 @@ main {
             const referencias = document.getElementById('referencias')?.value.trim() || '';
             let tags = [];
 try {
-    tags = JSON.parse(tagify.value).map(tag => tag.value).filter(t => t && t.trim());
+    tags = tagify.getCleanValue().map(tag => tag.value).filter(t => t && t.trim());
 } catch (err) {
     showAlert("⚠️ Error al parsear las etiquetas:", err);
     tags = [];
 }
 
 if (tags.length === 0) {
+    console.log("✅ No hay etiquetas, se debe mostrar la alerta");
     showAlert("⚠️ Debes ingresar al menos una etiqueta válida.", "error");
-    
-    // Agrega animación al input para mayor feedback:
+
     tagInput.classList.add("shake");
     setTimeout(() => tagInput.classList.remove("shake"), 500);
-    
+
     return;
 }
+
 
             const content = quill.root.innerHTML.trim();
             
