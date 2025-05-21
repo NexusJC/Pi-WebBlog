@@ -474,6 +474,256 @@ app.get('/api/posts', async (req, res) => {
     }
 });
 
+// 🔹 Obtener un post por ID
+app.get('/api/posts/:id', async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const [rows] = await pool.promise().query("SELECT * FROM posts WHERE id = ?", [postId]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ success: false, message: "Post no encontrado" });
+    }
+
+    res.json(rows[0]);
+  } catch (error) {
+    console.error("❌ Error al obtener post:", error);
+    res.status(500).json({ success: false, message: "Error interno al cargar el post" });
+  }
+});
+
+app.put('/api/posts/:id', async (req, res) => {
+  const postId = req.params.id;
+  const { title, content } = req.body;
+
+  if (!title || !content) {
+    return res.status(400).json({ success: false, message: "Datos incompletos" });
+  }
+
+  try {
+    // 1. Actualizar en la base de datos
+    const [result] = await pool.promise().query(
+      "UPDATE posts SET title = ?, content = ? WHERE id = ?",
+      [title, content, postId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: "Post no encontrado" });
+    }
+
+    // 2. Obtener el post completo para regenerar HTML
+    const [rows] = await pool.promise().query("SELECT * FROM posts WHERE id = ?", [postId]);
+    const post = rows[0];
+
+    const tags = JSON.parse(post.etiquetas || "[]").map(tag => tag.value).join(", ");
+    const imageSrc = post.image_path ? `../../..${post.image_path}` : "../../img/default.jpg";
+    const fecha = new Date(post.created_at).toLocaleDateString();
+
+    const postHTML = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${post.title}</title>
+    <link rel="stylesheet" href="/posts/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://kit.fontawesome.com/e718b2ee5a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+    <link rel="stylesheet" href="/posts/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://kit.fontawesome.com/e718b2ee5a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="menu">
+                <nav class="main-navbar">
+                    <ul>
+                        <li>
+                            <div class="header-content__logo-container">
+                                <img src="/img/logo-ecolima.png" alt="">
+                            </div>
+                        </li>
+                        <li title="Menú Principal"><a href="/menu/index.html"><i class="fa-solid fa-house"></i></a></li>
+                        <li title="Blog" class="blog-selected"><a class="blog-selected" href="#"><i class="fa-solid fa-newspaper"></i></a></li>
+                        <li title="¿Quiénes somos?"><a href="/about-us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
+                        <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
+                        <li title="¡Inicia sesión!"><a href="/login/login.html"><i class="fa-solid fa-circle-user"></i></a></li>
+                        <li title="Búsquedas">
+                            <div class="main-navbar--ctn-icon-search">
+                                <i class="fa-solid fa-magnifying-glass" id="icon-search"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>  
+            </div>
+            <div id="icon-menu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div id="ctn-bars-search">
+        <input type="text" id="inputSearch" placeholder="¿Qué deseas buscar?">
+    </div>
+
+    <ul id="box-search">
+        <li><a href="../../blog1/blog1.html"><i class="fa-solid fa-magnifying-glass"></i>Ecosistemas terrestres</a></li>
+        <li><a href="../../blog2/blog2.html"><i class="fa-solid fa-magnifying-glass"></i>Los campos</a></li>
+        <li><a href="../../blog3/blog3.html"><i class="fa-solid fa-magnifying-glass"></i>Ecosistemas en lagos</a></li>
+        <li><a href="../../blog4/blog4.html"><i class="fa-solid fa-magnifying-glass"></i>Habitats de animales</a></li>
+        <li><a href="#b5"><i class="fa-solid fa-magnifying-glass"></i>Blog 5</a></li>
+        <li><a href="#b6"><i class="fa-solid fa-magnifying-glass"></i>Blog 6</a></li>
+    </ul>
+
+    <div id="cover-ctn-search"></div>
+
+  <main class="main-wrapper">
+    <aside class="main-wrapper__secondary-navbar">
+      <div class="secondary-navbar--contenedor post" data-id="${postId}">
+        <h2><br>Información</h2>
+        <h3>Fecha</h3>
+        <p>${fecha}</p>
+        <h3>Autor</h3>
+        <p>ID Usuario: ${post.user_id}</p>
+        <h3>Tema</h3>
+        <p>${post.title}</p>
+        <p>${tags}</p>
+        <h3>Mensaje</h3>
+        <p>${post.mensaje_autor || "Sin mensaje"}</p>
+        <button class="like-button">
+          ❤️ <span class="like-count">${post.likes || 0}</span>
+        </button>
+      </div>
+    </aside>
+
+    <main>
+      <div class="main-wrapper__content blog-1">
+        <article>
+          <h2 id="b1">${post.title}</h2>
+          <img src="${imageSrc}" alt="Imagen del post" class="post-image">
+          <div>${post.content}</div>
+        </article>
+        <section class="referencias">
+          <h3>Referencias</h3>
+          <div>${post.referencias || "Ninguna referencia proporcionada."}</div>
+        </section>
+      </div>
+    </main>
+
+       <aside class="main-wrapper__contenido-relacionado">
+            <h2>Contenido relacionado</h2>
+            <div class="related-items-container">
+                <div class="related-item">
+                    <img src="../img/logo-ecolima.png" alt="">
+                    <h4>equipo x</h4>
+                    <p>exito</p>
+                    <a href="#">
+                        <button>Ver más</button>
+                    </a>
+                </div>
+                <div class="related-item">
+                    <img src="../img/logo-ecolima.png" alt="">
+                    <h4>equipo x</h4>
+                    <p>exito</p>
+                    <a href="#">
+                        <button>Ver más</button>
+                    </a>
+                </div>
+                <div class="related-item">
+                    <img src="../img/logo-ecolima.png" alt="">
+                    <h4>equipo x</h4>
+                    <p>exito</p>
+                    <a href="#">
+                        <button>Ver más</button>
+                    </a>
+                </div>
+                <div class="related-item">
+                    <img src="../img/logo-ecolima.png" alt="">
+                    <h4>equipo x</h4>
+                    <p>exito</p>
+                    <a href="#">
+                        <button>Ver más</button>
+                    </a>
+                </div>
+                <div class="related-item">
+                    <img src="../img/logo-ecolima.png" alt="">
+                    <h4>equipo x</h4>
+                    <p>exito</p>
+                    <a href="#">
+                        <button>Ver más</button>
+                    </a>
+                </div>
+                <div class="related-item">
+                    <img src="../img/logo-ecolima.png" alt="">
+                    <h4>equipo x</h4>
+                    <p>exito</p>
+                    <a href="#">
+                        <button>Ver más</button>
+                    </a>
+                </div>
+                <!-- Agrega más elementos relacionados según sea necesario -->
+            </div>
+        </aside>
+  </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer__grupo1">
+                <div class="box">
+                    <figure>
+                        <a href="#">
+                            <img src="/img/logo-ecolima.png" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="box">
+                    <h2>¡Gracias por visitar!</h2>
+                    <p>Conservemos juntos los ecosistemas para un futuro más verde y saludable.</p>
+                </div>
+                <div class="box">
+                    <h2>Síguenos</h2>
+                    <div class="red-social">
+                        <a href="#" class="fa fa-facebook"></a>
+                        <a href="#" class="fa fa-instagram"></a>
+                        <a href="#" class="fa fa-twitter"></a>
+                        <a href="#" class="fa fa-youtube"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__grupo2">
+                <small>© 2025 <b>Ecolima</b> - Todos los Derechos Reservados</small>
+            </div>
+        </div>
+    </footer>
+
+  <script src="/posts/scriptPosts.js"></script>
+</body>
+</html>`;
+
+    const filePath = path.join(__dirname, 'frontend', 'posts', `blog${postId}.html`);
+    await fs.promises.writeFile(filePath, postHTML);
+
+    res.json({ success: true, message: "Post actualizado y HTML regenerado correctamente" });
+
+  } catch (error) {
+    console.error("❌ Error al actualizar post:", error);
+    res.status(500).json({ success: false, message: "Error interno al actualizar el post" });
+  }
+});
+
+
+
+
+
 // 🔹 Error global
 app.use((err, req, res, next) => {
     console.error("🔥 Error global:", err);

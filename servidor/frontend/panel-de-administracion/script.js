@@ -15,7 +15,6 @@ function mostrar_buscador() {
   }
 }
 
-// ✅ Definimos funciones globales
 async function cargarPosts() {
   const res = await fetch("/api/posts");
   const data = await res.json();
@@ -26,6 +25,8 @@ async function cargarPosts() {
 
   posts.forEach(post => {
     const postFile = `blog${post.id}.html`;
+    const editUrl = `/posts/editarPosts.html?id=${post.id}`;
+
 
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -36,12 +37,18 @@ async function cargarPosts() {
         </a>
       </td>
       <td>
+        <a href="${editUrl}">
+          <button>Editar</button>
+        </a>
+      </td>
+      <td>
         <button onclick="borrarPost('${post.id}')">Eliminar</button>
       </td>
     `;
     tbody.appendChild(tr);
   });
 }
+
 
 
 async function borrarPost(id) {
