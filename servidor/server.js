@@ -46,7 +46,6 @@ app.use("/login", express.static(path.join(__dirname, "frontend", "login")));
 app.use("/posts", express.static(path.join(__dirname, "frontend", "posts")));
 app.use("/publicaciones", express.static(path.join(__dirname, "frontend", "publicaciones")));
 
-
 // Conexión a base de datos
 const pool = mysql.createPool({
     host: "localhost",
@@ -493,31 +492,59 @@ app.get('/api/posts/:id', async (req, res) => {
 });
 
 app.put('/api/posts/:id', async (req, res) => {
-  const postId = req.params.id;
-  const { title, content } = req.body;
+   const postId = req.params.id;
+  const { title, content, referencias, mensaje_autor, tags } = req.body;
 
-  if (!title || !content) {
+  if (!title || !content || !mensaje_autor || !tags) {
     return res.status(400).json({ success: false, message: "Datos incompletos" });
   }
 
   try {
-    // 1. Actualizar en la base de datos
-    const [result] = await pool.promise().query(
-      "UPDATE posts SET title = ?, content = ? WHERE id = ?",
-      [title, content, postId]
-    );
+    // Procesar etiquetas
+    const parsedTags = JSON.parse(tags);
+    const formattedTags = JSON.stringify(parsedTags.map(tag => ({ value: tag })));
+    const tagsText = parsedTags.map(tag => tag.value).join(", ");
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ success: false, message: "Post no encontrado" });
+    // Procesar referencias con sanitización
+    let refProcesadas = (referencias || "").replace(
+      /(https?:\/\/[^\s]+)/g,
+      (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
+    );
+    const safeReferencias = sanitizeHtml(refProcesadas, {
+      allowedTags: ['a', 'p', 'br', 'ul', 'li', 'strong', 'em'],
+      allowedAttributes: { 'a': ['href', 'target', 'rel'] },
+      allowedSchemes: ['http', 'https']
+    });
+
+    // Verificar si viene nueva imagen
+    let image_path = null;
+    if (req.files?.image) {
+      const image = req.files.image;
+      const ext = path.extname(image.name);
+      const filename = `post_${Date.now()}${ext}`;
+      const uploadPath = path.join(__dirname, 'uploads', filename);
+      await image.mv(uploadPath);
+      image_path = `/uploads/${filename}`;
     }
 
-    // 2. Obtener el post completo para regenerar HTML
-    const [rows] = await pool.promise().query("SELECT * FROM posts WHERE id = ?", [postId]);
-    const post = rows[0];
+    // Obtener el post actual (para conservar imagen previa si no se actualiza)
+    const [currentData] = await pool.promise().query("SELECT * FROM posts WHERE id = ?", [postId]);
+    if (!currentData.length) return res.status(404).json({ success: false, message: "Post no encontrado" });
 
-    const tags = JSON.parse(post.etiquetas || "[]").map(tag => tag.value).join(", ");
-    const imageSrc = post.image_path ? `../../..${post.image_path}` : "../../img/default.jpg";
-    const fecha = new Date(post.created_at).toLocaleDateString();
+    const oldPost = currentData[0];
+    const newImagePath = image_path || oldPost.image_path;
+    const user_id = oldPost.user_id;
+    const likes = oldPost.likes;
+    // Actualizar en BD
+    await pool.promise().query(`
+      UPDATE posts 
+      SET title = ?, content = ?, mensaje_autor = ?, etiquetas = ?, referencias = ?, image_path = ? 
+      WHERE id = ?
+    `, [title, content, mensaje_autor, formattedTags, safeReferencias, newImagePath, postId]);
+
+    // Generar el HTML actualizado
+    const fecha = new Date().toLocaleDateString();
+    const imageSrc = newImagePath ? `../../..${newImagePath}` : '../../img/default.jpg';
 
     const postHTML = `
 <!DOCTYPE html>
@@ -525,7 +552,7 @@ app.put('/api/posts/:id', async (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${post.title}</title>
+    <title>${title}</title>
     <link rel="stylesheet" href="/posts/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://kit.fontawesome.com/e718b2ee5a.js" crossorigin="anonymous"></script>
@@ -593,14 +620,14 @@ app.put('/api/posts/:id', async (req, res) => {
         <h3>Fecha</h3>
         <p>${fecha}</p>
         <h3>Autor</h3>
-        <p>ID Usuario: ${post.user_id}</p>
+        <p>ID Usuario: ${user_id}</p>
         <h3>Tema</h3>
-        <p>${post.title}</p>
+        <p>${title}</p>
         <p>${tags}</p>
         <h3>Mensaje</h3>
-        <p>${post.mensaje_autor || "Sin mensaje"}</p>
+        <p>${mensaje_autor || "Sin mensaje"}</p>
         <button class="like-button">
-          ❤️ <span class="like-count">${post.likes || 0}</span>
+          ❤️ <span class="like-count">${likes || 0}</span>
         </button>
       </div>
     </aside>
@@ -608,13 +635,13 @@ app.put('/api/posts/:id', async (req, res) => {
     <main>
       <div class="main-wrapper__content blog-1">
         <article>
-          <h2 id="b1">${post.title}</h2>
+          <h2 id="b1">${title}</h2>
           <img src="${imageSrc}" alt="Imagen del post" class="post-image">
-          <div>${post.content}</div>
+          <div>${content}</div>
         </article>
         <section class="referencias">
           <h3>Referencias</h3>
-          <div>${post.referencias || "Ninguna referencia proporcionada."}</div>
+          <div>${referencias || "Ninguna referencia proporcionada."}</div>
         </section>
       </div>
     </main>
@@ -673,7 +700,7 @@ app.put('/api/posts/:id', async (req, res) => {
                 <!-- Agrega más elementos relacionados según sea necesario -->
             </div>
         </aside>
-  </main>
+    </main>
 
     <footer class="footer">
         <div class="footer-content">

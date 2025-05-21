@@ -1,51 +1,100 @@
 const urlParams = new URLSearchParams(window.location.search);
 const postId = urlParams.get("id");
 
-const titleInput = document.getElementById("title");
-const contentInput = document.getElementById("content");
-const form = document.getElementById("editForm");
+if (!postId) {
+  alert("❌ No se proporcionó un ID de post");
+  throw new Error("Falta ID");
+}
 
+// Instanciar Quill y Tagify
+let quill;
+const inputTag = document.querySelector("#post-tags");
+const tagify = new Tagify(inputTag);
+
+// Cargar datos del post
 async function cargarPost() {
   try {
     const res = await fetch(`/api/posts/${postId}`);
-    if (!res.ok) throw new Error("No se pudo obtener el post");
+    if (!res.ok) throw new Error("Post no encontrado");
 
-    const data = await res.json();
-    titleInput.value = data.title || "";
-    contentInput.value = data.content || "";
-  } catch (error) {
+    const post = await res.json();
+
+    document.getElementById("post-title").value = post.title;
+    document.getElementById("mensaje-autor").value = post.mensaje_autor || "";
+    document.getElementById("referencias").value = post.referencias || "";
+
+    // Rellenar etiquetas
+    try {
+      const tags = JSON.parse(post.etiquetas || "[]");
+      tagify.addTags(tags.map(t => t.value));
+    } catch (e) {
+      console.warn("⚠️ Error al parsear etiquetas");
+    }
+
+    // Rellenar contenido en Quill
+    quill.root.innerHTML = post.content;
+
+  } catch (err) {
+    console.error(err);
     alert("Error al cargar el post");
-    console.error(error);
   }
 }
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  // Iniciar Quill
+  quill = new Quill("#editor", {
+    theme: "snow"
+  });
 
-  const actualizado = {
-    title: titleInput.value,
-    content: contentInput.value
-  };
+  cargarPost();
 
-  try {
-    const res = await fetch(`/api/posts/${postId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(actualizado)
-    });
+  const fileInput = document.getElementById("real-input");
+  fileInput.addEventListener("change", () => {
+    const fileName = fileInput.files[0]?.name || "No hay imagen seleccionada";
+    document.querySelector(".file-name").textContent = fileName;
+  });
 
-    if (res.ok) {
-      alert("Post actualizado correctamente");
-      window.location.href = "/menu/index.html"; // Cambia a la página a la que quieres volver
-    } else {
-      alert("Error al actualizar el post");
+  // Submit
+  document.getElementById("editForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("post-title").value.trim();
+    const content = quill.root.innerHTML;
+    const mensaje_autor = document.getElementById("mensaje-autor").value.trim();
+    const referencias = document.getElementById("referencias").value.trim();
+    const etiquetas = tagify.value.map(tag => tag.value);
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("mensaje_autor", mensaje_autor);
+    formData.append("referencias", referencias);
+    formData.append("tags", JSON.stringify(etiquetas));
+
+    const imageFile = fileInput.files[0];
+    if (imageFile) {
+      formData.append("image", imageFile);
     }
-  } catch (error) {
-    alert("Error de red al actualizar");
-    console.error(error);
-  }
-});
 
-cargarPost();
+    try {
+      const res = await fetch(`/api/posts/${postId}`, {
+        method: "PUT",
+        body: formData
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        alert("✅ Post actualizado con éxito");
+        window.location.href = `/posts/blog${postId}.html`;
+      } else {
+        alert("❌ Error al actualizar: " + (result.message || "desconocido"));
+      }
+
+    } catch (err) {
+      console.error("❌ Error al actualizar post:", error.message, error.stack);
+
+      alert("❌ Error al enviar los datos");
+    }
+  });
+});
