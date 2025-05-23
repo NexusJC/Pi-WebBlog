@@ -54,6 +54,10 @@
                             <button type="button" class="img-autor">📷 Subir foto</button> 
                         </div>
                         <span class="file-name">No hay imagen seleccionada</span>
+                        <div class="preview-container">
+                          <img id="image-preview" src="" alt="Vista previa de imagen" style="display:none; max-width: 300px; margin-top: 1rem;">
+                        </div>
+
                     </div>
           <h3>Etiquetas</h3>
           <input name="tags" id="post-tags" placeholder="Ej: clima, ecosistemas" required>
@@ -92,7 +96,7 @@
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
   <script src="scriptsEditar.js"></script>
-   <style>
+  <style>
     textarea {
       min-height: 5rem;
       max-height: auto;

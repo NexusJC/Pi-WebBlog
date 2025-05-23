@@ -48,18 +48,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cargarPost();
 
-  const fileInput = document.getElementById("real-input");
+const fileInput = document.getElementById("real-input");
+const fileNameSpan = document.querySelector(".file-name");
+const imagePreview = document.getElementById("image-preview"); // Este debe estar en tu HTML
 
-  // Mostrar nombre de archivo
-  fileInput.addEventListener("change", () => {
-    const fileName = fileInput.files[0]?.name || "No hay imagen seleccionada";
-    document.querySelector(".file-name").textContent = fileName;
-  });
+// Mostrar nombre de archivo y vista previa
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+  const fileName = file?.name || "No hay imagen seleccionada";
+  fileNameSpan.textContent = fileName;
 
-  // 🟢 Habilitar botón "📷 Subir foto"
-  document.querySelector(".img-autor").addEventListener("click", () => {
-    fileInput.click();
-  });
+  // Vista previa
+  if (file && file.type.startsWith("image/")) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreview.src = e.target.result;
+      imagePreview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  } else {
+    imagePreview.src = "";
+    imagePreview.style.display = "none";
+  }
+});
+
+// Habilitar botón personalizado para subir
+document.querySelector(".img-autor").addEventListener("click", () => {
+  fileInput.click();
+});
+
 
   // Submit
   document.getElementById("editForm").addEventListener("submit", async (e) => {

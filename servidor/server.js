@@ -291,7 +291,10 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                 <p>ID Usuario: ${user_id}</p>
                 <h3>Tema</h3>
                 <p>${title}</p>
-                <p>${parsedTags.map(tag => tag.value).join(', ')}</p>
+                <h3>Etiquetas</h3>
+                <ul>
+                ${parsedTags.map(tag => `<li>${tag}</li>`).join("")}
+                </ul>
                 <h3>Mensaje</h3>
                 <p>${mensaje_autor}</p>
                 <button class="like-button">
@@ -626,7 +629,8 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
         <p>ID Usuario: ${user_id}</p>
         <h3>Tema</h3>
         <p>${title}</p>
-        <p>${tags}</p>
+        <h3>Etiquetas</h3>
+        ${parsedTags.map(tag => `<li>${tag}</li>`).join("")}
         <h3>Mensaje</h3>
         <p>${mensaje_autor || "Sin mensaje"}</p>
         <button class="like-button">
