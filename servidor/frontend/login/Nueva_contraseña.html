@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../login/style.css">
     <link rel="icon" type="image/png" href="../img/favicon.ico">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 <body>
     <div class="container-form">
@@ -19,7 +20,7 @@
                 <p>Solo ingresa tu nueva contraseña para completar el proceso.</p>
                 <a href="../login/login.html">
                     <input type="button" value="Volver al Inicio de Sesión">
-                </a> 
+                </a>
             </div>
         </div>
 
@@ -58,25 +59,14 @@
             const error = document.querySelector('.alerta-error');
             const success = document.querySelector('.alerta-exito');
 
-            // Validación de contraseñas
             if (!newPassword || !confirmPassword || newPassword !== confirmPassword) {
-                error.textContent = 'Las contraseñas no coinciden o son inválidas';
                 error.style.display = 'block';
                 success.style.display = 'none';
                 return;
             }
 
-            // Obtener correo guardado
-            const email = sessionStorage.getItem("recoverEmail");
-
-            if (!email) {
-                error.textContent = "Correo no encontrado. Vuelve a intentar desde 'Olvidé mi contraseña'.";
-                error.style.display = 'block';
-                success.style.display = 'none';
-                return;
-            }
-
-            console.log("➡️ Recuperando contraseña para:", email);
+            // Suponiendo que el email se guardó en sessionStorage al iniciar el proceso de recuperación
+            const email = sessionStorage.getItem("recoverEmail"); 
 
             try {
                 const res = await fetch('http://localhost:3001/restablecer-contrasena', {
@@ -88,27 +78,20 @@
                 });
 
                 const result = await res.json();
-
                 if (result.success) {
                     success.style.display = 'block';
                     error.style.display = 'none';
-
-                    // Limpiar sessionStorage después de éxito
-                    sessionStorage.removeItem("recoverEmail");
-
                     setTimeout(() => {
                         window.location.href = '../login/login.html';
                     }, 2000);
                 } else {
                     error.textContent = result.message || 'Hubo un error';
                     error.style.display = 'block';
-                    success.style.display = 'none';
                 }
             } catch (err) {
-                console.error(" Error al conectar con el servidor:", err);
+                console.error(err);
                 error.textContent = 'Error al conectar con el servidor';
                 error.style.display = 'block';
-                success.style.display = 'none';
             }
         });
     </script>

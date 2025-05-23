@@ -180,60 +180,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const postsContainer = document.querySelector(".posts");
-    const leftArrow = document.querySelector(".left-arrow");
-    const rightArrow = document.querySelector(".right-arrow");
-    const postWidth = postsContainer.querySelector(".post").offsetWidth + 20; // Ancho del post + gap
+document.addEventListener("DOMContentLoaded", () => {
+  const postsContainer = document.querySelector(".posts");
+  const leftArrow = document.querySelector(".left-arrow");
+  const rightArrow = document.querySelector(".right-arrow");
 
-    let scrollAmount = 0;
-    const scrollSpeed = 1; // Velocidad del desplazamiento automático
+  if (postsContainer && leftArrow && rightArrow) {
+    const postWidth = document.querySelector(".post")?.offsetWidth || 300; // fallback
 
-    // Función para desplazamiento automático
-    function autoScroll() {
-        scrollAmount += scrollSpeed;
-
-        if (scrollAmount >= postsContainer.scrollWidth - postsContainer.offsetWidth) {
-            scrollAmount = 0;
-        }
-
-        postsContainer.scrollTo({
-            left: scrollAmount,
-            behavior: "smooth",
-        });
-
-        requestAnimationFrame(autoScroll);
-        
-    }
-
-
-    // Función para desplazarse hacia la izquierda
-    leftArrow.addEventListener("click", function () {
-        scrollAmount -= postWidth;
-        if (scrollAmount < 0) {
-            scrollAmount = 0; // Evitar desplazamiento negativo
-        }
-        postsContainer.scrollTo({
-            left: scrollAmount,
-            behavior: "smooth",
-        });
+    rightArrow.addEventListener("click", () => {
+      postsContainer.scrollLeft += postWidth + 20;
     });
 
-    // Función para desplazarse hacia la derecha
-    rightArrow.addEventListener("click", function () {
-        scrollAmount += postWidth;
-        if (scrollAmount >= postsContainer.scrollWidth - postsContainer.offsetWidth) {
-            scrollAmount = postsContainer.scrollWidth - postsContainer.offsetWidth; // Evitar exceder el límite
-        }
-        postsContainer.scrollTo({
-            left: scrollAmount,
-            behavior: "smooth",
-        });
+    leftArrow.addEventListener("click", () => {
+      postsContainer.scrollLeft -= postWidth + 20;
     });
-
-    // Iniciar desplazamiento automático
-    autoScroll();
+  } else {
+    console.warn("⚠️ Carousel elements not found in DOM.");
+  }
 });
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('carousel-posts');

@@ -47,10 +47,14 @@
           <h3>Mensaje del autor</h3>
           <textarea id="mensaje-autor" required></textarea>
 
-          <h3>Imagen (opcional)</h3>
-          <input type="file" id="real-input" class="real-input">
-          <span class="file-name">No hay imagen seleccionada</span>
-
+          <h3>Comparte una imagen</h3>
+                    <div class="img-autor--container">
+                        <input type="file" id="real-input" class="real-input">
+                        <div class="boton-img-autor--container">
+                            <button type="button" class="img-autor">📷 Subir foto</button> 
+                        </div>
+                        <span class="file-name">No hay imagen seleccionada</span>
+                    </div>
           <h3>Etiquetas</h3>
           <input name="tags" id="post-tags" placeholder="Ej: clima, ecosistemas" required>
 

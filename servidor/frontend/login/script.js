@@ -62,7 +62,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
         if (result.success) {
             alert('Usuario registrado con éxito');
-            window.location.href = "../menú/index.html"; // Redirigir a la página de inicio de sesión
+            window.location.href = "../menu/index.html"; // Redirigir a la página de inicio de sesión
         } else {
             alert('Error al registrar usuario: ' + result.message);
         }

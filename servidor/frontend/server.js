@@ -492,11 +492,8 @@ app.get('/api/posts/:id', async (req, res) => {
 });
 
 app.put('/api/posts/:id', async (req, res) => {
-    const fields = req.body;
-const files = req.files || {};
    const postId = req.params.id;
-const { title, content, referencias, mensaje_autor, tags } = fields;
-
+  const { title, content, referencias, mensaje_autor, tags } = req.body;
 
   if (!title || !content || !mensaje_autor || !tags) {
     return res.status(400).json({ success: false, message: "Datos incompletos" });
@@ -521,8 +518,8 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
 
     // Verificar si viene nueva imagen
     let image_path = null;
-    if (files?.image) {
-      const image = files.image;
+    if (req.files?.image) {
+      const image = req.files.image;
       const ext = path.extname(image.name);
       const filename = `post_${Date.now()}${ext}`;
       const uploadPath = path.join(__dirname, 'uploads', filename);
@@ -760,7 +757,7 @@ app.use((err, req, res, next) => {
     res.status(500).json({ success: false, message: "Error interno del servidor" });
 });
 
-// 🔹 Iniciar servidor
+// 🔹 Iniciar servidor 
 app.listen(PORT, () => {
     console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });

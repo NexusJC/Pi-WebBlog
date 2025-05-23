@@ -49,9 +49,16 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarPost();
 
   const fileInput = document.getElementById("real-input");
+
+  // Mostrar nombre de archivo
   fileInput.addEventListener("change", () => {
     const fileName = fileInput.files[0]?.name || "No hay imagen seleccionada";
     document.querySelector(".file-name").textContent = fileName;
+  });
+
+  // 🟢 Habilitar botón "📷 Subir foto"
+  document.querySelector(".img-autor").addEventListener("click", () => {
+    fileInput.click();
   });
 
   // Submit
@@ -91,9 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("❌ Error al actualizar: " + (result.message || "desconocido"));
       }
 
-    } catch (err) {
+    } catch (error) {
       console.error("❌ Error al actualizar post:", error.message, error.stack);
-
       alert("❌ Error al enviar los datos");
     }
   });
