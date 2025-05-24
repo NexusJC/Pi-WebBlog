@@ -233,7 +233,7 @@ a {
 .main-navbar ul {
     display: flex;
     padding: 0;
-    justify-content: start;
+    justify-content: space-between;
     margin: 0;
     align-items: center;
     /* justify-content:space-evenly; checar esta entre todos*/
@@ -263,7 +263,6 @@ a {
     transition: color 300ms;
     font-size: 1.1rem;
 }
-
 nav a {
     text-decoration: none;
 }
@@ -321,7 +320,7 @@ font-size: 1.75rem;
 
 .main-navbar li {
     list-style: none;
-    margin: 0.25rem 2.5rem;
+    margin: 0.25rem rem;
     position: relative;
 }
 
@@ -1514,6 +1513,18 @@ main {
         transform: translateX(2.75rem);
     }
 }
+.user-button {
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 
 @media screen and (max-width: 415px) {
 
@@ -1526,3 +1537,43 @@ main {
     }
     
 }
+.search-item {
+  margin-left: auto;
+  margin-right: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.main-navbar--ctn-icon-search {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#icon-search {
+  font-size: 1.5rem;
+  color: #e5dede;
+  transition: color 0.3s;
+}
+
+#icon-search:hover {
+  color: #6B8E23;
+}
+
+.main-navbar a#icon-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.main-navbar a#icon-search i {
+  font-size: 1.8rem;
+  color: #e5dede;
+}
+
+.main-navbar a#icon-search:hover i {
+  color: #6B8E23;
+}
+
+

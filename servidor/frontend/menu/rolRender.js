@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
         admin: `<li title="Administración"><a href="/admin/panel-de-administracion.html"><i class="fa-solid fa-user-gear"></i></a></li>`,
         login: `<li title="Iniciar sesión"><a href="/login/login.html"><i class="fa-solid fa-circle-user"></i></a></li>`,
         logout: `<li title="Cerrar sesión"><a href="#" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i></a></li>`,
-        userName: `<li class="usuario-info"><i class="fa-solid fa-user"></i> ${name}</li>`
+        userName: `<li><button class="user-button"><i class="fa-solid fa-user"></i> ${name}</button></li>`,
+        search: `<li title="Busquedas"><a href="#" id="icon-search"><i class="fa-solid fa-magnifying-glass"></i></a></li>`
     };
 
     if (menu) {
@@ -32,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.admin}
                 ${menuItems.userName}
                 ${menuItems.logout}
+                ${menuItems.search}
             `;
         } else if (role === "usuario") {
             menu.innerHTML = `
@@ -58,6 +60,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function cerrarSesion() {
     localStorage.clear();
-    location.href = "/menu/index.html"; // O la ruta real donde ves el contenido como visitante
+    location.href = "/menu/index.html";
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const currentPath = window.location.pathname;
+    const showSearchOnlyOn = ["/menu/index.html"];
+
+    const searchItem = document.querySelector('.search-item');
+    if (searchItem && !showSearchOnlyOn.includes(currentPath)) {
+        searchItem.style.display = "none";
+    }
+});
 

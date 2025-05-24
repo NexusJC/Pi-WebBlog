@@ -630,7 +630,9 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
         <h3>Tema</h3>
         <p>${title}</p>
         <h3>Etiquetas</h3>
-        ${parsedTags.map(tag => `<li>${tag}</li>`).join("")}
+                <ul>
+                ${parsedTags.map(tag => `<li>${tag}</li>`).join("")}
+                </ul>
         <h3>Mensaje</h3>
         <p>${mensaje_autor || "Sin mensaje"}</p>
         <button class="like-button">

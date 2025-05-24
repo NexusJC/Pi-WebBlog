@@ -6,7 +6,14 @@ const inputSearch = document.getElementById("inputSearch");
 const box_search = document.getElementById("box-search");
 
 // Eventos principales
-document.getElementById("icon-search").addEventListener("click", mostrar_buscador);
+// Delegación para detectar clics en el botón de búsqueda
+document.addEventListener("click", (e) => {
+  const target = e.target.closest("#icon-search");
+  if (target) {
+    e.preventDefault();
+    mostrar_buscador();
+  }
+});
 document.getElementById("cover-ctn-search").addEventListener("click", ocultar_buscador);
 inputSearch.addEventListener("keyup", buscador_interno);
 

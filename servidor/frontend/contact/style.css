@@ -215,6 +215,7 @@ nav a {
 
 #icon-search {
 font-size: 1.75rem;
+display: none;
 }
 
 #icon-menu {
@@ -1375,6 +1376,18 @@ main {
     border-radius: 8px;          /* Bordes redondeados */
     background-color: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
 }
+.user-button {
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 
 
 

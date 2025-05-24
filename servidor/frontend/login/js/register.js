@@ -1,5 +1,5 @@
 export const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-export const passwordRegex = /^.{4,12}$/;
+export const passwordRegex = /^.{4,16}$/;
 const userNameRegex = /^[a-zA-Z0-9_-]{4,16}$/;
 
 export const estadoValidacionCampos = {
@@ -86,4 +86,20 @@ export function enviarFormulario(form, alertaError, alertaExito) {
         alertaExito.style.display = "none";
     }, 3000);
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const passwordInput = document.getElementById("passwordInput");
+  const toggleBtn = document.getElementById("togglePassword");
+
+  if (passwordInput && toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const isHidden = passwordInput.type === "password";
+      passwordInput.type = isHidden ? "text" : "password";
+
+      toggleBtn.classList.toggle("bx-show");
+      toggleBtn.classList.toggle("bx-hide");
+    });
+  }
+});
+
+
 

@@ -35,14 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     inputPass.addEventListener("input", () => {
-        validarCampo(passwordRegex, inputPass, "La contraseña debe tener entre 4 y 12 caracteres.");
+        validarCampo(passwordRegex, inputPass, "La contraseña debe tener entre 4 y 16 caracteres.");
     });
 
     formLogin.addEventListener("submit", (e) => {
         e.preventDefault();  // ✅ Previene el envío por navegador
 
         validarCampo(emailRegex, inputEmail, "El correo no es válido.");
-        validarCampo(passwordRegex, inputPass, "La contraseña debe tener entre 4 y 12 caracteres.");
+        validarCampo(passwordRegex, inputPass, "La contraseña debe tener entre 4 y 16 caracteres.");
 
         if (estadoValidacionCampos.userEmail && estadoValidacionCampos.userPassword) {
             loader.classList.remove("hide");

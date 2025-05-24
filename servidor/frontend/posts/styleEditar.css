@@ -787,33 +787,6 @@ main {
     font-weight: 500;
 }
 
-.img-autor {
-  background-color: #2e8b57;
-  border: none;
-  padding: 0.75rem 2rem;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.img-autor:hover {
-  background-color:  #1e6b41;
-}
-
-.file-name {
-  display: inline-block;
-  margin-top: 0.8rem;
-  color: #555;
-  font-style: italic;
-}
-
-
 
 /* FOOTER */
 

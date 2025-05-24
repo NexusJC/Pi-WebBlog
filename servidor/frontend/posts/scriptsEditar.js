@@ -9,7 +9,13 @@ if (!postId) {
 // Instanciar Quill y Tagify
 let quill;
 const inputTag = document.querySelector("#post-tags");
-const tagify = new Tagify(inputTag);
+const tagify = new Tagify(inputTag, {
+  maxTags: 3,
+  dropdown: {
+    enabled: 0
+  }
+});
+
 
 // Cargar datos del post
 async function cargarPost() {
