@@ -417,58 +417,11 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
         </main>
         <aside class="main-wrapper__contenido-relacionado">
             <h2>Contenido relacionado</h2>
-            <div class="related-items-container">
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <!-- Agrega más elementos relacionados según sea necesario -->
+            <div class="related-items-container" id="related-posts-container">
+                <!-- Los posts se insertarán aquí dinámicamente -->
             </div>
         </aside>
+
     </div>
 
         <footer class="footer">
@@ -752,58 +705,10 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
       </div>
     </main>
 
-       <aside class="main-wrapper__contenido-relacionado">
+    <aside class="main-wrapper__contenido-relacionado">
             <h2>Contenido relacionado</h2>
-            <div class="related-items-container">
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <div class="related-item">
-                    <img src="../img/logo-ecolima.png" alt="">
-                    <h4>equipo x</h4>
-                    <p>exito</p>
-                    <a href="#">
-                        <button>Ver más</button>
-                    </a>
-                </div>
-                <!-- Agrega más elementos relacionados según sea necesario -->
+            <div class="related-items-container" id="related-posts-container">
+                <!-- Los posts se insertarán aquí dinámicamente -->
             </div>
         </aside>
     </main>

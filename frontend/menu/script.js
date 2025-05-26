@@ -173,63 +173,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+
+    function initCarrusel(selector, leftArrowClass, rightArrowClass, interval = 3500) {
+    const container = document.querySelector(selector);
+    if (!container) return;
+
+    const postWidth = container.querySelector(".post")?.offsetWidth + 20 || 320;
+    let scrollAmount = 0;
+
+    function autoScroll() {
+        scrollAmount += postWidth;
+        if (scrollAmount >= container.scrollWidth - container.offsetWidth) {
+            scrollAmount = 0;
+        }
+        container.scrollTo({ left: scrollAmount, behavior: "smooth" });
+    }
+
+    setInterval(autoScroll, interval);
+
+    const leftArrow = document.querySelector(leftArrowClass);
+    const rightArrow = document.querySelector(rightArrowClass);
+
+    if (leftArrow && rightArrow) {
+        leftArrow.addEventListener("click", () => {
+            scrollAmount -= postWidth;
+            if (scrollAmount < 0) scrollAmount = 0;
+            container.scrollTo({ left: scrollAmount, behavior: "smooth" });
+        });
+
+        rightArrow.addEventListener("click", () => {
+            scrollAmount += postWidth;
+            if (scrollAmount > container.scrollWidth - container.offsetWidth) {
+                scrollAmount = container.scrollWidth - container.offsetWidth;
+            }
+            container.scrollTo({ left: scrollAmount, behavior: "smooth" });
+        });
+    }
+}
+
+// Inicializar ambos carruseles
 document.addEventListener("DOMContentLoaded", () => {
-  const likedContainer = document.querySelector("#carousel-liked");
-  const leftArrowLiked = document.querySelector(".left-arrow-liked");
-  const rightArrowLiked = document.querySelector(".right-arrow-liked");
-
-  if (likedContainer && leftArrowLiked && rightArrowLiked) {
-    const postWidth = document.querySelector(".post")?.offsetWidth || 300;
-
-    rightArrowLiked.addEventListener("click", () => {
-      likedContainer.scrollLeft += postWidth + 20;
-    });
-
-    leftArrowLiked.addEventListener("click", () => {
-      likedContainer.scrollLeft -= postWidth + 20;
-    });
-  } else {
-    console.warn("⚠️ Carousel de likeados no encontrado.");
-  }
+    initCarrusel(".posts-liked", ".left-arrow-liked", ".right-arrow-liked");
+    initCarrusel(".posts-recent", ".left-arrow-recent", ".right-arrow-recent");
 });
 
-
-
-    // Carrusel horizontal
-    const postsContainer = document.querySelector(".posts");
-    if (postsContainer) {
-        const postWidth = postsContainer.querySelector(".post")?.offsetWidth + 20 || 320;
-        let scrollAmount = 0;
-
-        function autoScroll() {
-            scrollAmount += postWidth;
-            if (scrollAmount >= postsContainer.scrollWidth - postsContainer.offsetWidth) {
-                scrollAmount = 0;
-            }
-            postsContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
-        }
-
-        setInterval(autoScroll, 3500);
-
-        const leftArrow = document.querySelector(".left-arrow");
-        const rightArrow = document.querySelector(".right-arrow");
-
-        if (leftArrow && rightArrow) {
-            leftArrow.addEventListener("click", () => {
-                scrollAmount -= postWidth;
-                if (scrollAmount < 0) scrollAmount = 0;
-                postsContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
-            });
-
-            rightArrow.addEventListener("click", () => {
-                scrollAmount += postWidth;
-                if (scrollAmount > postsContainer.scrollWidth - postsContainer.offsetWidth) {
-                    scrollAmount = postsContainer.scrollWidth - postsContainer.offsetWidth;
-                }
-                postsContainer.scrollTo({ left: scrollAmount, behavior: "smooth" });
-            });
-        }
-    }
 
     // Contenido relacionado (aside derecho)
     const relatedContainer = document.querySelector('.related-items-container');
@@ -256,24 +243,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const postsContainer = document.querySelector(".posts");
-  const leftArrow = document.querySelector(".left-arrow");
-  const rightArrow = document.querySelector(".right-arrow");
+document.addEventListener("click", (e) => {
+  const modal = document.getElementById("logoutModal");
 
-  if (postsContainer && leftArrow && rightArrow) {
-    const postWidth = document.querySelector(".post")?.offsetWidth || 300; // fallback
+  // Abrir el modal si se hace clic en el botón de cerrar sesión
+  const abrirModalBtn = e.target.closest("#abrirLogoutModal");
+  if (abrirModalBtn && modal) {
+    e.preventDefault();
+    modal.classList.add("show");
+    return;
+  }
 
-    rightArrow.addEventListener("click", () => {
-      postsContainer.scrollLeft += postWidth + 20;
-    });
+  // Confirmar cierre de sesión
+  if (e.target.id === "confirmLogout") {
+    localStorage.clear();
+    location.href = "/menu/index.html";
+    return;
+  }
 
-    leftArrow.addEventListener("click", () => {
-      postsContainer.scrollLeft -= postWidth + 20;
-    });
-  } else {
-    console.warn("⚠️ Carousel elements not found in DOM.");
+  // Cancelar cierre de sesión
+  if (e.target.id === "cancelLogout" || e.target === modal) {
+    modal.classList.remove("show");
+    return;
   }
 });
+
+
+  const modal = document.getElementById("logoutModal");
+  const confirmBtn = document.getElementById("confirmLogout");
+  const cancelBtn = document.getElementById("cancelLogout");
+
+  if (abrirModalBtn && modal) {
+    abrirModalBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modal.classList.add("show");
+    });
+  }
+
+  if (confirmBtn) {
+    confirmBtn.addEventListener("click", () => {
+      localStorage.clear();
+      location.href = "/login/login.html";
+    });
+  }
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      modal.classList.remove("show");
+    });
+  }
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.remove("show");
+    }
+  });
+});
+
+
+
+
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -320,6 +349,7 @@ if (success) {
 
     document.getElementById('carousel-posts').innerHTML = carruselHTML;
 
+    
     // ================================
     // 📚 Sección "Todos los Posts"
     // ================================

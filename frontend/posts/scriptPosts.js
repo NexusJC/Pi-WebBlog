@@ -72,29 +72,52 @@ function buscador_interno() {
 }
 
 // ✅ Scroll automático de contenido relacionado
-document.addEventListener("DOMContentLoaded", () => {
-    const relatedContainer = document.querySelector('.related-items-container');
-    const relatedItems = relatedContainer ? relatedContainer.querySelectorAll('.related-item') : [];
+document.addEventListener('DOMContentLoaded', async () => {
+  const relatedContainer = document.getElementById('related-posts-container');
+  if (!relatedContainer) return;
 
-    if (relatedContainer && relatedItems.length > 0) {
-        let currentIndex = 0;
+  try {
+    const response = await fetch('http://localhost:3001/api/posts');
+    const { success, posts } = await response.json();
 
-        function scrollToItem(index) {
-            const itemHeight = relatedItems[0].offsetHeight + 10; // espacio entre elementos
-            relatedContainer.scrollTo({
-                top: index * itemHeight,
-                behavior: 'smooth'
-            });
+    if (success) {
+      const ultimosPosts = [...posts]
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, 5);
+
+      const html = ultimosPosts.map(post => {
+        let etiquetas = [];
+
+        try {
+          const parsed = JSON.parse(post.etiquetas);
+          if (Array.isArray(parsed)) {
+            etiquetas = parsed.map(item => item.value);
+          }
+        } catch (err) {
+          console.warn('⚠️ Etiquetas malformadas en contenido relacionado:', post.etiquetas);
         }
 
-        function autoScrollRelated() {
-            currentIndex = (currentIndex + 1) % relatedItems.length;
-            scrollToItem(currentIndex);
-        }
+        return `
+          <div class="related-item">
+            <img src="${post.imageUrl || '../img/default.jpg'}" alt="Imagen del post">
+            <h4>${post.title || 'Sin título'}</h4>
+            <p>${(post.content || '').replace(/<[^>]+>/g, '').slice(0, 50)}...</p>
+            <a href="/posts/blog${post.id}.html">
+              <button>Ver más</button>
+            </a>
+          </div>
+        `;
+      }).join('');
 
-        setInterval(autoScrollRelated, 6000); // cada 3 segundos
+      relatedContainer.innerHTML = html;
+    } else {
+      console.warn("⚠️ No se pudo cargar contenido relacionado.");
     }
+  } catch (err) {
+    console.error("❌ Error al cargar contenido relacionado:", err);
+  }
 });
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const postDiv = document.querySelector(".post");
