@@ -1,3 +1,8 @@
+
+
+const API_BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3001"
+  : "https://www.ecolima.blog";
 const urlParams = new URLSearchParams(window.location.search);
 const postId = urlParams.get("id");
 
@@ -20,7 +25,7 @@ const tagify = new Tagify(inputTag, {
 // Cargar datos del post
 async function cargarPost() {
   try {
-    const res = await fetch(`/api/posts/${postId}`);
+    const res = await fetch(`${API_BASE_URL}/api/posts/${postId}`);
     if (!res.ok) throw new Error("Post no encontrado");
 
     const post = await res.json();
@@ -107,7 +112,7 @@ document.querySelector(".img-autor").addEventListener("click", () => {
     }
 
     try {
-      const res = await fetch(`/api/posts/${postId}`, {
+        const res = await fetch(`${API_BASE_URL}/api/posts/${postId}`, {
         method: "PUT",
         body: formData
       });

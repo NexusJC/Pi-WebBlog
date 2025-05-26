@@ -1715,7 +1715,7 @@ if (tags.length === 0) {
                 formData.append('image', fileInput.files[0]);
             }
             
-            const response = await fetch('http://localhost:3001/api/posts', {
+            const response = await fetch('/api/posts', {
                 method: 'POST',
                 body: formData
             });
@@ -1752,7 +1752,7 @@ if (tags.length === 0) {
 // Función para cargar y mostrar posts
 async function loadPosts() {
     try {
-        const response = await fetch('http://localhost:3001/api/posts');
+        const response = await fetch('/api/posts');
         
         if (!response.ok) {
             throw new Error('Error al cargar los posts');

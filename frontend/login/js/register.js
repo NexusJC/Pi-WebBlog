@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         validarCampo(passwordRegex, inputPass, "La contraseña debe tener entre 4 y 12 caracteres.");
     });
 });
-//validar_Campos
 export function validarCampo(regex, input, mensaje) {
     const form = input.closest("form");
     const isRegisterForm = form.classList.contains("form-register");
@@ -67,25 +66,58 @@ export function validarCampo(regex, input, mensaje) {
     mensajeError.style.display = isValid ? "none" : "block";
 }
 
+//validar_Campos
 export function enviarFormulario(form, alertaError, alertaExito) {
-    alertaExito.textContent = "Te registraste correctamente";
-    alertaExito.classList.add("alertaExito");
-    alertaExito.style.display = "block";
+    const userName = form.userName.value.trim();
+    const userEmail = form.userEmail.value.trim();
+    const userPassword = form.userPassword.value.trim();
+    const submitButton = form.querySelector("button[type='submit']");
+    submitButton.disabled = true;
 
-    alertaError.classList.remove("alertaError");
-    alertaError.style.display = "none";
+    fetch("/registrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userName, userEmail, userPassword })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alertaExito.textContent = "Te registraste correctamente";
+            alertaExito.classList.add("alertaExito");
+            alertaExito.style.display = "block";
 
-    form.reset();
+            alertaError.classList.remove("alertaError");
+            alertaError.style.display = "none";
 
-    estadoValidacionCampos.userName = false;
-    estadoValidacionCampos.userEmail = false;
-    estadoValidacionCampos.userPassword = false;
+            form.reset();
 
-    setTimeout(() => {
-        alertaExito.classList.remove("alertaExito");
-        alertaExito.style.display = "none";
-    }, 3000);
+            estadoValidacionCampos.userName = false;
+            estadoValidacionCampos.userEmail = false;
+            estadoValidacionCampos.userPassword = false;
+
+            setTimeout(() => {
+                alertaExito.classList.remove("alertaExito");
+                alertaExito.style.display = "none";
+            }, 3000);
+        } else {
+            mostrarError(data.message || "Error al registrarse");
+        }
+    })
+    .catch(() => {
+        mostrarError("Error de red al intentar registrarse");
+    });
+
+    function mostrarError(msg) {
+        alertaError.textContent = msg;
+        alertaError.classList.add("alertaError");
+        alertaError.style.display = "block";
+        setTimeout(() => {
+            alertaError.classList.remove("alertaError");
+            alertaError.style.display = "none";
+        }, 3000);
+    }
 }
+
 document.addEventListener("DOMContentLoaded", () => {
   const passwordInput = document.getElementById("passwordInput");
   const toggleBtn = document.getElementById("togglePassword");
@@ -100,6 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
+//prueba de commits
 
 

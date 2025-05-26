@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.logout}
                 ${menuItems.search}
             `;
+                alert(`Bienvenido administrador, ${name}`);
         } else if (role === "usuario") {
             menu.innerHTML = `
                 ${menuItems.logo}

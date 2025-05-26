@@ -11,10 +11,16 @@ const sanitizeHtml = require("sanitize-html");
 
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
+
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || "*",
+  credentials: true
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({
@@ -47,15 +53,15 @@ app.use("/posts", express.static(path.join(__dirname, "frontend", "posts")));
 app.use("/publicaciones", express.static(path.join(__dirname, "frontend", "publicaciones")));
 
 // Conexión a base de datos
+require('dotenv').config(); // Ya está en tu código, bien
+
 const pool = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "db_blog",
+    uri: process.env.MYSQL_URL,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
 });
+
 
 pool.getConnection((err, connection) => {
     if (err) {
@@ -152,27 +158,8 @@ app.post("/restablecer-contrasena", async (req, res) => {
 // Dar like
 app.post('/like/:id', async (req, res) => {
   const postId = req.params.id;
-  const { userId } = req.body;
-
-  if (!userId) {
-    return res.status(400).json({ error: "Falta userId" });
-  }
 
   try {
-    // Verificar si ya existe el like
-    const [exists] = await pool.promise().query(
-      "SELECT id FROM post_likes WHERE user_id = ? AND post_id = ?",
-      [userId, postId]
-    );
-    if (exists.length > 0) {
-      return res.status(409).json({ error: "Ya diste like" });
-    }
-
-    // Insertar like
-    await pool.promise().query(
-      "INSERT INTO post_likes (user_id, post_id, created_at) VALUES (?, ?, NOW())",
-      [userId, postId]
-    );
     await pool.promise().query(
       "UPDATE posts SET likes = likes + 1 WHERE id = ?",
       [postId]
@@ -190,21 +177,12 @@ app.post('/like/:id', async (req, res) => {
   }
 });
 
+
 // Quitar like
 app.delete('/like/:id', async (req, res) => {
   const postId = req.params.id;
-  const { userId } = req.body;
-
-  if (!userId) {
-    return res.status(400).json({ error: "Falta userId" });
-  }
 
   try {
-    // Borrar like del usuario
-    await pool.promise().query(
-      "DELETE FROM post_likes WHERE user_id = ? AND post_id = ?",
-      [userId, postId]
-    );
     await pool.promise().query(
       "UPDATE posts SET likes = GREATEST(likes - 1, 0) WHERE id = ?",
       [postId]
@@ -223,9 +201,9 @@ app.delete('/like/:id', async (req, res) => {
 });
 
 
+
 app.get("/api/posts/:id/likes", async (req, res) => {
   const postId = req.params.id;
-  const userId = req.query.userId;
 
   try {
     const [[{ likes }]] = await pool.promise().query(
@@ -233,21 +211,13 @@ app.get("/api/posts/:id/likes", async (req, res) => {
       [postId]
     );
 
-    let hasLiked = false;
-    if (userId) {
-      const [liked] = await pool.promise().query(
-        "SELECT id FROM post_likes WHERE post_id = ? AND user_id = ?",
-        [postId, userId]
-      );
-      hasLiked = liked.length > 0;
-    }
-
-    res.json({ likes, hasLiked });
+    res.json({ likes, hasLiked: false }); // No hay control por usuario ya
   } catch (err) {
     console.error("❌ Error al obtener likes:", err);
     res.status(500).json({ error: "Error al obtener likes" });
   }
 });
+
 
 
 
@@ -309,7 +279,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
 
         const postId = result.insertId;
         const postFilename = `blog${postId}.html`;
-        const imageSrc = image_path ? `../../..${image_path}` : '../../img/default.jpg';
+       const imageSrc = image_path ? `${image_path}` : '/img/default.jpg';
 
         const postHTML = `
 <!DOCTYPE html>
@@ -374,8 +344,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                 <h2><br>Información</h2>
                 <h3>Fecha</h3>
                 <p>${new Date().toLocaleDateString()}</p>
-                <h3>Autor</h3>
-                <p>ID Usuario: ${user_id}</p>
+                
                 <h3>Tema</h3>
                 <p>${title}</p>
                 <h3>Etiquetas</h3>
@@ -389,18 +358,22 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                 </button>
             </div>
         </aside>
+        <!-- Sección de Comentarios -->
+
         <main>
-        <!-- Modal personalizado para invitar a iniciar sesión -->
-        <div id="loginModal" class="custom-modal">
-        <div class="modal-content">
-            <h3>🔒 Acción restringida</h3>
-            <p>Debes iniciar sesión para dar like a una publicación.</p>
-            <div class="modal-buttons">
-            <button id="goToLogin" class="modal-btn login">Iniciar sesión</button>
-            <button id="stayGuest" class="modal-btn guest">Permanecer como invitado</button>
-            </div>
-        </div>
-        </div>
+<div id="likeModal" class="modal">
+  <div class="modal-content">
+    <h3>🔒 Acción restringida</h3>
+    <p>Debes iniciar sesión para dar like a una publicación.</p>
+    <div class="modal-buttons">
+      <button id="goToLoginLike">Iniciar sesión</button>
+      <button id="stayGuestLike">Permanecer como invitado</button>
+    </div>
+  </div>
+</div>
+
+
+
             <div class="main-wrapper__content blog-1">
                 <article>
                     <h2 id="b1">${title}</h2>
@@ -414,6 +387,17 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
 
 
             </div>
+            <!-- Sección de Comentarios -->
+<div class="comments-section">
+  <h2>Comentarios</h2>
+  <div class="new-comment">
+    <div class="avatar" id="avatarInicial">U</div>
+    <input type="text" id="commentInput" placeholder="Escribe tu comentario..." />
+    <button id="sendComment">Enviar</button>
+  </div>
+  <div id="commentsList"></div>
+  <button id="verMasBtn" style="display: none;">Ver más</button>
+</div>
         </main>
         <aside class="main-wrapper__contenido-relacionado">
             <h2>Contenido relacionado</h2>
@@ -453,7 +437,21 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
             </div>
         </div>
     </footer>
+        <!-- Modal para iniciar sesión -->
+<div id="commentModal" class="modal"> <!-- CAMBIADO -->
+  <div class="modal-content">
+    <h3>¡Atención!</h3>
+    <p>Para comentar, es recomendable que inicies sesión. Así tu comentario aparecerá con tu nombre.</p>
+    <div class="modal-buttons">
+      <button id="btnLogin">Iniciar sesión</button>
+      <button id="btnContinue">Continuar como visitante</button>
+    </div>
+  </div>
+</div>
+
+
     <script src="/posts/scriptPosts.js"></script>
+
 </body>
 </html>`;
 
@@ -514,7 +512,8 @@ app.get('/api/posts', async (req, res) => {
             success: true,
             posts: posts.map(post => ({
                 ...post,
-                imageUrl: post.image_path ? `http://localhost:3001/uploads/${post.image_path.split('/').pop()}` : null
+                imageUrl: post.image_path ? `${post.image_path}` : '/img/default.jpg'
+
             }))
         });
     } catch (error) {
@@ -669,49 +668,75 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
 
     <div id="cover-ctn-search"></div>
 
-  <main class="main-wrapper">
-    <aside class="main-wrapper__secondary-navbar">
-      <div class="secondary-navbar--contenedor post" data-id="${postId}">
-        <h2><br>Información</h2>
-        <h3>Fecha</h3>
-        <p>${fecha}</p>
-        <h3>Autor</h3>
-        <p>ID Usuario: ${user_id}</p>
-        <h3>Tema</h3>
-        <p>${title}</p>
-        <h3>Etiquetas</h3>
+ <div class="main-wrapper">
+        <aside class="main-wrapper__secondary-navbar">
+            <div class="secondary-navbar--contenedor post" data-id="${postId}">
+                <h2><br>Información</h2>
+                <h3>Fecha</h3>
+                <p>${new Date().toLocaleDateString()}</p>
+                
+                <h3>Tema</h3>
+                <p>${title}</p>
+                <h3>Etiquetas</h3>
                 <ul>
                 ${parsedTags.map(tag => `<li>${tag}</li>`).join("")}
                 </ul>
-        <h3>Mensaje</h3>
-        <p>${mensaje_autor || "Sin mensaje"}</p>
-        <button class="like-button">
-          ❤️ <span class="like-count">${likes || 0}</span>
-        </button>
-      </div>
-    </aside>
+                <h3>Mensaje</h3>
+                <p>${mensaje_autor}</p>
+                <button class="like-button">
+                ❤️ <span class="like-count">0</span>
+                </button>
+            </div>
+        </aside>
+        <!-- Sección de Comentarios -->
 
-    <main>
-      <div class="main-wrapper__content blog-1">
-        <article>
-          <h2 id="b1">${title}</h2>
-          <img src="${imageSrc}" alt="Imagen del post" class="post-image">
-          <div>${content}</div>
-        </article>
-        <section class="referencias">
-          <h3>Referencias</h3>
-          <div>${referencias || "Ninguna referencia proporcionada."}</div>
-        </section>
-      </div>
-    </main>
+        <main>
+<div id="likeModal" class="modal">
+  <div class="modal-content">
+    <h3>🔒 Acción restringida</h3>
+    <p>Debes iniciar sesión para dar like a una publicación.</p>
+    <div class="modal-buttons">
+      <button id="goToLoginLike">Iniciar sesión</button>
+      <button id="stayGuestLike">Permanecer como invitado</button>
+    </div>
+  </div>
+</div>
 
-    <aside class="main-wrapper__contenido-relacionado">
+
+
+            <div class="main-wrapper__content blog-1">
+                <article>
+                    <h2 id="b1">${title}</h2>
+                    <img src="${imageSrc}" alt="Imagen del post" class="post-image">
+                    <div>${content}</div>
+                </article>
+                <section class="referencias">
+                    <h3>Referencias</h3>
+                    <div>${ referencias || 'Ninguna referencia proporcionada.'}</div>
+                </section>
+
+
+            </div>
+            <!-- Sección de Comentarios -->
+<div class="comments-section">
+  <h2>Comentarios</h2>
+  <div class="new-comment">
+    <div class="avatar" id="avatarInicial">U</div>
+    <input type="text" id="commentInput" placeholder="Escribe tu comentario..." />
+    <button id="sendComment">Enviar</button>
+  </div>
+  <div id="commentsList"></div>
+  <button id="verMasBtn" style="display: none;">Ver más</button>
+</div>
+        </main>
+        <aside class="main-wrapper__contenido-relacionado">
             <h2>Contenido relacionado</h2>
             <div class="related-items-container" id="related-posts-container">
                 <!-- Los posts se insertarán aquí dinámicamente -->
             </div>
         </aside>
-    </main>
+
+    </div>
 
     <footer class="footer">
         <div class="footer-content">
@@ -742,8 +767,19 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
             </div>
         </div>
     </footer>
-
+  <!-- Modal para iniciar sesión -->
+<div id="commentModal" class="modal"> <!-- CAMBIADO -->
+  <div class="modal-content">
+    <h3>¡Atención!</h3>
+    <p>Para comentar, es recomendable que inicies sesión. Así tu comentario aparecerá con tu nombre.</p>
+    <div class="modal-buttons">
+      <button id="btnLogin">Iniciar sesión</button>
+      <button id="btnContinue">Continuar como visitante</button>
+    </div>
+  </div>
+</div>
   <script src="/posts/scriptPosts.js"></script>
+
 </body>
 </html>`;
 

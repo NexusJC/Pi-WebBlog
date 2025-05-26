@@ -1,3 +1,8 @@
+const API_BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3001"
+  : "https://www.ecolima.blog";
+
+
 // Evento para mostrar el menú
 document.getElementById('icon-menu').addEventListener('click', function () {
     document.querySelector('.menu').classList.toggle('show-lateral');
@@ -77,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!relatedContainer) return;
 
   try {
-    const response = await fetch('http://localhost:3001/api/posts');
+    const response = await fetch(`${API_BASE_URL}/api/posts`);
     const { success, posts } = await response.json();
 
     if (success) {
@@ -119,6 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 
+// Like y lógica general
 document.addEventListener("DOMContentLoaded", () => {
   const postDiv = document.querySelector(".post");
   const postId = postDiv?.dataset?.id;
@@ -129,8 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("userId");
   const likeCountSpan = likeButton.querySelector(".like-count");
 
-  // Obtener estado inicial
-  fetch(`/api/posts/${postId}/likes?userId=${userId}`)
+  fetch(`${API_BASE_URL}/api/posts/${postId}/likes?userId=${userId}`)
     .then(res => res.json())
     .then(data => {
       likeCountSpan.textContent = data.likes;
@@ -142,46 +147,139 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-  // Toggle like
-likeButton.addEventListener("click", () => {
+ likeButton.addEventListener("click", () => {
   if (!userId) {
-    const modal = document.getElementById("loginModal");
+    const modal = document.getElementById("likeModal");
     modal.style.display = "flex";
 
-    // Botones del modal
-    document.getElementById("goToLogin").onclick = () => {
-      window.location.href = "/login/login.html";
-    };
+    document.getElementById("goToLoginLike").onclick = () => {
+  window.location.href = "/login/login.html";
+};
 
-    document.getElementById("stayGuest").onclick = () => {
-      modal.style.display = "none";
-    };
+document.getElementById("stayGuestLike").onclick = () => {
+  cerrarModal("likeModal");
+};
+
 
     return;
   }
 
-  // Aquí sigue el código para dar o quitar like
-  const liked = likeButton.classList.contains("liked");
-  const method = liked ? "DELETE" : "POST";
 
-  fetch(`/like/${postId}`, {
-    method,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId })
-  })
-    .then(res => res.json())
-    .then(data => {
-      likeCountSpan.textContent = data.likes;
-      if (liked) {
-        likeButton.classList.remove("liked");
-        likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${data.likes}</span>`;
-      } else {
-        likeButton.classList.add("liked");
-        likeButton.innerHTML = `💔 Quitar like <span class="like-count">${data.likes}</span>`;
-      }
+    const liked = likeButton.classList.contains("liked");
+    const method = liked ? "DELETE" : "POST";
+
+fetch(`${API_BASE_URL}/like/${postId}`, {
+  method: liked ? "DELETE" : "POST",
+  headers: { "Content-Type": "application/json" }
+})
+  .then(res => res.json())
+  .then(data => {
+    const likesCount = typeof data.likes === "number" ? data.likes : 0;
+    likeCountSpan.textContent = likesCount;
+
+    if (liked) {
+      likeButton.classList.remove("liked");
+      likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likesCount}</span>`;
+    } else {
+      likeButton.classList.add("liked");
+      likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likesCount}</span>`;
+    }
+  });
+
+
+
+  });
+
+  // 👇 Aquí comienza tu bloque de comentarios (solo uno, no anidado)
+  const userName = localStorage.getItem("userName") || "Invitado";
+  const commentInput = document.getElementById("commentInput");
+  const sendButton = document.getElementById("sendComment");
+  const commentsList = document.getElementById("commentsList");
+  const verMasBtn = document.getElementById("verMasBtn");
+
+  const btnLogin = document.getElementById("btnLogin");
+  const btnContinue = document.getElementById("btnContinue");
+
+  if (btnLogin) {
+    btnLogin.addEventListener("click", () => {
+      location.href = "/login/login.html";
     });
+  }
+
+  if (btnContinue) {
+  btnContinue.addEventListener("click", () => {
+    cerrarModal("commentModal");
+  });
+}
+
+
+
+  if (sendButton) {
+    sendButton.addEventListener("click", guardarComentario);
+  }
+
+  const avatarInicial = document.getElementById("avatarInicial");
+  if (avatarInicial) {
+    avatarInicial.textContent = userName.charAt(0).toUpperCase();
+  }
+
+  function crearComentario(nombre, texto) {
+    const div = document.createElement("div");
+    div.className = "comentario";
+    div.innerHTML = `<div class="nombre">${nombre}</div><div class="texto">${texto}</div>`;
+    return div;
+  }
+
+  function cargarComentarios(mostrarTodos = false) {
+    const comentarios = JSON.parse(localStorage.getItem("comentariosMenu")) || [];
+    commentsList.innerHTML = "";
+    const MAX = 5;
+    const visibles = mostrarTodos ? comentarios : comentarios.slice(0, MAX);
+    visibles.forEach(com => commentsList.appendChild(crearComentario(com.nombre, com.texto)));
+
+    if (comentarios.length > MAX) {
+      verMasBtn.style.display = "inline-block";
+      verMasBtn.textContent = mostrarTodos ? "Ver menos" : "Ver más";
+      verMasBtn.onclick = () => cargarComentarios(!mostrarTodos);
+    } else {
+      verMasBtn.style.display = "none";
+    }
+  }
+
+  function guardarComentario() {
+    const texto = commentInput.value.trim();
+    if (texto === "") return;
+    const userName = localStorage.getItem("userName");
+    if (!userName || userName === "Invitado") {
+  document.getElementById("commentModal").classList.add("show");
+  return;
+}
+
+    guardarComentarioComo(userName);
+  }
+
+  function guardarComentarioComo(nombre) {
+    const texto = commentInput.value.trim();
+    if (texto === "") return;
+    const comentarios = JSON.parse(localStorage.getItem("comentariosMenu")) || [];
+    comentarios.push({ nombre, texto });
+    localStorage.setItem("comentariosMenu", JSON.stringify(comentarios));
+    commentInput.value = "";
+    cargarComentarios();
+  }
+
+function cerrarModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) modal.classList.remove("show");
+  modal.style.display = "none"; // por si es un modal con display:flex
+}
+
+
+
+  
+
+  cargarComentarios();
 });
 
-});
 
 

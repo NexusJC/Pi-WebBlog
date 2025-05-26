@@ -4,6 +4,10 @@ const bars_search = document.getElementById("ctn-bars-search");
 const cover_ctn_search = document.getElementById("cover-ctn-search");
 const inputSearch = document.getElementById("inputSearch");
 const box_search = document.getElementById("box-search");
+const API_BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:3001"
+  : "https://www.ecolima.blog";
+
 
 // Eventos principales
 // Delegación para detectar clics en el botón de búsqueda
@@ -38,7 +42,7 @@ function ocultar_buscador() {
 // Cargar todos los posts y añadir al buscador con contenido
 async function cargarPostsEnBuscador() {
     try {
-        const response = await fetch("http://localhost:3001/api/posts");
+        const response = await fetch(`${API_BASE_URL}/api/posts`);
         const data = await response.json();
 
         if (data.success) {
@@ -129,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', async () => {
     const containerLiked = document.getElementById('carousel-liked');
     try {
-        const response = await fetch('http://localhost:3001/api/posts');
+        const response = await fetch(`${API_BASE_URL}/api/posts`);
         const { success, posts } = await response.json();
 
         if (success) {
@@ -159,7 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
                         </ul>
                         <p>❤️ ${post.likes || 0}</p>
-                        <a href="http://localhost:3001/posts/blog${post.id}.html">
+                        <a href="/posts/blog${post.id}.html">
                             <button>Leer más</button>
                         </a>
                     </div>
@@ -308,7 +312,7 @@ document.addEventListener("click", (e) => {
 document.addEventListener('DOMContentLoaded', async () => {
     const container = document.getElementById('carousel-posts');
     try {
-        const response = await fetch('http://localhost:3001/api/posts');
+        const response = await fetch(`${API_BASE_URL}/api/posts`);
         const { success, posts } = await response.json();
 
 if (success) {
@@ -340,7 +344,7 @@ if (success) {
                 <ul class="ctn-tags">
                     ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
                 </ul>
-                <a href="http://localhost:3001/posts/blog${post.id}.html">
+                <a href="/posts/blog${post.id}.html">
                     <button>Leer más</button>
                 </a>
             </div>
@@ -375,7 +379,7 @@ if (success) {
                 <ul class="ctn-tags">
                     ${etiquetas.map(tag => `<li>${tag}</li>`).join('')}
                 </ul>
-                <a href="http://localhost:3001/posts/blog${post.id}.html">
+                <a href="/posts/blog${post.id}.html">
                     <button>Leer más</button>
                 </a>
             </div>
@@ -394,5 +398,107 @@ if (success) {
     } catch (err) {
         console.error("❌ Error cargando posts en carrusel:", err);
     }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const userName = localStorage.getItem("userName") || "Invitado";
+  const commentInput = document.getElementById("commentInput");
+  const sendButton = document.getElementById("sendComment");
+  const commentsList = document.getElementById("commentsList");
+  const verMasBtn = document.getElementById("verMasBtn");
+// Agrega listeners para los botones del modal de login
+const btnLogin = document.getElementById("btnLogin");
+const btnContinue = document.getElementById("btnContinue");
+
+if (btnLogin) {
+  btnLogin.addEventListener("click", () => {
+    location.href = "/login/login.html";
+  });
+}
+
+if (btnContinue) {
+  btnContinue.addEventListener("click", () => {
+    const loginModal = document.getElementById("loginModal");
+    if (loginModal) loginModal.classList.remove("show");
+    // No hacer nada más, solo cerrar el modal
+  });
+}
+
+
+  sendButton.addEventListener("click", guardarComentario);
+
+
+  // Mostrar inicial del usuario en el avatar
+  const avatarInicial = document.getElementById("avatarInicial");
+  if (avatarInicial) {
+    avatarInicial.textContent = userName.charAt(0).toUpperCase();
+  }
+
+  function crearComentario(nombre, texto) {
+    const div = document.createElement("div");
+    div.className = "comentario";
+    div.innerHTML = `
+      <div class="nombre">${nombre}</div>
+      <div class="texto">${texto}</div>
+    `;
+    return div;
+  }
+
+  function cargarComentarios(mostrarTodos = false) {
+    const comentarios = JSON.parse(localStorage.getItem("comentariosMenu")) || [];
+    commentsList.innerHTML = "";
+
+    const MAX_VISIBLES = 5;
+    const visibles = mostrarTodos ? comentarios : comentarios.slice(0, MAX_VISIBLES);
+
+    visibles.forEach(com => {
+      const div = crearComentario(com.nombre, com.texto);
+      commentsList.appendChild(div);
+    });
+
+    if (comentarios.length > MAX_VISIBLES) {
+      verMasBtn.style.display = "inline-block";
+      verMasBtn.textContent = mostrarTodos ? "Ver menos" : "Ver más";
+      verMasBtn.onclick = () => cargarComentarios(!mostrarTodos);
+    } else {
+      verMasBtn.style.display = "none";
+    }
+  }
+
+function guardarComentario() {
+  const texto = commentInput.value.trim();
+  if (texto === "") return;
+
+  const userName = localStorage.getItem("userName");
+
+  if (!userName || userName === "Invitado") {
+    // Mostrar el modal
+    document.getElementById("loginModal").classList.add("show");
+    return;
+  }
+
+  guardarComentarioComo(userName);
+}
+
+// Esta función sí guarda el comentario
+function guardarComentarioComo(nombre) {
+  const texto = commentInput.value.trim();
+  if (texto === "") return;
+
+  const comentarios = JSON.parse(localStorage.getItem("comentariosMenu")) || [];
+  comentarios.push({ nombre, texto });
+  localStorage.setItem("comentariosMenu", JSON.stringify(comentarios));
+  commentInput.value = "";
+  cargarComentarios();
+}
+
+window.addEventListener("click", (e) => {
+  const loginModal = document.getElementById("loginModal");
+  if (e.target === loginModal) {
+    loginModal.classList.remove("show");
+  }
+});
+
+
 });
 

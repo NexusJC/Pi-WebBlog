@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Enviando:', { userName, userEmail, userPassword });
 
             try {
-                const response = await fetch('http://localhost:3001/registrar', {
+                const response = await fetch('/registrar', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

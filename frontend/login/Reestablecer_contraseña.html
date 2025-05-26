@@ -79,7 +79,7 @@
             console.log("➡️ Recuperando contraseña para:", email);
 
             try {
-                const res = await fetch('http://localhost:3001/restablecer-contrasena', {
+                const res = await fetch('/restablecer-contrasena', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
