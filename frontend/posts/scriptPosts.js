@@ -95,29 +95,70 @@ document.addEventListener("DOMContentLoaded", () => {
         setInterval(autoScrollRelated, 6000); // cada 3 segundos
     }
 });
+
 document.addEventListener("DOMContentLoaded", () => {
-    const postDiv = document.querySelector(".post");
-    const postId = postDiv.dataset.id;
-    const likeCountSpan = postDiv.querySelector(".like-count");
-    const likeButton = postDiv.querySelector(".like-button");
+  const postDiv = document.querySelector(".post");
+  const postId = postDiv?.dataset?.id;
+  const likeButton = postDiv?.querySelector(".like-button");
 
-    // 1. Cargar likes al iniciar
-    fetch(`http://localhost:3001/api/posts/${postId}/likes`)
-      .then(res => res.json())
-      .then(data => {
-        likeCountSpan.textContent = data.likes;
-      })
-      .catch(err => console.error("❌ Error al obtener likes:", err));
+  if (!postDiv || !likeButton) return;
 
-    // 2. Dar like al hacer clic
-    likeButton.addEventListener("click", () => {
-      fetch(`http://localhost:3001/like/${postId}`, {
-        method: "POST"
-      })
-      .then(res => res.json())
-      .then(data => {
-        likeCountSpan.textContent = data.likes;
-      })
-      .catch(err => console.error("❌ Error al dar like:", err));
+  const userId = localStorage.getItem("userId");
+  const likeCountSpan = likeButton.querySelector(".like-count");
+
+  // Obtener estado inicial
+  fetch(`/api/posts/${postId}/likes?userId=${userId}`)
+    .then(res => res.json())
+    .then(data => {
+      likeCountSpan.textContent = data.likes;
+      if (data.hasLiked) {
+        likeButton.classList.add("liked");
+        likeButton.innerHTML = `💔 Quitar like <span class="like-count">${data.likes}</span>`;
+      } else {
+        likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${data.likes}</span>`;
+      }
     });
-  });
+
+  // Toggle like
+likeButton.addEventListener("click", () => {
+  if (!userId) {
+    const modal = document.getElementById("loginModal");
+    modal.style.display = "flex";
+
+    // Botones del modal
+    document.getElementById("goToLogin").onclick = () => {
+      window.location.href = "/login/login.html";
+    };
+
+    document.getElementById("stayGuest").onclick = () => {
+      modal.style.display = "none";
+    };
+
+    return;
+  }
+
+  // Aquí sigue el código para dar o quitar like
+  const liked = likeButton.classList.contains("liked");
+  const method = liked ? "DELETE" : "POST";
+
+  fetch(`/like/${postId}`, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId })
+  })
+    .then(res => res.json())
+    .then(data => {
+      likeCountSpan.textContent = data.likes;
+      if (liked) {
+        likeButton.classList.remove("liked");
+        likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${data.likes}</span>`;
+      } else {
+        likeButton.classList.add("liked");
+        likeButton.innerHTML = `💔 Quitar like <span class="like-count">${data.likes}</span>`;
+      }
+    });
+});
+
+});
+
+

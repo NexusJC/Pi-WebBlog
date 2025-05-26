@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 loader.classList.add("hide");
 
                 if (data.success) {
+                    localStorage.setItem("userId", data.userId);
                     localStorage.setItem("userName", data.name);
                     localStorage.setItem("userRole", data.role);
                     location.href = "../menu/index.html";

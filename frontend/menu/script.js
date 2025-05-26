@@ -126,6 +126,74 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarPostsEnBuscador();
 });
 
+document.addEventListener('DOMContentLoaded', async () => {
+    const containerLiked = document.getElementById('carousel-liked');
+    try {
+        const response = await fetch('http://localhost:3001/api/posts');
+        const { success, posts } = await response.json();
+
+        if (success) {
+            const postsLikeados = [...posts]
+                .sort((a, b) => b.likes - a.likes)
+                .slice(0, 10);
+
+            const likedHTML = postsLikeados.map(post => {
+                let etiquetas = [];
+                try {
+                    const parsed = JSON.parse(post.etiquetas);
+                    if (Array.isArray(parsed)) {
+                        etiquetas = parsed.map(item => item.value);
+                    }
+                } catch (err) {
+                    console.warn('⚠️ Etiquetas malformadas:', post.etiquetas);
+                }
+
+                return `
+                    <div class="post">
+                        <div class="ctn-img">
+                            <img src="${post.imageUrl || '../img/default.jpg'}" alt="Post image">
+                        </div>
+                        <h3>${post.title || 'Sin título'}</h3>
+                        <span>${new Date(post.created_at).toLocaleDateString()}</span>
+                        <ul class="ctn-tags">
+                            ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
+                        </ul>
+                        <p>❤️ ${post.likes || 0}</p>
+                        <a href="http://localhost:3001/posts/blog${post.id}.html">
+                            <button>Leer más</button>
+                        </a>
+                    </div>
+                `;
+            }).join('');
+
+            containerLiked.innerHTML = likedHTML;
+        }
+    } catch (err) {
+        console.error("❌ Error cargando posts más likeados:", err);
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const likedContainer = document.querySelector("#carousel-liked");
+  const leftArrowLiked = document.querySelector(".left-arrow-liked");
+  const rightArrowLiked = document.querySelector(".right-arrow-liked");
+
+  if (likedContainer && leftArrowLiked && rightArrowLiked) {
+    const postWidth = document.querySelector(".post")?.offsetWidth || 300;
+
+    rightArrowLiked.addEventListener("click", () => {
+      likedContainer.scrollLeft += postWidth + 20;
+    });
+
+    leftArrowLiked.addEventListener("click", () => {
+      likedContainer.scrollLeft -= postWidth + 20;
+    });
+  } else {
+    console.warn("⚠️ Carousel de likeados no encontrado.");
+  }
+});
+
+
 
     // Carrusel horizontal
     const postsContainer = document.querySelector(".posts");

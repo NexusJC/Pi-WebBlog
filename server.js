@@ -111,7 +111,7 @@ app.post("/login", async (req, res) => {
         const match = await bcrypt.compare(password, user.password);
         if (!match) return res.status(401).json({ success: false, message: "Contraseña incorrecta" });
 
-        res.json({ success: true, name: user.name, role: user.role });
+        res.json({ success: true, userId: user.id, name: user.name, role: user.role });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: "Error en login" });
@@ -149,22 +149,109 @@ app.post("/restablecer-contrasena", async (req, res) => {
     }
 });
 
+// Dar like
 app.post('/like/:id', async (req, res) => {
-    const postId = req.params.id;
-  
-    try {
-      // Incrementar likes
-      await pool.promise().query('UPDATE posts SET likes = likes + 1 WHERE id = ?', [postId]);
-  
-      // Obtener nuevo número de likes
-      const [rows] = await pool.promise().query('SELECT likes FROM posts WHERE id = ?', [postId]);
-  
-      res.json({ likes: rows[0].likes });
-    } catch (err) {
-      console.error('❌ Error en endpoint de likes:', err);
-      res.status(500).json({ error: 'Error al actualizar los likes' });
+  const postId = req.params.id;
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: "Falta userId" });
+  }
+
+  try {
+    // Verificar si ya existe el like
+    const [exists] = await pool.promise().query(
+      "SELECT id FROM post_likes WHERE user_id = ? AND post_id = ?",
+      [userId, postId]
+    );
+    if (exists.length > 0) {
+      return res.status(409).json({ error: "Ya diste like" });
     }
-  });
+
+    // Insertar like
+    await pool.promise().query(
+      "INSERT INTO post_likes (user_id, post_id, created_at) VALUES (?, ?, NOW())",
+      [userId, postId]
+    );
+    await pool.promise().query(
+      "UPDATE posts SET likes = likes + 1 WHERE id = ?",
+      [postId]
+    );
+
+    const [[{ likes }]] = await pool.promise().query(
+      "SELECT likes FROM posts WHERE id = ?",
+      [postId]
+    );
+
+    res.json({ likes });
+  } catch (err) {
+    console.error("❌ Error al dar like:", err);
+    res.status(500).json({ error: "Error al dar like" });
+  }
+});
+
+// Quitar like
+app.delete('/like/:id', async (req, res) => {
+  const postId = req.params.id;
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: "Falta userId" });
+  }
+
+  try {
+    // Borrar like del usuario
+    await pool.promise().query(
+      "DELETE FROM post_likes WHERE user_id = ? AND post_id = ?",
+      [userId, postId]
+    );
+    await pool.promise().query(
+      "UPDATE posts SET likes = GREATEST(likes - 1, 0) WHERE id = ?",
+      [postId]
+    );
+
+    const [[{ likes }]] = await pool.promise().query(
+      "SELECT likes FROM posts WHERE id = ?",
+      [postId]
+    );
+
+    res.json({ likes });
+  } catch (err) {
+    console.error("❌ Error al quitar like:", err);
+    res.status(500).json({ error: "Error al quitar like" });
+  }
+});
+
+
+app.get("/api/posts/:id/likes", async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.query.userId;
+
+  try {
+    const [[{ likes }]] = await pool.promise().query(
+      "SELECT likes FROM posts WHERE id = ?",
+      [postId]
+    );
+
+    let hasLiked = false;
+    if (userId) {
+      const [liked] = await pool.promise().query(
+        "SELECT id FROM post_likes WHERE post_id = ? AND user_id = ?",
+        [postId, userId]
+      );
+      hasLiked = liked.length > 0;
+    }
+
+    res.json({ likes, hasLiked });
+  } catch (err) {
+    console.error("❌ Error al obtener likes:", err);
+    res.status(500).json({ error: "Error al obtener likes" });
+  }
+});
+
+
+
+
   
 
 // 🔹 Crear nuevo post
@@ -303,6 +390,17 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
             </div>
         </aside>
         <main>
+        <!-- Modal personalizado para invitar a iniciar sesión -->
+        <div id="loginModal" class="custom-modal">
+        <div class="modal-content">
+            <h3>🔒 Acción restringida</h3>
+            <p>Debes iniciar sesión para dar like a una publicación.</p>
+            <div class="modal-buttons">
+            <button id="goToLogin" class="modal-btn login">Iniciar sesión</button>
+            <button id="stayGuest" class="modal-btn guest">Permanecer como invitado</button>
+            </div>
+        </div>
+        </div>
             <div class="main-wrapper__content blog-1">
                 <article>
                     <h2 id="b1">${title}</h2>
@@ -373,7 +471,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
         </aside>
     </div>
 
-    <footer class="footer">
+        <footer class="footer">
         <div class="footer-content">
             <div class="footer__grupo1">
                 <div class="box">
@@ -390,10 +488,10 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                 <div class="box">
                     <h2>Síguenos</h2>
                     <div class="red-social">
-                        <a href="#" class="fa fa-facebook"></a>
-                        <a href="#" class="fa fa-instagram"></a>
-                        <a href="#" class="fa fa-twitter"></a>
-                        <a href="#" class="fa fa-youtube"></a>
+                         <a target="_blank" href="https://www.facebook.com/people/Ecolima/61575066085514/" class="fa fa-facebook"></a>
+                    <a target="_blank" href="https://www.instagram.com/accounts/login/" class="fa fa-instagram"></a>
+                    <a target="_blank" href="https://x.com/EEcolima94463" class="fa fa-twitter"></a>
+                    <a target="_blank" href="https://www.youtube.com/channel/UC2W95ydAwJjhvyZnvhPnC4A" class="fa fa-youtube"></a>
                     </div>
                 </div>
             </div>
@@ -402,7 +500,6 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
             </div>
         </div>
     </footer>
-
     <script src="/posts/scriptPosts.js"></script>
 </body>
 </html>`;
@@ -728,10 +825,10 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
                 <div class="box">
                     <h2>Síguenos</h2>
                     <div class="red-social">
-                        <a href="#" class="fa fa-facebook"></a>
-                        <a href="#" class="fa fa-instagram"></a>
-                        <a href="#" class="fa fa-twitter"></a>
-                        <a href="#" class="fa fa-youtube"></a>
+                         <a target="_blank" href="https://www.facebook.com/people/Ecolima/61575066085514/" class="fa fa-facebook"></a>
+                    <a target="_blank" href="https://www.instagram.com/accounts/login/" class="fa fa-instagram"></a>
+                    <a target="_blank" href="https://x.com/EEcolima94463" class="fa fa-twitter"></a>
+                    <a target="_blank" href="https://www.youtube.com/channel/UC2W95ydAwJjhvyZnvhPnC4A" class="fa fa-youtube"></a>
                     </div>
                 </div>
             </div>
