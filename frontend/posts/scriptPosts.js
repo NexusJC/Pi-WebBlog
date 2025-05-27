@@ -173,7 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetch(`${API_BASE_URL}/like/${postId}`, {
       method,
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId })
     })
       .then(res => res.json())
       .then(data => {
