@@ -135,11 +135,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("userId");
   const likeCountSpan = likeButton.querySelector(".like-count");
 
+  const likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
+  const yaLeDioLike = likedPosts.includes(postId);
+
   fetch(`${API_BASE_URL}/api/posts/${postId}/likes?userId=${userId}`)
     .then(res => res.json())
     .then(data => {
       likeCountSpan.textContent = data.likes;
-      if (data.hasLiked) {
+      if (data.hasLiked || yaLeDioLike) {
         likeButton.classList.add("liked");
         likeButton.innerHTML = `💔 Quitar like <span class="like-count">${data.likes}</span>`;
       } else {
@@ -147,138 +150,46 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
- likeButton.addEventListener("click", () => {
-  if (!userId) {
-    const modal = document.getElementById("likeModal");
-    modal.style.display = "flex";
-
-    document.getElementById("goToLoginLike").onclick = () => {
-  window.location.href = "/login/login.html";
-};
-
-document.getElementById("stayGuestLike").onclick = () => {
-  cerrarModal("likeModal");
-};
-
-
-    return;
-  }
-
+  likeButton.addEventListener("click", () => {
+    if (!userId) {
+      const modal = document.getElementById("likeModal");
+      modal.style.display = "flex";
+      document.getElementById("goToLoginLike").onclick = () => {
+        window.location.href = "/login/login.html";
+      };
+      document.getElementById("stayGuestLike").onclick = () => {
+        cerrarModal("likeModal");
+      };
+      return;
+    }
 
     const liked = likeButton.classList.contains("liked");
     const method = liked ? "DELETE" : "POST";
 
-fetch(`${API_BASE_URL}/like/${postId}`, {
-  method: liked ? "DELETE" : "POST",
-  headers: { "Content-Type": "application/json" }
-})
-  .then(res => res.json())
-  .then(data => {
-    const likesCount = typeof data.likes === "number" ? data.likes : 0;
-    likeCountSpan.textContent = likesCount;
+    fetch(`${API_BASE_URL}/like/${postId}`, {
+      method,
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(res => res.json())
+    .then(data => {
+      const likesCount = typeof data.likes === "number" ? data.likes : 0;
+      likeCountSpan.textContent = likesCount;
 
-    if (liked) {
-      likeButton.classList.remove("liked");
-      likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likesCount}</span>`;
-    } else {
-      likeButton.classList.add("liked");
-      likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likesCount}</span>`;
-    }
-  });
+      let likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
 
+      if (liked) {
+        likeButton.classList.remove("liked");
+        likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likesCount}</span>`;
+        likedPosts = likedPosts.filter(id => id !== postId);
+      } else {
+        likeButton.classList.add("liked");
+        likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likesCount}</span>`;
+        likedPosts.push(postId);
+      }
 
-
-  });
-
-  // 👇 Aquí comienza tu bloque de comentarios (solo uno, no anidado)
-  const userName = localStorage.getItem("userName") || "Invitado";
-  const commentInput = document.getElementById("commentInput");
-  const sendButton = document.getElementById("sendComment");
-  const commentsList = document.getElementById("commentsList");
-  const verMasBtn = document.getElementById("verMasBtn");
-
-  const btnLogin = document.getElementById("btnLogin");
-  const btnContinue = document.getElementById("btnContinue");
-
-  if (btnLogin) {
-    btnLogin.addEventListener("click", () => {
-      location.href = "/login/login.html";
+      localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
     });
-  }
-
-  if (btnContinue) {
-  btnContinue.addEventListener("click", () => {
-    cerrarModal("commentModal");
   });
-}
-
-
-
-  if (sendButton) {
-    sendButton.addEventListener("click", guardarComentario);
-  }
-
-  const avatarInicial = document.getElementById("avatarInicial");
-  if (avatarInicial) {
-    avatarInicial.textContent = userName.charAt(0).toUpperCase();
-  }
-
-  function crearComentario(nombre, texto) {
-    const div = document.createElement("div");
-    div.className = "comentario";
-    div.innerHTML = `<div class="nombre">${nombre}</div><div class="texto">${texto}</div>`;
-    return div;
-  }
-
-  function cargarComentarios(mostrarTodos = false) {
-    const comentarios = JSON.parse(localStorage.getItem("comentariosMenu")) || [];
-    commentsList.innerHTML = "";
-    const MAX = 5;
-    const visibles = mostrarTodos ? comentarios : comentarios.slice(0, MAX);
-    visibles.forEach(com => commentsList.appendChild(crearComentario(com.nombre, com.texto)));
-
-    if (comentarios.length > MAX) {
-      verMasBtn.style.display = "inline-block";
-      verMasBtn.textContent = mostrarTodos ? "Ver menos" : "Ver más";
-      verMasBtn.onclick = () => cargarComentarios(!mostrarTodos);
-    } else {
-      verMasBtn.style.display = "none";
-    }
-  }
-
-  function guardarComentario() {
-    const texto = commentInput.value.trim();
-    if (texto === "") return;
-    const userName = localStorage.getItem("userName");
-    if (!userName || userName === "Invitado") {
-  document.getElementById("commentModal").classList.add("show");
-  return;
-}
-
-    guardarComentarioComo(userName);
-  }
-
-  function guardarComentarioComo(nombre) {
-    const texto = commentInput.value.trim();
-    if (texto === "") return;
-    const comentarios = JSON.parse(localStorage.getItem("comentariosMenu")) || [];
-    comentarios.push({ nombre, texto });
-    localStorage.setItem("comentariosMenu", JSON.stringify(comentarios));
-    commentInput.value = "";
-    cargarComentarios();
-  }
-
-function cerrarModal(modalId) {
-  const modal = document.getElementById(modalId);
-  if (modal) modal.classList.remove("show");
-  modal.style.display = "none"; // por si es un modal con display:flex
-}
-
-
-
-  
-
-  cargarComentarios();
 });
 
 
