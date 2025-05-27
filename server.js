@@ -484,14 +484,6 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
     </div>
   </div>
 </div>
-<button id="testModalBtn" style="position: fixed; top: 1rem; right: 1rem; z-index: 10000;">Abrir Modal</button>
-
-<script>
-  document.getElementById("testModalBtn").addEventListener("click", () => {
-    const modal = document.getElementById("loginModal");
-    if (modal) modal.classList.add("show");
-  });
-</script>
 
     <script src="/posts/scriptPosts.js"></script>
 

@@ -138,15 +138,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
   const yaLeDioLike = likedPosts.includes(postId);
 
+  // Obtener el estado inicial de likes desde el backend
   fetch(`${API_BASE_URL}/api/posts/${postId}/likes?userId=${userId}`)
     .then(res => res.json())
     .then(data => {
-      likeCountSpan.textContent = data.likes;
+      const likes = data.likes || 0;
+      likeCountSpan.textContent = likes;
+
       if (data.hasLiked || yaLeDioLike) {
         likeButton.classList.add("liked");
-        likeButton.innerHTML = `💔 Quitar like <span class="like-count">${data.likes}</span>`;
+        likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likes}</span>`;
       } else {
-        likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${data.likes}</span>`;
+        likeButton.classList.remove("liked");
+        likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likes}</span>`;
       }
     });
 
@@ -154,6 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!userId) {
       const modal = document.getElementById("likeModal");
       modal.style.display = "flex";
+
       document.getElementById("goToLoginLike").onclick = () => {
         window.location.href = "/login/login.html";
       };
@@ -170,27 +175,28 @@ document.addEventListener("DOMContentLoaded", () => {
       method,
       headers: { "Content-Type": "application/json" }
     })
-    .then(res => res.json())
-    .then(data => {
-      const likesCount = typeof data.likes === "number" ? data.likes : 0;
-      likeCountSpan.textContent = likesCount;
+      .then(res => res.json())
+      .then(data => {
+        const likesCount = typeof data.likes === "number" ? data.likes : 0;
+        likeCountSpan.textContent = likesCount;
 
-      let likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
+        let likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
 
-      if (liked) {
-        likeButton.classList.remove("liked");
-        likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likesCount}</span>`;
-        likedPosts = likedPosts.filter(id => id !== postId);
-      } else {
-        likeButton.classList.add("liked");
-        likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likesCount}</span>`;
-        likedPosts.push(postId);
-      }
+        if (liked) {
+          likeButton.classList.remove("liked");
+          likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likesCount}</span>`;
+          likedPosts = likedPosts.filter(id => id !== postId);
+        } else {
+          likeButton.classList.add("liked");
+          likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likesCount}</span>`;
+          likedPosts.push(postId);
+        }
 
-      localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
-    });
+        localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+      });
   });
 });
+
 
 
 
