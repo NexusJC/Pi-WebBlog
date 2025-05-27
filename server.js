@@ -155,32 +155,18 @@ app.post("/restablecer-contrasena", async (req, res) => {
     }
 });
 
-// Dar like
 app.post('/like/:id', async (req, res) => {
   const postId = req.params.id;
   const { userId } = req.body;
 
-    console.log("🧪 POST /like", { postId, userId }); // 👈 Aquí
+  console.log("🧪 POST /like", { postId, userId });
 
   if (!userId) {
     return res.status(400).json({ error: "Falta userId" });
   }
 
   try {
-    // Verificar si ya existe el like
-    const [exists] = await pool.promise().query(
-      "SELECT id FROM post_likes WHERE user_id = ? AND post_id = ?",
-      [userId, postId]
-    );
-    if (exists.length > 0) {
-      return res.status(409).json({ error: "Ya diste like" });
-    }
-
-    // Insertar like
-    await pool.promise().query(
-      "INSERT INTO post_likes (user_id, post_id, created_at) VALUES (?, ?, NOW())",
-      [userId, postId]
-    );
+    // Simplemente incrementamos el contador
     await pool.promise().query(
       "UPDATE posts SET likes = likes + 1 WHERE id = ?",
       [postId]
@@ -193,12 +179,11 @@ app.post('/like/:id', async (req, res) => {
 
     res.json({ likes });
   } catch (err) {
-    console.error("❌ Error al dar like:", err);
+    console.error("❌ Error al dar like:", err.message, err.stack);
     res.status(500).json({ error: "Error al dar like" });
   }
 });
 
-// Quitar like
 app.delete('/like/:id', async (req, res) => {
   const postId = req.params.id;
   const { userId } = req.body;
@@ -208,15 +193,27 @@ app.delete('/like/:id', async (req, res) => {
   }
 
   try {
-    // Borrar like del usuario
-    await pool.promise().query(
-      "DELETE FROM post_likes WHERE user_id = ? AND post_id = ?",
-      [userId, postId]
-    );
     await pool.promise().query(
       "UPDATE posts SET likes = GREATEST(likes - 1, 0) WHERE id = ?",
       [postId]
     );
+    app.get("/api/posts/:id/likes", async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const [[{ likes }]] = await pool.promise().query(
+      "SELECT likes FROM posts WHERE id = ?",
+      [postId]
+    );
+
+    // Ya no usamos hasLiked porque no hay tabla post_likes
+    res.json({ likes });
+  } catch (err) {
+    console.error("❌ Error al obtener likes:", err.message, err.stack);
+    res.status(500).json({ error: "Error al obtener likes" });
+  }
+});
+
 
     const [[{ likes }]] = await pool.promise().query(
       "SELECT likes FROM posts WHERE id = ?",
@@ -225,35 +222,8 @@ app.delete('/like/:id', async (req, res) => {
 
     res.json({ likes });
   } catch (err) {
-    console.error("❌ Error al quitar like:", err);
+    console.error("❌ Error al quitar like:", err.message, err.stack);
     res.status(500).json({ error: "Error al quitar like" });
-  }
-});
-
-
-app.get("/api/posts/:id/likes", async (req, res) => {
-  const postId = req.params.id;
-  const userId = req.query.userId;
-
-  try {
-    const [[{ likes }]] = await pool.promise().query(
-      "SELECT likes FROM posts WHERE id = ?",
-      [postId]
-    );
-
-    let hasLiked = false;
-    if (userId) {
-      const [liked] = await pool.promise().query(
-        "SELECT id FROM post_likes WHERE post_id = ? AND user_id = ?",
-        [postId, userId]
-      );
-      hasLiked = liked.length > 0;
-    }
-
-    res.json({ likes, hasLiked });
-  } catch (err) {
-    console.error("❌ Error al obtener likes:", err);
-    res.status(500).json({ error: "Error al obtener likes" });
   }
 });
 
