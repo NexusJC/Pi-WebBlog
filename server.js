@@ -830,6 +830,43 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
 
 
 
+app.get('/post/:id', async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const [posts] = await pool.promise().query("SELECT * FROM posts WHERE id = ?", [postId]);
+    if (posts.length === 0) return res.status(404).send("Post no encontrado");
+
+    const post = posts[0];
+    const tags = JSON.parse(post.etiquetas || "[]").map(t => `<li>${t.value}</li>`).join("");
+
+    const html = `
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>${post.title}</title>
+        <link rel="stylesheet" href="/posts/style.css">
+    </head>
+    <body>
+        <h1>${post.title}</h1>
+        <img src="${post.image_path || '/img/default.jpg'}" alt="">
+        <p>${post.content}</p>
+        <h4>Mensaje del autor</h4>
+        <p>${post.mensaje_autor}</p>
+        <h4>Etiquetas:</h4>
+        <ul>${tags}</ul>
+        <h4>Referencias:</h4>
+        <div>${post.referencias}</div>
+    </body>
+    </html>
+    `;
+    res.send(html);
+  } catch (err) {
+    console.error("❌ Error al mostrar post dinámico:", err);
+    res.status(500).send("Error interno");
+  }
+});
 
 
 // 🔹 Error global
