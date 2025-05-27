@@ -315,7 +315,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
 
         const postId = result.insertId;
         const postFilename = `blog${postId}.html`;
-        const imageSrc = image_path ? `../../..${image_path}` : '../../img/default.jpg';
+       const imageSrc = image_path ? image_path : '/img/default.jpg';
 
         const postHTML = `
 <!DOCTYPE html>
@@ -547,7 +547,7 @@ app.get('/api/posts', async (req, res) => {
             success: true,
             posts: posts.map(post => ({
                 ...post,
-                imageUrl: post.image_path ? `http://localhost:3001/uploads/${post.image_path.split('/').pop()}` : null
+                imageUrl: post.image_path ? `${req.protocol}://${req.get("host")}${post.image_path}` : '/img/default.jpg'
             }))
         });
     } catch (error) {
@@ -633,7 +633,7 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
 
     // Generar el HTML actualizado
     const fecha = new Date().toLocaleDateString();
-    const imageSrc = newImagePath ? `../../..${newImagePath}` : '../../img/default.jpg';
+    const imageSrc = newImagePath ? newImagePath : '/img/default.jpg';
 
     const postHTML = `
 <!DOCTYPE html>
