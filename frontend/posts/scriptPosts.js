@@ -2,130 +2,108 @@ const API_BASE_URL = window.location.hostname.includes("localhost")
   ? "http://localhost:3001"
   : "https://www.ecolima.blog";
 
-
-// Evento para mostrar el menú
-document.getElementById('icon-menu').addEventListener('click', function () {
-    document.querySelector('.menu').classList.toggle('show-lateral');
-});
-
-// Eventos del buscador
-document.getElementById("icon-search").addEventListener("click", mostrar_buscador);
-document.getElementById("cover-ctn-search").addEventListener("click", ocultar_buscador);
-
-// Declaración de variables del buscador
-let bars_search = document.getElementById("ctn-bars-search");
-let cover_ctn_search = document.getElementById("cover-ctn-search");
-let inputSearch = document.getElementById("inputSearch");
-let box_search = document.getElementById("box-search");
-
 document.addEventListener("DOMContentLoaded", () => {
-    const iconMenu = document.getElementById('icon-menu');
-    const menu = document.querySelector('.menu');
-
-    if (iconMenu && menu) {
-        iconMenu.addEventListener('click', function () {
-            menu.classList.toggle('show-lateral');
-        });
-    }
+  inicializarMenu();
+  inicializarBuscador();
+  cargarContenidoRelacionado();
+  manejarLikes();
 });
 
-// Función para mostrar el buscador
-function mostrar_buscador() {
-    if (window.innerWidth <= 800) {
-        document.querySelector('.menu').classList.remove('show-lateral');
-    }
+// 📌 MENÚ LATERAL
+function inicializarMenu() {
+  const iconMenu = document.getElementById("icon-menu");
+  const menu = document.querySelector(".menu");
+  if (iconMenu && menu) {
+    iconMenu.addEventListener("click", () => {
+      menu.classList.toggle("show-lateral");
+    });
+  }
+}
 
+// 📌 BUSCADOR
+function inicializarBuscador() {
+  const bars_search = document.getElementById("ctn-bars-search");
+  const cover_ctn_search = document.getElementById("cover-ctn-search");
+  const inputSearch = document.getElementById("inputSearch");
+  const box_search = document.getElementById("box-search");
+
+  document.getElementById("icon-search").addEventListener("click", () => {
+    if (window.innerWidth <= 800) {
+      document.querySelector(".menu").classList.remove("show-lateral");
+    }
     bars_search.style.top = "5rem";
     cover_ctn_search.style.display = "block";
     inputSearch.focus();
 
     if (inputSearch.value === "") {
-        box_search.style.display = "none";
+      box_search.style.display = "none";
     }
-}
+  });
 
-// Función para ocultar el buscador
-function ocultar_buscador() {
+  cover_ctn_search.addEventListener("click", () => {
     bars_search.style.top = "-10rem";
     cover_ctn_search.style.display = "none";
     inputSearch.value = "";
     box_search.style.display = "none";
-}
+  });
 
-// Función para el filtrado de búsqueda
-document.getElementById("inputSearch").addEventListener("keyup", buscador_interno);
+  inputSearch.addEventListener("keyup", () => {
+    const filter = inputSearch.value.toUpperCase();
+    const li = box_search.getElementsByTagName("li");
 
-function buscador_interno() {
-    let filter = inputSearch.value.toUpperCase();
-    let li = box_search.getElementsByTagName("li");
-
+    let hasResults = false;
     for (let i = 0; i < li.length; i++) {
-        let a = li[i].getElementsByTagName("a")[0];
-        let textValue = a.textContent || a.innerText;
-
-        if (textValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-            box_search.style.display = "block";
-        } else {
-            li[i].style.display = "none";
-        }
+      const a = li[i].getElementsByTagName("a")[0];
+      const textValue = a.textContent || a.innerText;
+      const visible = textValue.toUpperCase().includes(filter);
+      li[i].style.display = visible ? "" : "none";
+      if (visible) hasResults = true;
     }
 
-    if (inputSearch.value === "") {
-        box_search.style.display = "none";
-    }
+    box_search.style.display = hasResults ? "block" : "none";
+  });
 }
 
-// ✅ Scroll automático de contenido relacionado
-document.addEventListener('DOMContentLoaded', async () => {
-  const relatedContainer = document.getElementById('related-posts-container');
-  if (!relatedContainer) return;
+// 📌 CARGAR CONTENIDO RELACIONADO
+async function cargarContenidoRelacionado() {
+  const container = document.getElementById("related-posts-container");
+  if (!container) return;
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/posts`);
-    const { success, posts } = await response.json();
+    const res = await fetch(`${API_BASE_URL}/api/posts`);
+    const { success, posts } = await res.json();
+    if (!success) return;
 
-    if (success) {
-      const ultimosPosts = [...posts]
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-        .slice(0, 5);
+    const ultimosPosts = posts
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(0, 5);
 
-      const html = ultimosPosts.map(post => {
-        let etiquetas = [];
+    const html = ultimosPosts.map(post => {
+      let etiquetas = [];
+      try {
+        etiquetas = JSON.parse(post.etiquetas || "[]").map(e => e.value);
+      } catch {}
 
-        try {
-          const parsed = JSON.parse(post.etiquetas);
-          if (Array.isArray(parsed)) {
-            etiquetas = parsed.map(item => item.value);
-          }
-        } catch (err) {
-          console.warn('⚠️ Etiquetas malformadas en contenido relacionado:', post.etiquetas);
-        }
+      return `
+        <div class="related-item">
+          <img src="${post.imageUrl || '../img/default.jpg'}" alt="Imagen del post">
+          <h4>${post.title || 'Sin título'}</h4>
+          <p>${(post.content || '').replace(/<[^>]+>/g, '').slice(0, 50)}...</p>
+          <a href="/posts/blog${post.id}.html">
+            <button>Ver más</button>
+          </a>
+        </div>
+      `;
+    }).join("");
 
-        return `
-          <div class="related-item">
-            <img src="${post.imageUrl || '../img/default.jpg'}" alt="Imagen del post">
-            <h4>${post.title || 'Sin título'}</h4>
-            <p>${(post.content || '').replace(/<[^>]+>/g, '').slice(0, 50)}...</p>
-            <a href="/posts/blog${post.id}.html">
-              <button>Ver más</button>
-            </a>
-          </div>
-        `;
-      }).join('');
-
-      relatedContainer.innerHTML = html;
-    } else {
-      console.warn("⚠️ No se pudo cargar contenido relacionado.");
-    }
+    container.innerHTML = html;
   } catch (err) {
     console.error("❌ Error al cargar contenido relacionado:", err);
   }
-});
+}
 
-
-// Like y lógica general
-document.addEventListener("DOMContentLoaded", () => {
+// 📌 LIKE BUTTON
+function manejarLikes() {
   const postDiv = document.querySelector(".post");
   const postId = postDiv?.dataset?.id;
   const likeButton = postDiv?.querySelector(".like-button");
@@ -138,14 +116,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
   const yaLeDioLike = likedPosts.includes(postId);
 
-  // Obtener el estado inicial de likes desde el backend
-  fetch(`${API_BASE_URL}/api/posts/${postId}/likes?userId=${userId}`)
+  fetch(`${API_BASE_URL}/api/posts/${postId}/likes`)
     .then(res => res.json())
     .then(data => {
       const likes = data.likes || 0;
       likeCountSpan.textContent = likes;
 
-      if (data.hasLiked || yaLeDioLike) {
+      if (yaLeDioLike) {
         likeButton.classList.add("liked");
         likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likes}</span>`;
       } else {
@@ -163,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "/login/login.html";
       };
       document.getElementById("stayGuestLike").onclick = () => {
-        cerrarModal("likeModal");
+        modal.style.display = "none";
       };
       return;
     }
@@ -178,26 +155,22 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then(res => res.json())
       .then(data => {
-        const likesCount = typeof data.likes === "number" ? data.likes : 0;
-        likeCountSpan.textContent = likesCount;
+        const likes = typeof data.likes === "number" ? data.likes : 0;
+        likeCountSpan.textContent = likes;
 
         let likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
 
         if (liked) {
           likeButton.classList.remove("liked");
-          likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likesCount}</span>`;
+          likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likes}</span>`;
           likedPosts = likedPosts.filter(id => id !== postId);
         } else {
           likeButton.classList.add("liked");
-          likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likesCount}</span>`;
+          likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likes}</span>`;
           likedPosts.push(postId);
         }
 
         localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
       });
   });
-});
-
-
-
-
+}
