@@ -477,38 +477,24 @@ font-size: 1.75rem;
 }
 .toast {
   position: fixed;
-  top: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
-  max-width: 400px;
-  background-color: #2e7d32; /* Verde más agradable */
-  color: #fff;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: #28a745;
+  color: white;
   padding: 1rem 1.5rem;
-  border-radius: 10px;
-  text-align: center;
-  font-size: 1rem;
-  line-height: 1.4;
-  z-index: 10000;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-weight: bold;
+  z-index: 9999;
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s ease;
 }
-
 .toast.show {
   opacity: 1;
-  pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
 }
-
 .toast.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(-50%) translateY(-20px);
+  display: none;
 }
-
-
 
 /* PORTADA */
 
