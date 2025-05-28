@@ -230,62 +230,6 @@ function manejarComentarios() {
 }
 
 
-async function mostrarComentarios() {
-  const postDiv = document.querySelector(".post");
-  const postId = postDiv?.dataset?.id;
-  const container = document.getElementById("commentsList");
-  const currentUserId = localStorage.getItem("userId");
-  if (!postId || !container) return;
-
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/posts/${postId}/comments`);
-    const data = await res.json();
-    if (!data.success) return;
-
-    const html = data.comments.map(comment => {
-      const user = comment.user_name || "Anónimo";
-      const fecha = new Date(comment.created_at).toLocaleDateString();
-      const canEdit = currentUserId && comment.user_id == currentUserId;
-
-      return `
-        <div class="comment" data-id="${comment.id}">
-          <strong>${user}</strong> <span class="comment-date">${fecha}</span>
-          <p class="comment-text">${comment.content}</p>
-          ${canEdit ? `
-            <button class="edit-comment">✏️ Editar</button>
-            <button class="delete-comment">🗑️ Eliminar</button>
-          ` : ''}
-        </div>
-      `;
-    }).join("");
-
-    container.innerHTML = html;
-
-    // Eventos para eliminar
-    document.querySelectorAll(".delete-comment").forEach(btn => {
-      btn.addEventListener("click", async (e) => {
-        const commentDiv = e.target.closest(".comment");
-        const commentId = commentDiv.dataset.id;
-        const confirmed = confirm("¿Eliminar este comentario?");
-        if (!confirmed) return;
-
-        const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: currentUserId })
-        });
-
-        const data = await res.json();
-        if (data.success) {
-          commentDiv.remove();
-        } else {
-          alert("❌ No se pudo eliminar");
-        }
-      });
-    });
-
-    // Eventos para editar
-// Edición inline
 document.querySelectorAll(".edit-comment").forEach(btn => {
   btn.addEventListener("click", e => {
     const commentDiv = e.target.closest(".comment");
@@ -293,16 +237,30 @@ document.querySelectorAll(".edit-comment").forEach(btn => {
     const textP = commentDiv.querySelector(".comment-text");
     const originalText = textP.textContent;
 
-    // Reemplaza el texto con input y botones
-    commentDiv.innerHTML = `
-      <textarea class="edit-input">${originalText}</textarea>
-      <button class="save-edit">💾 Guardar</button>
-      <button class="cancel-edit">❌ Cancelar</button>
-    `;
+    // Oculta texto original
+    textP.style.display = "none";
 
-    // Guardar
-    commentDiv.querySelector(".save-edit").addEventListener("click", async () => {
-      const newContent = commentDiv.querySelector(".edit-input").value.trim();
+    // Crea área de edición
+    const textarea = document.createElement("textarea");
+    textarea.className = "edit-input";
+    textarea.value = originalText;
+
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "💾 Guardar";
+    saveBtn.className = "save-edit";
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.textContent = "❌ Cancelar";
+    cancelBtn.className = "cancel-edit";
+
+    // Insertar al DOM
+    commentDiv.insertBefore(textarea, textP.nextSibling);
+    commentDiv.insertBefore(saveBtn, textarea.nextSibling);
+    commentDiv.insertBefore(cancelBtn, saveBtn.nextSibling);
+
+    // Eventos
+    saveBtn.addEventListener("click", async () => {
+      const newContent = textarea.value.trim();
       if (!newContent) return;
 
       const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
@@ -313,22 +271,14 @@ document.querySelectorAll(".edit-comment").forEach(btn => {
 
       const data = await res.json();
       if (data.success) {
-        mostrarComentarios(); // Recarga comentarios
+        mostrarComentarios(); // recarga comentarios actualizados
       } else {
         alert("❌ No se pudo actualizar");
       }
     });
 
-    // Cancelar
-    commentDiv.querySelector(".cancel-edit").addEventListener("click", () => {
-      mostrarComentarios();
+    cancelBtn.addEventListener("click", () => {
+      mostrarComentarios(); // recarga comentarios sin cambios
     });
   });
 });
-
-
-  } catch (err) {
-    console.error("❌ Error al mostrar comentarios:", err);
-  }
-}
-

@@ -418,10 +418,13 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
             <!-- Sección de Comentarios -->
 <div class="comments-section">
   <h2>Comentarios</h2>
-  <div class="new-comment">
-    <div class="avatar" id="avatarInicial">U</div>
-        <button id="sendComment">Enviar</button>
-  </div>
+<div class="new-comment">
+  <div class="avatar" id="avatarInicial">U</div>
+  <textarea id="commentInput" placeholder="Escribe tu comentario..."></textarea>
+  <button id="sendComment">Enviar</button>
+</div>
+
+
   <div id="commentsList"></div>
   <button id="verMasBtn" style="display: none;">Ver más</button>
 </div>
