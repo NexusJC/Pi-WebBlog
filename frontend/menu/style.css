@@ -477,24 +477,34 @@ font-size: 1.75rem;
 }
 .toast {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: #28a745;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  max-width: 800px;
+  background-color: #00796b;
   color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.2rem;
   z-index: 9999;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .toast.show {
   opacity: 1;
+  pointer-events: auto;
 }
+
 .toast.hidden {
-  display: none;
+  opacity: 0;
+  pointer-events: none;
 }
+
 
 /* PORTADA */
 
