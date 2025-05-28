@@ -185,11 +185,26 @@ function manejarComentarios() {
   const input = document.getElementById("commentInput");
   const postDiv = document.querySelector(".post");
   const postId = postDiv?.dataset?.id;
-  const userId = localStorage.getItem("userId") || null;
+  const userId = localStorage.getItem("userId");
 
   if (!sendBtn || !input || !postId) return;
 
   sendBtn.addEventListener("click", () => {
+    // 👇 Evita que usuarios no registrados comenten
+    if (!userId) {
+      const modal = document.getElementById("commentModal");
+      if (modal) {
+        modal.style.display = "flex";
+        document.getElementById("btnLogin")?.addEventListener("click", () => {
+          window.location.href = "/login/login.html";
+        });
+        document.getElementById("btnContinue")?.addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+      }
+      return;
+    }
+
     const content = input.value.trim();
     if (!content) return;
 
@@ -202,7 +217,7 @@ function manejarComentarios() {
     .then(data => {
       if (data.success) {
         input.value = "";
-        location.reload(); // o recargar solo la sección de comentarios si prefieres
+        location.reload(); // puedes optimizar esto si quieres evitar recarga completa
       } else {
         alert("❌ No se pudo enviar el comentario.");
       }
@@ -213,6 +228,7 @@ function manejarComentarios() {
     });
   });
 }
+
 
 async function mostrarComentarios() {
   const postDiv = document.querySelector(".post");

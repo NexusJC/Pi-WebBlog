@@ -420,8 +420,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
   <h2>Comentarios</h2>
   <div class="new-comment">
     <div class="avatar" id="avatarInicial">U</div>
-    <input type="text" id="commentInput" placeholder="Escribe tu comentario..." />
-    <button id="sendComment">Enviar</button>
+        <button id="sendComment">Enviar</button>
   </div>
   <div id="commentsList"></div>
   <button id="verMasBtn" style="display: none;">Ver más</button>
@@ -748,8 +747,7 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
   <h2>Comentarios</h2>
   <div class="new-comment">
     <div class="avatar" id="avatarInicial">U</div>
-    <input type="text" id="commentInput" placeholder="Escribe tu comentario..." />
-    <button id="sendComment">Enviar</button>
+        <button id="sendComment">Enviar</button>
   </div>
   <div id="commentsList"></div>
   <button id="verMasBtn" style="display: none;">Ver más</button>
@@ -822,11 +820,12 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
 
 
 app.post("/api/comments", async (req, res) => {
-  const { postId, userId, content } = req.body;
+const { postId, userId, content } = req.body;
 
-  if (!postId || !content) {
-    return res.status(400).json({ success: false, message: "Faltan datos" });
-  }
+if (!postId || !content || !userId) {
+  return res.status(400).json({ success: false, message: "Debes estar registrado para comentar" });
+}
+
 
   try {
     await pool.promise().query(
