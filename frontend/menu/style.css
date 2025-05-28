@@ -474,7 +474,14 @@ font-size: 1.75rem;
     z-index: 7;
     top: 0;
     display: none;
-}.toast {
+}
+.toast p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.toast {
   position: fixed;
   top: 2rem;
   left: 50%;
