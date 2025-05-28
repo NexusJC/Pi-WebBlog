@@ -184,7 +184,6 @@ app.post('/like/:id', async (req, res) => {
   }
 });
 
-// Eliminar un like (decrementar contador)
 app.delete('/like/:id', async (req, res) => {
   const postId = req.params.id;
   const { userId } = req.body;
@@ -198,6 +197,23 @@ app.delete('/like/:id', async (req, res) => {
       "UPDATE posts SET likes = GREATEST(likes - 1, 0) WHERE id = ?",
       [postId]
     );
+    app.get("/api/posts/:id/likes", async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const [[{ likes }]] = await pool.promise().query(
+      "SELECT likes FROM posts WHERE id = ?",
+      [postId]
+    );
+
+    // Ya no usamos hasLiked porque no hay tabla post_likes
+    res.json({ likes });
+  } catch (err) {
+    console.error("❌ Error al obtener likes:", err.message, err.stack);
+    res.status(500).json({ error: "Error al obtener likes" });
+  }
+});
+
 
     const [[{ likes }]] = await pool.promise().query(
       "SELECT likes FROM posts WHERE id = ?",
@@ -208,23 +224,6 @@ app.delete('/like/:id', async (req, res) => {
   } catch (err) {
     console.error("❌ Error al quitar like:", err.message, err.stack);
     res.status(500).json({ error: "Error al quitar like" });
-  }
-});
-
-// Obtener número de likes de un post
-app.get("/api/posts/:id/likes", async (req, res) => {
-  const postId = req.params.id;
-
-  try {
-    const [[{ likes }]] = await pool.promise().query(
-      "SELECT likes FROM posts WHERE id = ?",
-      [postId]
-    );
-
-    res.json({ likes });
-  } catch (err) {
-    console.error("❌ Error al obtener likes:", err.message, err.stack);
-    res.status(500).json({ error: "Error al obtener likes" });
   }
 });
 
@@ -839,10 +838,6 @@ app.get("/api/posts/:id/comments", async (req, res) => {
   }
 });
 
-const sanitized = content.trim();
-if (!sanitized) {
-  return res.status(400).json({ success: false, message: "Comentario vacío no permitido" });
-}
 
 
 // 🔹 Error global
