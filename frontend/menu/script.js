@@ -502,3 +502,18 @@ window.addEventListener("click", (e) => {
 
 });
 
+function mostrarBienvenida(mensaje) {
+  const toast = document.getElementById("bienvenidaToast");
+  const msg = document.getElementById("bienvenidaMensaje");
+
+  if (toast && msg) {
+    msg.textContent = mensaje;
+    toast.classList.remove("hidden");
+    toast.classList.add("show");
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+      toast.classList.add("hidden");
+    }, 4000); // Se oculta después de 4 segundos
+  }
+}
