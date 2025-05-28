@@ -3,13 +3,21 @@ const API_BASE_URL = window.location.hostname.includes("localhost")
   : "https://www.ecolima.blog";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const nombre = localStorage.getItem("userName") || "Usuario";
+  const avatar = document.getElementById("avatarInicial");
+
+  if (avatar) {
+    avatar.textContent = nombre.charAt(0).toUpperCase(); // ✅ CORREGIDO
+  }
+
   inicializarMenu();
   inicializarBuscador();
   cargarContenidoRelacionado();
   manejarLikes();
   manejarComentarios();
-  mostrarComentarios(); 
+  mostrarComentarios();
 });
+
 
 
 // 📌 MENÚ LATERAL
