@@ -1258,6 +1258,39 @@ main {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.comment-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-bottom: 0.5rem;
+}
+.comment {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+}
+
+.comment strong {
+  color: #2c3e50;
+}
+
+.comment-actions {
+  margin-top: 0.5rem;
+}
+
+.comment-actions button {
+  margin-right: 0.5rem;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment-actions button:hover {
+  background-color: #ddd;
+}
 
 
 /* Importando fuentes */
