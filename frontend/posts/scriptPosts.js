@@ -230,58 +230,6 @@ function manejarComentarios() {
 }
 
 
-document.querySelectorAll(".edit-comment").forEach(btn => {
-  btn.addEventListener("click", e => {
-    const commentDiv = e.target.closest(".comment");
-    const commentId = commentDiv.dataset.id;
-    const textP = commentDiv.querySelector(".comment-text");
-    const originalText = textP.textContent;
-
-    // Oculta texto original
-    textP.style.display = "none";
-
-    // Crea área de edición
-    const textarea = document.createElement("textarea");
-    textarea.className = "edit-input";
-    textarea.value = originalText;
-
-    const saveBtn = document.createElement("button");
-    saveBtn.textContent = "💾 Guardar";
-    saveBtn.className = "save-edit";
-
-    const cancelBtn = document.createElement("button");
-    cancelBtn.textContent = "❌ Cancelar";
-    cancelBtn.className = "cancel-edit";
-
-    // Insertar al DOM
-    commentDiv.insertBefore(textarea, textP.nextSibling);
-    commentDiv.insertBefore(saveBtn, textarea.nextSibling);
-    commentDiv.insertBefore(cancelBtn, saveBtn.nextSibling);
-
-    // Eventos
-    saveBtn.addEventListener("click", async () => {
-      const newContent = textarea.value.trim();
-      if (!newContent) return;
-
-      const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: newContent, userId: currentUserId })
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        mostrarComentarios(); // recarga comentarios actualizados
-      } else {
-        alert("❌ No se pudo actualizar");
-      }
-    });
-
-    cancelBtn.addEventListener("click", () => {
-      mostrarComentarios(); // recarga comentarios sin cambios
-    });
-  });
-});
 async function mostrarComentarios() {
   const postDiv = document.querySelector(".post");
   const postId = postDiv?.dataset?.id;
