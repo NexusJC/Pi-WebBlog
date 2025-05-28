@@ -282,3 +282,112 @@ document.querySelectorAll(".edit-comment").forEach(btn => {
     });
   });
 });
+async function mostrarComentarios() {
+  const postDiv = document.querySelector(".post");
+  const postId = postDiv?.dataset?.id;
+  const container = document.getElementById("commentsList");
+  const currentUserId = localStorage.getItem("userId");
+
+  if (!postId || !container) return;
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/posts/${postId}/comments`);
+    const { success, comments } = await res.json();
+
+    if (!success || !Array.isArray(comments)) return;
+
+    const html = comments.map(comment => {
+      const isAuthor = comment.user_id == currentUserId;
+      return `
+        <div class="comment" data-id="${comment.id}">
+          <p><strong>${comment.user_name || "Invitado"}:</strong></p>
+          <p class="comment-text">${comment.content}</p>
+          ${isAuthor ? `
+            <div class="comment-actions">
+              <button class="edit-comment">✏️ Editar</button>
+              <button class="delete-comment">🗑️ Eliminar</button>
+            </div>
+          ` : ""}
+        </div>
+      `;
+    }).join("");
+
+    container.innerHTML = html;
+
+    // Agrega eventos de editar y eliminar
+    document.querySelectorAll(".edit-comment").forEach(btn => {
+      btn.addEventListener("click", e => {
+        const commentDiv = e.target.closest(".comment");
+        const commentId = commentDiv.dataset.id;
+        const textP = commentDiv.querySelector(".comment-text");
+        const originalText = textP.textContent;
+
+        textP.style.display = "none";
+
+        const textarea = document.createElement("textarea");
+        textarea.className = "edit-input";
+        textarea.value = originalText;
+
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "💾 Guardar";
+        saveBtn.className = "save-edit";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "❌ Cancelar";
+        cancelBtn.className = "cancel-edit";
+
+        commentDiv.appendChild(textarea);
+        commentDiv.appendChild(saveBtn);
+        commentDiv.appendChild(cancelBtn);
+
+        saveBtn.addEventListener("click", async () => {
+          const newContent = textarea.value.trim();
+          if (!newContent) return;
+
+          const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: newContent, userId: currentUserId })
+          });
+
+          const data = await res.json();
+          if (data.success) {
+            mostrarComentarios();
+          } else {
+            alert("❌ No se pudo actualizar el comentario.");
+          }
+        });
+
+        cancelBtn.addEventListener("click", () => {
+          mostrarComentarios();
+        });
+      });
+    });
+
+    document.querySelectorAll(".delete-comment").forEach(btn => {
+      btn.addEventListener("click", async (e) => {
+        const commentDiv = e.target.closest(".comment");
+        const commentId = commentDiv.dataset.id;
+
+        const confirmDelete = confirm("¿Eliminar este comentario?");
+        if (!confirmDelete) return;
+
+        const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: currentUserId })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          mostrarComentarios();
+        } else {
+          alert("❌ No se pudo eliminar el comentario.");
+        }
+      });
+    });
+
+  } catch (err) {
+    console.error("❌ Error al mostrar comentarios:", err);
+  }
+}
