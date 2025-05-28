@@ -1222,6 +1222,33 @@ main {
   font-size: 0.9em;
   margin-left: 10px;
 }
+.comment textarea.edit-input {
+  width: 100%;
+  min-height: 60px;
+  margin-bottom: 8px;
+  padding: 8px;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.comment button.save-edit,
+.comment button.cancel-edit {
+  margin-right: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.comment button.save-edit {
+  background-color: #28a745;
+  color: white;
+}
+
+.comment button.cancel-edit {
+  background-color: #dc3545;
+  color: white;
+}
 
 
 /* Importando fuentes */

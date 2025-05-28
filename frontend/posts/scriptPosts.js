@@ -202,7 +202,6 @@ function manejarComentarios() {
     .then(data => {
       if (data.success) {
         input.value = "";
-        alert("✅ Comentario enviado.");
         location.reload(); // o recargar solo la sección de comentarios si prefieres
       } else {
         alert("❌ No se pudo enviar el comentario.");
@@ -270,30 +269,47 @@ async function mostrarComentarios() {
     });
 
     // Eventos para editar
-    document.querySelectorAll(".edit-comment").forEach(btn => {
-      btn.addEventListener("click", async (e) => {
-        const commentDiv = e.target.closest(".comment");
-        const commentId = commentDiv.dataset.id;
-        const textP = commentDiv.querySelector(".comment-text");
-        const original = textP.textContent;
+// Edición inline
+document.querySelectorAll(".edit-comment").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const commentDiv = e.target.closest(".comment");
+    const commentId = commentDiv.dataset.id;
+    const textP = commentDiv.querySelector(".comment-text");
+    const originalText = textP.textContent;
 
-        const newContent = prompt("Editar comentario:", original);
-        if (newContent === null || newContent.trim() === "") return;
+    // Reemplaza el texto con input y botones
+    commentDiv.innerHTML = `
+      <textarea class="edit-input">${originalText}</textarea>
+      <button class="save-edit">💾 Guardar</button>
+      <button class="cancel-edit">❌ Cancelar</button>
+    `;
 
-        const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content: newContent.trim(), userId: currentUserId })
-        });
+    // Guardar
+    commentDiv.querySelector(".save-edit").addEventListener("click", async () => {
+      const newContent = commentDiv.querySelector(".edit-input").value.trim();
+      if (!newContent) return;
 
-        const data = await res.json();
-        if (data.success) {
-          textP.textContent = newContent.trim();
-        } else {
-          alert("❌ No se pudo editar");
-        }
+      const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: newContent, userId: currentUserId })
       });
+
+      const data = await res.json();
+      if (data.success) {
+        mostrarComentarios(); // Recarga comentarios
+      } else {
+        alert("❌ No se pudo actualizar");
+      }
     });
+
+    // Cancelar
+    commentDiv.querySelector(".cancel-edit").addEventListener("click", () => {
+      mostrarComentarios();
+    });
+  });
+});
+
 
   } catch (err) {
     console.error("❌ Error al mostrar comentarios:", err);
