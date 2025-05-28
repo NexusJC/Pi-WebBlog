@@ -7,7 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarBuscador();
   cargarContenidoRelacionado();
   manejarLikes();
+  manejarComentarios();
+  mostrarComentarios(); 
 });
+
 
 // 📌 MENÚ LATERAL
 function inicializarMenu() {
@@ -19,6 +22,7 @@ function inicializarMenu() {
     });
   }
 }
+
 
 // 📌 BUSCADOR
 function inicializarBuscador() {
@@ -173,4 +177,70 @@ function manejarLikes() {
         localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
       });
   });
+}
+
+// 📌 COMENTARIOS
+function manejarComentarios() {
+  const sendBtn = document.getElementById("sendComment");
+  const input = document.getElementById("commentInput");
+  const postDiv = document.querySelector(".post");
+  const postId = postDiv?.dataset?.id;
+  const userId = localStorage.getItem("userId") || null;
+
+  if (!sendBtn || !input || !postId) return;
+
+  sendBtn.addEventListener("click", () => {
+    const content = input.value.trim();
+    if (!content) return;
+
+    fetch(`${API_BASE_URL}/api/comments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ postId, userId, content })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        input.value = "";
+        alert("✅ Comentario enviado.");
+        location.reload(); // o recargar solo la sección de comentarios si prefieres
+      } else {
+        alert("❌ No se pudo enviar el comentario.");
+      }
+    })
+    .catch(err => {
+      console.error("❌ Error al enviar comentario:", err);
+      alert("Error al enviar comentario.");
+    });
+  });
+}
+
+function mostrarComentarios() {
+  const postDiv = document.querySelector(".post");
+  const postId = postDiv?.dataset?.id;
+  const container = document.getElementById("commentsContainer");
+
+  if (!postId || !container) return;
+
+  fetch(`${API_BASE_URL}/api/posts/${postId}/comments`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success || !Array.isArray(data.comments)) return;
+
+      const html = data.comments.map(comment => {
+        const user = comment.user_name || "Anónimo";
+        const fecha = new Date(comment.created_at).toLocaleDateString();
+        return `
+          <div class="comment">
+            <strong>${user}</strong> <span class="comment-date">${fecha}</span>
+            <p>${comment.content}</p>
+          </div>
+        `;
+      }).join("");
+
+      container.innerHTML = html;
+    })
+    .catch(err => {
+      console.error("❌ Error al cargar comentarios:", err);
+    });
 }

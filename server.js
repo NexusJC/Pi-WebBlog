@@ -801,18 +801,6 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
   }
 });
 
-fetch(`${API_BASE_URL}/api/comments`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    postId,
-    userId,
-    content
-  })
-});
-
 
 app.post("/api/comments", async (req, res) => {
   const { postId, userId, content } = req.body;
