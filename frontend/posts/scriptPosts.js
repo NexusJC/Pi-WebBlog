@@ -218,7 +218,7 @@ function manejarComentarios() {
 function mostrarComentarios() {
   const postDiv = document.querySelector(".post");
   const postId = postDiv?.dataset?.id;
-  const container = document.getElementById("commentsContainer");
+  const container = document.getElementById("commentsList");
 
   if (!postId || !container) return;
 

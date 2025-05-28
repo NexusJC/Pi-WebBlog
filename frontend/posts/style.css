@@ -1211,6 +1211,17 @@ main {
 .modal.show {
   display: flex !important;
 }
+.comment {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.comment-date {
+  color: #888;
+  font-size: 0.9em;
+  margin-left: 10px;
+}
 
 
 /* Importando fuentes */
