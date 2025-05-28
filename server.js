@@ -184,6 +184,7 @@ app.post('/like/:id', async (req, res) => {
   }
 });
 
+// Eliminar un like (decrementar contador)
 app.delete('/like/:id', async (req, res) => {
   const postId = req.params.id;
   const { userId } = req.body;
@@ -197,23 +198,6 @@ app.delete('/like/:id', async (req, res) => {
       "UPDATE posts SET likes = GREATEST(likes - 1, 0) WHERE id = ?",
       [postId]
     );
-    app.get("/api/posts/:id/likes", async (req, res) => {
-  const postId = req.params.id;
-
-  try {
-    const [[{ likes }]] = await pool.promise().query(
-      "SELECT likes FROM posts WHERE id = ?",
-      [postId]
-    );
-
-    // Ya no usamos hasLiked porque no hay tabla post_likes
-    res.json({ likes });
-  } catch (err) {
-    console.error("❌ Error al obtener likes:", err.message, err.stack);
-    res.status(500).json({ error: "Error al obtener likes" });
-  }
-});
-
 
     const [[{ likes }]] = await pool.promise().query(
       "SELECT likes FROM posts WHERE id = ?",
@@ -224,6 +208,23 @@ app.delete('/like/:id', async (req, res) => {
   } catch (err) {
     console.error("❌ Error al quitar like:", err.message, err.stack);
     res.status(500).json({ error: "Error al quitar like" });
+  }
+});
+
+// Obtener número de likes de un post
+app.get("/api/posts/:id/likes", async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const [[{ likes }]] = await pool.promise().query(
+      "SELECT likes FROM posts WHERE id = ?",
+      [postId]
+    );
+
+    res.json({ likes });
+  } catch (err) {
+    console.error("❌ Error al obtener likes:", err.message, err.stack);
+    res.status(500).json({ error: "Error al obtener likes" });
   }
 });
 
@@ -801,7 +802,47 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
 });
 
 
+app.post("/api/comments", async (req, res) => {
+  const { postId, userId, content } = req.body;
 
+  if (!postId || !content) {
+    return res.status(400).json({ success: false, message: "Faltan datos" });
+  }
+
+  try {
+    await pool.promise().query(
+      "INSERT INTO comments (post_id, user_id, content) VALUES (?, ?, ?)",
+      [postId, userId || null, content]
+    );
+    res.json({ success: true, message: "Comentario guardado" });
+  } catch (err) {
+    console.error("❌ Error al guardar comentario:", err);
+    res.status(500).json({ success: false, message: "Error interno" });
+  }
+});
+app.get("/api/posts/:id/comments", async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const [rows] = await pool.promise().query(`
+      SELECT c.*, u.name as user_name
+      FROM comments c
+      LEFT JOIN users u ON c.user_id = u.id
+      WHERE c.post_id = ?
+      ORDER BY c.created_at DESC
+    `, [postId]);
+
+    res.json({ success: true, comments: rows });
+  } catch (err) {
+    console.error("❌ Error al obtener comentarios:", err);
+    res.status(500).json({ success: false, message: "Error interno" });
+  }
+});
+
+const sanitized = content.trim();
+if (!sanitized) {
+  return res.status(400).json({ success: false, message: "Comentario vacío no permitido" });
+}
 
 
 // 🔹 Error global
