@@ -35,11 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.logout}
                 ${menuItems.search}
             `;
-
-    if (!sessionStorage.getItem("bienvenidaMostrada")) {
-        mostrarBienvenida(`Bienvenido administrador, ${name}`);
-        sessionStorage.setItem("bienvenidaMostrada", "true");
-    }
+            mostrarBienvenida(`Bienvenido administrador, ${name}`);
         } else if (role === "usuario") {
             menu.innerHTML = `
                 ${menuItems.logo}
@@ -50,11 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.logout}
                 ${menuItems.search}
             `;
-            
-    if (!sessionStorage.getItem("bienvenidaMostrada")) {
-        mostrarBienvenida(`¡Hola ${name}, bienvenido de nuevo!`);
-        sessionStorage.setItem("bienvenidaMostrada", "true");
-    }
+            mostrarBienvenida(`¡Hola ${name}, bienvenido de nuevo!`);
         } else {
             menu.innerHTML = `
                 ${menuItems.logo}
