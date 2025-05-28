@@ -215,32 +215,88 @@ function manejarComentarios() {
   });
 }
 
-function mostrarComentarios() {
+async function mostrarComentarios() {
   const postDiv = document.querySelector(".post");
   const postId = postDiv?.dataset?.id;
   const container = document.getElementById("commentsList");
-
+  const currentUserId = localStorage.getItem("userId");
   if (!postId || !container) return;
 
-  fetch(`${API_BASE_URL}/api/posts/${postId}/comments`)
-    .then(res => res.json())
-    .then(data => {
-      if (!data.success || !Array.isArray(data.comments)) return;
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/posts/${postId}/comments`);
+    const data = await res.json();
+    if (!data.success) return;
 
-      const html = data.comments.map(comment => {
-        const user = comment.user_name || "Anónimo";
-        const fecha = new Date(comment.created_at).toLocaleDateString();
-        return `
-          <div class="comment">
-            <strong>${user}</strong> <span class="comment-date">${fecha}</span>
-            <p>${comment.content}</p>
-          </div>
-        `;
-      }).join("");
+    const html = data.comments.map(comment => {
+      const user = comment.user_name || "Anónimo";
+      const fecha = new Date(comment.created_at).toLocaleDateString();
+      const canEdit = currentUserId && comment.user_id == currentUserId;
 
-      container.innerHTML = html;
-    })
-    .catch(err => {
-      console.error("❌ Error al cargar comentarios:", err);
+      return `
+        <div class="comment" data-id="${comment.id}">
+          <strong>${user}</strong> <span class="comment-date">${fecha}</span>
+          <p class="comment-text">${comment.content}</p>
+          ${canEdit ? `
+            <button class="edit-comment">✏️ Editar</button>
+            <button class="delete-comment">🗑️ Eliminar</button>
+          ` : ''}
+        </div>
+      `;
+    }).join("");
+
+    container.innerHTML = html;
+
+    // Eventos para eliminar
+    document.querySelectorAll(".delete-comment").forEach(btn => {
+      btn.addEventListener("click", async (e) => {
+        const commentDiv = e.target.closest(".comment");
+        const commentId = commentDiv.dataset.id;
+        const confirmed = confirm("¿Eliminar este comentario?");
+        if (!confirmed) return;
+
+        const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userId: currentUserId })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          commentDiv.remove();
+        } else {
+          alert("❌ No se pudo eliminar");
+        }
+      });
     });
+
+    // Eventos para editar
+    document.querySelectorAll(".edit-comment").forEach(btn => {
+      btn.addEventListener("click", async (e) => {
+        const commentDiv = e.target.closest(".comment");
+        const commentId = commentDiv.dataset.id;
+        const textP = commentDiv.querySelector(".comment-text");
+        const original = textP.textContent;
+
+        const newContent = prompt("Editar comentario:", original);
+        if (newContent === null || newContent.trim() === "") return;
+
+        const res = await fetch(`${API_BASE_URL}/api/comments/${commentId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: newContent.trim(), userId: currentUserId })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          textP.textContent = newContent.trim();
+        } else {
+          alert("❌ No se pudo editar");
+        }
+      });
+    });
+
+  } catch (err) {
+    console.error("❌ Error al mostrar comentarios:", err);
+  }
 }
+
