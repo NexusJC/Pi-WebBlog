@@ -1789,4 +1789,10 @@ main {
     align-items: center;
     gap: 5px;
 }
+.header-content__logo-container img {
+  width: 4rem;
+  height: auto;
+  display: block;
+}
+
 
