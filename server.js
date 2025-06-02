@@ -543,6 +543,33 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
     }
 });
 
+app.delete("/api/comments/:id", async (req, res) => {
+  const commentId = req.params.id;
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "Falta userId" });
+  }
+
+  try {
+    const [rows] = await pool.promise().query("SELECT * FROM comments WHERE id = ?", [commentId]);
+    if (!rows.length) {
+      return res.status(404).json({ success: false, message: "Comentario no encontrado" });
+    }
+
+    const comment = rows[0];
+    if (comment.user_id != userId) {
+      return res.status(403).json({ success: false, message: "No autorizado" });
+    }
+
+    await pool.promise().query("DELETE FROM comments WHERE id = ?", [commentId]);
+    res.json({ success: true, message: "Comentario eliminado" });
+  } catch (err) {
+    console.error("❌ Error al eliminar comentario:", err);
+    res.status(500).json({ success: false, message: "Error interno" });
+  }
+});
+
 
 app.delete('/api/posts/:id', async (req, res) => {
   const postId = req.params.id;
