@@ -733,9 +733,10 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
                         <li title="Blog" class="blog-selected"><a class="blog-selected" href="#"><i class="fa-solid fa-newspaper"></i></a></li>
                         <li title="¿Quiénes somos?"><a href="/about-us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
                         <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
-                        <li title="Usuario" id="userMenuItem">
+         <li title="Usuario" id="userMenuItem">
   <button class="user-button" id="userDisplay"><i class="fa-solid fa-user"></i> Iniciar sesión</button>
 </li>
+
 
                         <li title="Búsquedas">
                             <div class="main-navbar--ctn-icon-search">
