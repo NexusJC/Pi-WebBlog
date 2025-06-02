@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const role = localStorage.getItem("userRole") || "invitado";
     const name = localStorage.getItem("userName") || "Invitado";
     const menu = document.getElementById("dynamic-menu");
+    const isMenuPage = window.location.pathname.includes("/menu/index.html");
+
 
     const menuItems = {
         logo: `
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.publish}
                 ${menuItems.admin}
                 ${menuItems.userName}
-                ${menuItems.logout}
+                ${isMenuPage ? menuItems.logout : ""}
                 ${menuItems.search}
             `;
             mostrarBienvenida(`Bienvenido administrador, ${name}`);
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.about}
                 ${menuItems.contact}
                 ${menuItems.userName}
-                ${menuItems.logout}
+                ${isMenuPage ? menuItems.logout : ""}
                 ${menuItems.search}
             `;
             mostrarBienvenida(`¡Hola ${name}, bienvenido de nuevo!`);
