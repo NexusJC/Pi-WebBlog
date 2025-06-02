@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuItems = {
         logo: `
             <li>
-                <a href="/menu/index.html" class="header-content__logo-container" title="Ir al menú">
+                <div class="header-content__logo-container">
                     <img src="/img/logo-ecolima.png" alt="Logo">
                 </div>
             </li>
