@@ -144,6 +144,7 @@ nav a {
 
 #icon-search {
 font-size: 1.75rem;
+display: none;
 }
 
 #icon-menu {
