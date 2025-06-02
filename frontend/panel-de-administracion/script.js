@@ -55,20 +55,29 @@ tr.innerHTML = `
 
 
 
-async function borrarPost(id) {
-  if (confirm("¿Estás seguro de borrar este post?")) {
-    const res = await fetch(`/api/posts/${id}`, {
-      method: "DELETE"
-    });
+function borrarPost(id) {
+  const confirmar = confirm("¿Seguro que deseas eliminar este post?");
+  if (!confirmar) return;
 
-    if (res.ok) {
+  const API_BASE = location.hostname === "localhost"
+    ? "http://localhost:3001"
+    : "https://ecolima-backend.up.railway.app"; // 🔁 Cambia esto si tu backend tiene otro dominio
+
+  fetch(`${API_BASE}/api/posts/${id}`, {
+    method: "DELETE"
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Error al eliminar el post");
       alert("Post eliminado correctamente");
-      cargarPosts();
-    } else {
+      location.reload();
+    })
+    .catch((err) => {
+      console.error(err);
       alert("Error al eliminar el post");
-    }
-  }
+    });
 }
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const iconMenu = document.getElementById("icon-menu");
