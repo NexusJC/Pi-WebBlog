@@ -207,28 +207,32 @@ app.post('/like/:id', async (req, res) => {
 });
 
 // Eliminar un like (decrementar contador)
-app.delete("/api/comments/:id", async (req, res) => {
-  const commentId = req.params.id;
+app.delete('/like/:id', async (req, res) => {
+  const postId = req.params.id;
   const { userId } = req.body;
 
-  if (!userId) return res.status(400).json({ success: false, message: "Falta userId" });
+  if (!userId) {
+    return res.status(400).json({ error: "Falta userId" });
+  }
 
   try {
-    const [rows] = await pool.promise().query("SELECT * FROM comments WHERE id = ?", [commentId]);
-    if (!rows.length) return res.status(404).json({ success: false, message: "Comentario no encontrado" });
+    await pool.promise().query(
+      "UPDATE posts SET likes = GREATEST(likes - 1, 0) WHERE id = ?",
+      [postId]
+    );
 
-    const comment = rows[0];
-    if (comment.user_id != userId) {
-      return res.status(403).json({ success: false, message: "No autorizado" });
-    }
+    const [[{ likes }]] = await pool.promise().query(
+      "SELECT likes FROM posts WHERE id = ?",
+      [postId]
+    );
 
-    await pool.promise().query("DELETE FROM comments WHERE id = ?", [commentId]);
-    res.json({ success: true, message: "Comentario eliminado" });
+    res.json({ likes });
   } catch (err) {
-    console.error("❌ Error al eliminar comentario:", err);
-    res.status(500).json({ success: false, message: "Error interno" });
+    console.error("❌ Error al quitar like:", err.message);
+    res.status(500).json({ error: "Error al quitar like" });
   }
 });
+
 app.put("/api/comments/:id", async (req, res) => {
   const commentId = req.params.id;
   const { content, userId } = req.body;
