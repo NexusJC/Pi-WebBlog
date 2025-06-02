@@ -206,7 +206,7 @@ app.post('/like/:id', async (req, res) => {
   }
 });
 
-// app.getnar un like (decrementar contador)
+// Eliminar un like (decrementar contador)
 app.delete("/api/comments/:id", async (req, res) => {
   const commentId = req.params.id;
   const { userId } = req.body;
@@ -540,34 +540,28 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
 });
 
 
-// 🔹 Quitar un like
-app.delete("/like/:id", async (req, res) => {
+app.delete('/api/posts/:id', async (req, res) => {
   const postId = req.params.id;
-  const { userId } = req.body;
-
-  if (!userId) {
-    return res.status(400).json({ error: "Falta userId" });
-  }
 
   try {
-    // Resta un like (sin permitir negativos)
-    await pool.promise().query(
-      "UPDATE posts SET likes = GREATEST(likes - 1, 0) WHERE id = ?",
-      [postId]
-    );
+    // Borra de la base de datos
+    await pool.promise().execute('DELETE FROM posts WHERE id = ?', [postId]);
 
-    const [[{ likes }]] = await pool.promise().query(
-      "SELECT likes FROM posts WHERE id = ?",
-      [postId]
-    );
+    // Opcional: borrar el archivo HTML
+    const htmlPath = path.join(__dirname, 'frontend', 'posts', `blog${postId}.html`);
+    try {
+      await fs.promises.unlink(htmlPath);
+      console.log(`🗑️ Archivo blog${postId}.html eliminado`);
+    } catch (err) {
+      console.warn(`⚠️ Archivo blog${postId}.html no encontrado o ya eliminado`);
+    }
 
-    res.json({ likes });
-  } catch (err) {
-    console.error("❌ Error al quitar like:", err.message);
-    res.status(500).json({ error: "Error al quitar like" });
+    res.json({ success: true, message: 'Post eliminado' });
+  } catch (error) {
+    console.error('❌ Error al eliminar el post:', error);
+    res.status(500).json({ success: false, error: 'Error al eliminar el post' });
   }
 });
-
 
 // 🔹 Obtener todos los posts
 app.get('/api/posts', async (req, res) => {
@@ -612,33 +606,6 @@ app.get('/api/posts/:id', async (req, res) => {
     res.status(500).json({ success: false, message: "Error interno al cargar el post" });
   }
 });
-// 🔹 Eliminar un post por ID
-app.delete('/api/posts/:id', async (req, res) => {
-  const postId = req.params.id;
-
-  try {
-    // Verifica si el post existe
-    const [rows] = await pool.promise().query("SELECT * FROM posts WHERE id = ?", [postId]);
-    if (rows.length === 0) {
-      return res.status(404).json({ success: false, message: "Post no encontrado" });
-    }
-
-    // Elimina el post de la base de datos
-    await pool.promise().query("DELETE FROM posts WHERE id = ?", [postId]);
-
-    // Elimina el archivo HTML asociado (ej. blog123.html)
-    const htmlPath = path.join(__dirname, 'frontend', 'posts', `blog${postId}.html`);
-    if (fs.existsSync(htmlPath)) {
-      fs.unlinkSync(htmlPath);
-    }
-
-    res.json({ success: true, message: "Post eliminado" });
-  } catch (err) {
-    console.error("❌ Error al eliminar post:", err);
-    res.status(500).json({ success: false, message: "Error interno" });
-  }
-});
-
 
 app.put('/api/posts/:id', async (req, res) => {
     const fields = req.body;
