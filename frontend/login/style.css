@@ -275,12 +275,20 @@ body {
 .mensaje-error {
   font-size: 0.75rem;
   color: #e74c3c;
-  margin: 4px 0 0 40px; /* Alineado con los íconos */
+  margin: 4px 0 0 40px;
   padding: 0;
   line-height: 1.2;
+  min-height: 18px; /* ✅ RESERVA espacio constante */
   max-width: 100%;
   word-wrap: break-word;
+  display: block; /* ✅ Que siempre exista en el layout */
+  visibility: hidden; /* 👈 Oculta visualmente pero no colapsa */
 }
+
+.mensaje-error.activo {
+  visibility: visible; /* 👈 Solo visible si hay error */
+}
+
 
 
 

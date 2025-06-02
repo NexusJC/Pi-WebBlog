@@ -70,8 +70,14 @@ export function validarCampo(regex, input, mensaje) {
         container.appendChild(mensajeError);
     }
 
-    mensajeError.textContent = isValid ? "" : mensaje;
-    mensajeError.style.display = isValid ? "none" : "block";
+   if (!isValid) {
+    mensajeError.textContent = mensaje;
+    mensajeError.classList.add("activo");
+} else {
+    mensajeError.textContent = "";
+    mensajeError.classList.remove("activo");
+}
+
 }
 
 //validar_Campos
