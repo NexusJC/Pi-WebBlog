@@ -40,10 +40,13 @@
                             <input type="email" placeholder="Correo Electronico" name="userEmail">
                         </label>
                     </div>
-                   <div class="password-wrapper">
-                        <i class='bx bx-lock-alt'></i>
-                        <input type="password" placeholder="Contraseña" name="userPassword" id="passwordInput">
-                        <i class='bx bx-show toggle-password' id="togglePassword"></i>
+                    <div>
+                        <div class="password-wrapper">
+                            <i class='bx bx-lock-alt'></i>
+                            <input type="password" placeholder="Contraseña" name="userPassword" id="passwordInput">
+                            <i class='bx bx-show toggle-password' id="togglePassword"></i>
+                        </div>
+                        <p class="mensaje-error" id="errorPassword" style="display: none;">La contraseña debe tener entre 4 y 12 caracteres.</p>
                     </div>
                     <input type="submit" value="Registrarse">
                     <div class="alerta-error" style="display: none;"></div>
@@ -79,7 +82,6 @@
                             <input type="password" placeholder="Contraseña" name="userPassword" id="loginPasswordInput">
                             <i class='bx bx-show toggle-password' id="toggleLoginPassword"></i>
                         </div>
-
                     </div>
                     <div>
                         <a href="../login/Olvidé_contraseña.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
