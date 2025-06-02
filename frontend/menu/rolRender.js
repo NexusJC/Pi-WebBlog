@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.publish}
                 ${menuItems.admin}
                 ${menuItems.userName}
-                ${isMenuPage ? menuItems.logout : ""}
+                ${menuItems.logout}
                 ${menuItems.search}
             `;
             mostrarBienvenida(`Bienvenido administrador, ${name}`);
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.about}
                 ${menuItems.contact}
                 ${menuItems.userName}
-                ${isMenuPage ? menuItems.logout : ""}
+                ${menuItems.logout}
                 ${menuItems.search}
             `;
             mostrarBienvenida(`¡Hola ${name}, bienvenido de nuevo!`);
