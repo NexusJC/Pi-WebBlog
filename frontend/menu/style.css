@@ -216,7 +216,8 @@ a {
 
 .header-content__logo-container {
     width: 6.1rem;
-    height: 5rem;
+    cursor: pointer;
+    height: 5rem;   
     display: flex;
     position: relative;
     justify-content: center;
