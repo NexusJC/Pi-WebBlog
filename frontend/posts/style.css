@@ -1760,3 +1760,21 @@ main {
     }
     
 }
+.btn-usuario {
+  background-color: #ffffff;
+  color: #003800;
+  font-weight: bold;
+  border: 2px solid #388E3C;
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.btn-usuario:hover {
+  background-color: #388E3C;
+  color: white;
+}

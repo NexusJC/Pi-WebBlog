@@ -359,7 +359,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                         <li title="¿Quiénes somos?"><a href="/about-us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
                         <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
                         <li title="Usuario" id="userMenuItem">
-                          <a id="userDisplay" href="/login/login.html">
+                          <a id="userDisplay" class="btn-usuario" href="/login/login.html">
                             <i class="fa-solid fa-circle-user"></i> Iniciar sesión
                           </a>
                         </li>
@@ -705,7 +705,7 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
                         <li title="¿Quiénes somos?"><a href="/about-us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
                         <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
                         <li title="Usuario" id="userMenuItem">
-                          <a id="userDisplay" href="/login/login.html">
+                          <<a id="userDisplay" class="btn-usuario" href="/login/login.html">
                             <i class="fa-solid fa-circle-user"></i> Iniciar sesión
                           </a>
                         </li>
