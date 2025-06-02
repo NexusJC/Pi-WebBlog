@@ -791,9 +791,11 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
 <div class="comments-section">
   <h2>Comentarios</h2>
   <div class="new-comment">
-    <div class="avatar" id="avatarInicial"></div>
-        <button id="sendComment">Enviar</button>
-  </div>
+  <div class="avatar" id="avatarInicial"></div>
+  <textarea id="commentInput" placeholder="Escribe tu comentario..."></textarea>
+  <button id="sendComment">Enviar</button>
+</div>
+
   <div id="commentsList"></div>
   <button id="verMasBtn" style="display: none;">Ver más</button>
 </div>
