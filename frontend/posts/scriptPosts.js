@@ -160,7 +160,7 @@ function manejarLikes() {
     const liked = likeButton.classList.contains("liked");
     const method = liked ? "DELETE" : "POST";
 
-    fetch(`${API_BASE_URL}/api/like/${postId}`, {
+    fetch(`${API_BASE_URL}/like/${postId}`, {
       method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId })
