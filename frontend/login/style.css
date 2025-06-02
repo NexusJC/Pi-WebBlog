@@ -284,6 +284,12 @@ body {
 .form .form-group {
     min-height: 70px;
 }
+.logo-login {
+  width: 90px;
+  height: auto;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
 
 
 
