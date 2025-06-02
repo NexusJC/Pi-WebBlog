@@ -302,6 +302,49 @@ body {
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
 }
 
+.form .form-group {
+    min-height: 70px;
+}
+.politica-container {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.btn-politica {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  background-color: #E8F5E9;
+  color: #2E7D32;
+  border: 1px solid #81C784;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-politica:hover {
+  background-color: #C8E6C9;
+  border-color: #66BB6A;
+}
+.boton_regresar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+
+.boton_regresar:hover {
+  background-color: #45a049;
+}
 
 
 
