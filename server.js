@@ -83,26 +83,48 @@ app.get("/", (req, res) => {
 
 // 🔹 Registro de usuario
 app.post("/registrar", async (req, res) => {
-    const { userName, userEmail, userPassword } = req.body;
-    if (!userName || !userEmail || !userPassword) {
-        return res.status(400).json({ success: false, message: "Faltan datos" });
+  const { userName, userEmail, userPassword } = req.body;
+
+  // Validaciones del backend
+  const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  const passwordRegex = /^.{4,16}$/;
+  const userNameRegex = /^[a-zA-Z0-9_-]{4,16}$/;
+
+  if (!userName || !userEmail || !userPassword) {
+    return res.status(400).json({ success: false, message: "Faltan datos" });
+  }
+
+  if (!userNameRegex.test(userName)) {
+    return res.status(400).json({ success: false, message: "Nombre de usuario inválido" });
+  }
+
+  if (!emailRegex.test(userEmail)) {
+    return res.status(400).json({ success: false, message: "Correo inválido" });
+  }
+
+  if (!passwordRegex.test(userPassword)) {
+    return res.status(400).json({ success: false, message: "Contraseña inválida" });
+  }
+
+  try {
+    const [exists] = await pool.promise().query("SELECT id FROM users WHERE email = ?", [userEmail]);
+    if (exists.length > 0) {
+      return res.status(409).json({ success: false, message: "Correo ya registrado" });
     }
 
-    try {
-        const [exists] = await pool.promise().query("SELECT id FROM users WHERE email = ?", [userEmail]);
-        if (exists.length > 0) return res.status(409).json({ success: false, message: "Correo ya registrado" });
+    const hashed = await bcrypt.hash(userPassword, 10);
+    const [result] = await pool.promise().query(
+      "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
+      [userName, userEmail, hashed, "usuario"]
+    );
 
-        const hashed = await bcrypt.hash(userPassword, 10);
-        const [result] = await pool.promise().query(
-            "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-            [userName, userEmail, hashed, "usuario"]
-        );
-        res.status(201).json({ success: true, userId: result.insertId, userName });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: "Error al registrar usuario" });
-    }
+    res.status(201).json({ success: true, userId: result.insertId, userName });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Error al registrar usuario" });
+  }
 });
+
 
 // 🔹 Login
 app.post("/login", async (req, res) => {

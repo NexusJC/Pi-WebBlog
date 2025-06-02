@@ -18,20 +18,28 @@ const alertaExito = document.querySelector(".form-register .alerta-exito");
 
 document.addEventListener("DOMContentLoaded", () => {
     formRegister.addEventListener("submit", (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        if (estadoValidacionCampos.userName && estadoValidacionCampos.userEmail && estadoValidacionCampos.userPassword) {
-            enviarFormulario(formRegister, alertaError, alertaExito);
-        } else {
-            alertaError.textContent = "Por favor, completa todos los campos correctamente.";
-            alertaError.classList.add("alertaError");
-            alertaError.style.display = "block";
-            setTimeout(() => {
-                alertaError.classList.remove("alertaError");
-                alertaError.style.display = "none";
-            }, 3000);
-        }
-    });
+    // Validar en tiempo real ANTES de enviar
+    validarCampo(userNameRegex, inputUser, "El usuario debe tener de 4 a 16 caracteres, solo letras, números, guiones y guiones bajos.");
+    validarCampo(emailRegex, inputEmail, "El correo no es válido.");
+    validarCampo(passwordRegex, inputPass, "La contraseña debe tener entre 4 y 12 caracteres.");
+
+    const todoValido = estadoValidacionCampos.userName && estadoValidacionCampos.userEmail && estadoValidacionCampos.userPassword;
+
+    if (todoValido) {
+        enviarFormulario(formRegister, alertaError, alertaExito);
+    } else {
+        alertaError.textContent = "Por favor, completa todos los campos correctamente.";
+        alertaError.classList.add("alertaError");
+        alertaError.style.display = "block";
+        setTimeout(() => {
+            alertaError.classList.remove("alertaError");
+            alertaError.style.display = "none";
+        }, 3000);
+    }
+});
+
 
     inputUser.addEventListener("input", () => {
         validarCampo(userNameRegex, inputUser, "El usuario debe tener de 4 a 16 caracteres, solo letras, números, guiones y guiones bajos.");
