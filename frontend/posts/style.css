@@ -214,10 +214,13 @@ a {
 }
 
 .header-content__logo-container img {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
     height: auto;
-    margin: 0;
+    object-fit: contain;
 }
+
 
 .main-navbar ul {
     display: flex;
@@ -1787,12 +1790,5 @@ main {
     cursor: default;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 5px;   
 }
-.header-content__logo-container img {
-  width: 4rem;
-  height: auto;
-  display: block;
-}
-
-
