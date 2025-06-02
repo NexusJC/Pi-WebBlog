@@ -275,12 +275,11 @@ body {
 .mensaje-error {
   font-size: 0.75rem;
   color: #e74c3c;
-  margin-top: 5px;
-  padding-left: 5px;
-  text-align: left;
+  margin: 4px 0 0 40px; /* Alineado con los íconos */
+  padding: 0;
+  line-height: 1.2;
   max-width: 100%;
   word-wrap: break-word;
-  line-height: 1.2;
 }
 
 
