@@ -540,28 +540,34 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
 });
 
 
-app.delete('/api/posts/:id', async (req, res) => {
+// 🔹 Quitar un like
+app.delete("/like/:id", async (req, res) => {
   const postId = req.params.id;
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: "Falta userId" });
+  }
 
   try {
-    // Borra de la base de datos
-    await pool.promise().execute('DELETE FROM posts WHERE id = ?', [postId]);
+    // Resta un like (sin permitir negativos)
+    await pool.promise().query(
+      "UPDATE posts SET likes = GREATEST(likes - 1, 0) WHERE id = ?",
+      [postId]
+    );
 
-    // Opcional: borrar el archivo HTML
-    const htmlPath = path.join(__dirname, 'frontend', 'posts', `blog${postId}.html`);
-    try {
-      await fs.promises.unlink(htmlPath);
-      console.log(`🗑️ Archivo blog${postId}.html eliminado`);
-    } catch (err) {
-      console.warn(`⚠️ Archivo blog${postId}.html no encontrado o ya eliminado`);
-    }
+    const [[{ likes }]] = await pool.promise().query(
+      "SELECT likes FROM posts WHERE id = ?",
+      [postId]
+    );
 
-    res.json({ success: true, message: 'Post eliminado' });
-  } catch (error) {
-    console.error('❌ Error al eliminar el post:', error);
-    res.status(500).json({ success: false, error: 'Error al eliminar el post' });
+    res.json({ likes });
+  } catch (err) {
+    console.error("❌ Error al quitar like:", err.message);
+    res.status(500).json({ error: "Error al quitar like" });
   }
 });
+
 
 // 🔹 Obtener todos los posts
 app.get('/api/posts', async (req, res) => {
