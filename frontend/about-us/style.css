@@ -320,25 +320,28 @@ main {
 }
 
 .about-us-text {
-    width: 60%; /* Ajustado para mejor distribución con la imagen */
+  padding: 0 2rem;
+  box-sizing: border-box;
+  text-align: justify;
 }
 
 .about-us-text p {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: #333;
-    text-align: justify;
-    margin: 0 auto;
-    width: 100%;
-    padding: 0 1.5rem; /* Espaciado lateral */
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #333;
+  margin: 0 0 2rem 0;
 }
 
+
 .about-us-values {
-    padding: 1.5rem;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
 }
 
 .about-us-values h3 {
@@ -525,23 +528,22 @@ article img {
 
 /* --- Botones --- */
 .btn-action {
-    display: block;
-    margin: 2rem auto;
-    width: 200px;
-    padding: 1rem;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn-action:hover {
-    background-color: #388E3C;
+  background-color: #388E3C;
 }
 
 .usuario-info {
@@ -653,29 +655,29 @@ article img {
 
 /* --- Sección ODS (Contáctanos y Descripción) - Integrado --- */
 .ods-section {
-    padding: 2rem; /* Añade un poco de espacio alrededor de la sección */
-    margin-bottom: 2rem; /* Espacio con la siguiente sección */
-    background-color: #f9f9f9; /* Un fondo claro para destacar */
+    padding: 2rem;
+    margin-bottom: 2rem;
+    background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Centra los elementos internos por defecto */
+    text-align: center;
 }
 
 .ods-icons {
     display: flex;
     justify-content: space-around;
     margin-bottom: 1.5rem;
-    flex-wrap: wrap; /* Permite que los iconos se envuelvan en pantallas pequeñas */
+    flex-wrap: wrap;
 }
 
 .ods-icons div {
     text-align: center;
-    margin: 0.5rem; /* Espacio entre los iconos */
+    margin: 0.5rem;
 }
 
 .ods-icons i {
     font-size: 2rem;
-    color: #4CAF50; /* Un color verde */
+    color: #4CAF50;
     margin-bottom: 0.5rem;
     display: block;
 }
@@ -685,29 +687,39 @@ article img {
     color: #555;
 }
 
-/* Contenedor principal del texto y el botón */
+/* Contenedor principal del texto y los botones (UPDATED) */
 .ods-main-content {
     display: flex;
-    flex-direction: row; /* Elementos en fila por defecto */
-    gap: 2rem; /* Espacio entre el texto y el botón */
-    align-items: center; /* Alinea verticalmente el texto y el botón */
-    padding: 1rem; /* Espacio interno para el contenido principal */
+    flex-direction: column; /* Default: Stack elements on small screens */
+    align-items: center;   /* Center items horizontally */
+    gap: 1.5rem; /* Space between description and button group */
+    padding: 1rem;
 }
 
 .ods-description {
-    flex-grow: 1; /* Permite que el texto ocupe todo el espacio disponible */
-    text-align: justify; /* Justifica el texto para que ocupe todo el ancho */
+    width: 100%; /* Ensure text takes full width in column layout */
+    text-align: justify;
 }
 
 .ods-description p {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #333;
-    margin: 0; /* Elimina márgenes innecesarios del párrafo */
+    margin: 0;
 }
 
+/* NEW: Container for the buttons to keep them together */
+.ods-buttons-container {
+    display: flex; /* Use flexbox for the buttons themselves */
+    gap: 1rem; /* Space between the two buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap to next line if space is limited */
+    justify-content: center; /* Center buttons horizontally within their container */
+    margin-top: 1rem; /* Add some space above the buttons, below the description */
+}
+
+/* Styles for the "Contáctanos" button (existing, adjusted for flex container) */
 .btn-contact {
-    background-color: #4CAF50; /* Color verde para el botón */
+    background-color: #4CAF50;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -717,13 +729,35 @@ article img {
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: inline-block; /* Ensure it behaves well in flex */
     transition: background-color 0.3s ease;
-    flex-shrink: 0; /* Evita que el botón se encoja si el texto es muy largo */
+    flex-shrink: 0; /* Prevents button from shrinking */
 }
 
 .btn-contact:hover {
     background-color: #388E3C;
+}
+
+/* NEW: Styles for the "Fuerza" button */
+.btn-contact-fuerza {
+    background-color: #050705; /* A dark color for contrast */
+    color: white;
+    padding: 1rem 2rem;
+    border: 2px solid #333; /* A subtle border */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block; /* Ensure it behaves well in flex */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    flex-shrink: 0; /* Prevents button from shrinking */
+}
+
+.btn-contact-fuerza:hover {
+    background-color: #1a1a1a;
+    border-color: #555;
 }
 
 
@@ -1189,7 +1223,7 @@ article img {
         margin-right: auto;
     }
 
-    /* Media Queries para la sección ODS */
+    /* Media Queries para la sección ODS (UPDATED) */
     .ods-main-content {
         flex-direction: column; /* Apila el texto y el botón en pantallas pequeñas */
         gap: 1.5rem; /* Ajusta el espacio para la disposición en columna */
@@ -1199,9 +1233,15 @@ article img {
         text-align: center; /* Centra el texto cuando está apilado */
     }
 
-    .btn-contact {
-        width: 100%; /* El botón ocupa todo el ancho disponible */
-        max-width: 300px; /* Limita el ancho máximo del botón para que no se vea demasiado grande */
+    .ods-buttons-container { /* Ensure the container centers the buttons */
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-contact, .btn-contact-fuerza { /* Apply to both buttons for consistency */
+        width: 100%; /* The button takes full width available in its container */
+        max-width: 300px; /* Limits the max width of the button for better aesthetics */
+        margin: 0 auto; /* Centers the button if its width is less than container */
     }
 }
 
@@ -1222,6 +1262,25 @@ article img {
         box-sizing: border-box;
     }
 }
+
+@media screen and (min-width: 769px) { /* NEW: Specific for larger screens to make row layout */
+    .ods-main-content {
+        flex-direction: row; /* Place description and button group side-by-side */
+        justify-content: space-between; /* Distribute space between them */
+        align-items: center; /* Vertically align items */
+    }
+
+    .ods-description {
+        flex-grow: 1; /* Allow description to take available space */
+        width: auto; /* Reset width for flex-grow to work */
+        margin-right: 2rem; /* Space between description and button group */
+    }
+
+    .ods-buttons-container {
+        margin-top: 0; /* Remove top margin when in row layout */
+    }
+}
+
 
 @media screen and (max-width: 600px) {
     .main-wrapper__secondary-navbar,
@@ -1280,6 +1339,12 @@ article img {
 
     .main-wrapper__contenido-relacionado {
         transform: translateX(2.75rem);
+    }
+
+    /* ODS button sizing for very small screens */
+    .btn-contact, .btn-contact-fuerza {
+        padding: 0.8rem 1.5rem; /* Slightly smaller padding */
+        font-size: 1rem; /* Slightly smaller font */
     }
 }
 
