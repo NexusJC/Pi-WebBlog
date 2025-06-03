@@ -400,12 +400,11 @@ td a button:hover {
 
 .main-content {
     background-color: #E8F0E8;
-    height: auto;
-    margin: auto;
-    margin-top: 0rem;
-    padding: 10rem 23rem;
-    
+    width: 100%;
+    padding: 8rem 2rem; /* o menos si quieres más ancho */
+    box-sizing: border-box;
 }
+
 
 article {
     width: 90%;
