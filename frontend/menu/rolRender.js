@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         admin: `<li title="Administración"><a href="/admin/panel-de-administracion.html"><i class="fa-solid fa-user-gear"></i></a></li>`,
         login: `<li title="Iniciar sesión"><a href="/login/login.html"><i class="fa-solid fa-circle-user"></i></a></li>`,
         logout: `<li title="Cerrar sesión"><a href="#" id="abrirLogoutModal"><i class="fa-solid fa-right-from-bracket"></i></a></li>`,
-        userName: `<li><button class="user-button"><i class="fa-solid fa-user"></i> ${name}</button></li>`,
+        userName: `<li><button class="user-button"><i class="semen" class="fa-solid fa-user"></i> ${name}</button></li>`,
         search: `<li title="Busquedas"><a href="#" id="icon-search"><i class="fa-solid fa-magnifying-glass"></i></a></li>`
     };
 

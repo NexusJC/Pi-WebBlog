@@ -1448,6 +1448,9 @@ main {
   border-radius: 4px;
 }
 
+.semen{
+    color:#000;
+}
 /* Importando fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
 @media screen and (max-width: 1220px) {
