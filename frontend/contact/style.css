@@ -143,7 +143,6 @@ nav a {
 }
 
 #icon-search {
-display: none;
 font-size: 1.75rem;
 }
 
@@ -353,14 +352,31 @@ font-size: 1.75rem;
 
 
 .main-content {
-    max-width: 1200px; /* Aumenta el ancho máximo */
-    width: 90%; /* Ocupa el 90% del ancho de la ventana */
-    margin: 1rem auto; /* Centra el contenido horizontalmente */
-    padding: 3rem; /* Agrega espacio interno */
-    background-color: #f9f9f9; /* Fondo claro para destacar */
-    border-radius: 10px; /* Bordes redondeados para un diseño moderno */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para profundidad */
+    max-width: 1000px;
+    width: 90%;
+    margin: 2.5rem auto;
+    padding: 3rem;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-top: 6px solid #4CAF50;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
 }
+
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #4CAF50;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
 
 .main-content a {
     color: #2E7D32; /* Color verde para resaltar */
@@ -407,36 +423,36 @@ font-size: 1.75rem;
 
 /*Agregar los iconos de las redes sociales*/
 
-.social-icons {
+.main-content .social-icons {
     display: flex;
-    justify-content: center; /* Centra los íconos */
-    gap: 5rem; /* Espaciado entre los íconos */
-    margin: 2rem 0; /* Margen superior e inferior */
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
 }
 
-.social-icons a {
-    display: inline-block;
-    margin: 0.5rem;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.main-content .social-icons a {
+    width: 60px;
+    height: 60px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
     justify-content: center;
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.social-icons a:hover {
+.main-content .social-icons a:hover {
     transform: scale(1.1);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.social-icons a img {
-    width: 40px; /* Ajusta el tamaño de los íconos */
-    height: 40px; /* Asegura que todos tengan la misma altura */
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Transición suave */
+.main-content .social-icons a img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
 }
 
 .social-icons a img:hover {
