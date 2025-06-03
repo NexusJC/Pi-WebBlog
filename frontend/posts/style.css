@@ -662,11 +662,12 @@ main {
 }
 
 .ctn-tags {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 16px;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem auto;
+  padding: 0;
+  gap: 0.4rem; /* espacio entre etiquetas */
 }
 
 .ctn-tags li {
