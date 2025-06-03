@@ -1227,4 +1227,29 @@ main {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.03);
 }
+.crear-post-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem 0 2rem;
+}
+
+.crear-post-btn {
+  padding: 0.6rem 1.2rem;
+  background-color: #388e3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.crear-post-btn i {
+  margin-right: 0.5rem;
+}
+
+.crear-post-btn:hover {
+  background-color: #2e7d32;
+}
 
