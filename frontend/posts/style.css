@@ -1793,22 +1793,22 @@ main {
     gap: 5px;   
 }
 .post-tag {
-  display: inline-block;
-  background-color: #A5D6A7;
-  color: #1B5E20;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  margin: 0.25rem 0.35rem;
-  white-space: nowrap;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-  transition: background 0.3s ease;
+  background-color: #C8E6C9;
+  color: #256029;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.2rem 0.3rem;
 }
 
 .post-tag i {
-  margin-right: 0.3rem;
+  font-size: 0.9rem;
 }
+
 
 .post-tag:hover {
   background-color: #81C784;
