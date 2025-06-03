@@ -664,7 +664,7 @@ main {
 }
 
 .post button:hover {
-    background-color: #0056b3; /* Cambiar color al pasar el mouse */
+    background-color: #1b5e20; /* Cambiar color al pasar el mouse */
 }
 
 .container-post + h2, .container-post h2 {
@@ -938,7 +938,7 @@ main {
 
 /* Hover en las flechas */
 .arrow:hover {
-    background-color: #0056b3; /* Cambiar color al pasar el mouse */
+    background-color: #1b5e20; /* Cambiar color al pasar el mouse */
     transform: scale(1.1); /* Aumentar tamaño ligeramente */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
 }
@@ -952,7 +952,7 @@ main {
 .right-arrow-recent {
     position: absolute;
     top: 50%;
-    background-color: #007BFF;
+    background-color: #388e3c;
     color: white;
     border: none;
     border-radius: 50%;
@@ -1015,7 +1015,7 @@ main {
 
 .left-arrow-liked:hover,
 .right-arrow-liked:hover {
-    background-color: #0056b3;
+    background-color: #1b5e20;
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
