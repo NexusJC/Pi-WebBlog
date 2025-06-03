@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${isMenuPage ? menuItems.logout : ""}
                 ${menuItems.search}
             `;
-            mostrarBienvenida(`Bienvenido administrador, ${name}`);
+            mostrarBienvenida(`Te damos la ecobienvenida, ${name}`);
         } else if (role === "usuario") {
             menu.innerHTML = `
                 ${menuItems.logo}
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${isMenuPage ? menuItems.logout : ""}
                 ${menuItems.search}
             `;
-            mostrarBienvenida(`¡Hola ${name}, bienvenido de nuevo!`);
+            mostrarBienvenida(`¡Hola ${name}, te damos una ecobienvenida!`);
         } else {
             menu.innerHTML = `
                 ${menuItems.logo}
