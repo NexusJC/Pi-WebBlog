@@ -656,7 +656,7 @@ main {
     margin: 10px auto; /* Centrar el botón horizontalmente */
     display: block; /* Asegurar que el botón sea tratado como un bloque */
     padding: 10px 20px; /* Espaciado interno del botón */
-    background-color: #007BFF; /* Color de fondo */
+    background-color: #2e7d32; /* Color de fondo */
     color: white; /* Color del texto */
     border: none; /* Sin bordes */
     border-radius: 5px; /* Bordes redondeados */
@@ -867,7 +867,7 @@ main {
 .related-item button {
     margin-top: 10px;
     padding: 10px 50px;
-    background-color: #007BFF;
+    background-color: #2e7d32;
     color: white;
     border: none;
     border-radius: 5px;
@@ -881,7 +881,7 @@ main {
 }
 
 .related-item button:hover {
-    background-color: #0056b3;
+    background-color: #1b5e20;
 }
 
 /* Ocultar la barra de desplazamiento vertical */
@@ -977,7 +977,7 @@ main {
 
 .left-arrow-recent:hover,
 .right-arrow-recent:hover {
-    background-color: #0056b3;
+    background-color: #2e7d32;
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
@@ -990,7 +990,7 @@ main {
 .right-arrow-liked {
     position: absolute;
     top: 50%;
-    background-color: #007BFF;
+    background-color: #388e3c;
     color: white;
     border: none;
     border-radius: 50%;
