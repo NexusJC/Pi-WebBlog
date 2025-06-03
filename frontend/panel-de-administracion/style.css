@@ -1228,12 +1228,13 @@ main {
   transform: scale(1.03);
 }
 .crear-post-btn-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 2rem 0 2rem;
+  position: sticky;
+  top: 6rem; /* Ajusta según el alto del header */
+  z-index: 5;
+  background: #E8F0E8;
+  padding: 1rem 2rem;
 }
+
 
 .crear-post-msg {
   font-size: 1rem;
