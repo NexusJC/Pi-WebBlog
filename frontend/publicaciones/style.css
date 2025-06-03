@@ -1,35 +1,43 @@
+/* --- Base Styles & Resets --- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
+
+/* Box sizing for all elements */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
-    margin: 4rem;
-    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif; /* Using imported font first, then sans-serif as fallback */
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    justify-content: center;
-    background-color: #E0E8E0; 
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow-x: hidden; /* Previene scroll horizontal */
+    justify-content: center; /* This might center content vertically on short pages. Adjust if needed for long content. */
+    background-color: #E0E8E0; /* Light greenish-gray */
+    overflow-x: hidden; /* Prevents horizontal scroll */
 }
 
-div, body, header, nav, ul, footer {
-    box-sizing: border-box;
+a {
+    text-decoration: none;
+    color: inherit; /* Inherit color from parent by default */
 }
 
-.main-wrapper, header, footer {
-    width: 100%;
-}
+/* --- Typography --- */
 
-h1, h2, h3, h4 {
-    text-wrap: balance;
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance; /* Balances text lines for better readability */
+    margin-top: 0; /* Reset default margins */
+    margin-bottom: 0;
 }
 
 h1 {
-    font-size: 2.5rem; 
-    color: #2E7D32; 
+    font-size: 2.5rem;
+    color: #2E7D32; /* Dark green */
     font-weight: bold;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; /* 20px */
 }
 
 h2 {
@@ -37,21 +45,21 @@ h2 {
     font-weight: 700;
     text-align: center;
     color: transparent;
-    background: linear-gradient(90deg, #2e7d32, #66bb6a);
-    background-clip: text;
+    background: linear-gradient(90deg, #2e7d32, #66bb6a); /* Green gradient */
     -webkit-background-clip: text;
+    background-clip: text;
     text-transform: uppercase;
     position: relative;
     margin: 3rem 0 1.5rem;
-    animation: fadeInUp 0.8s ease-out forwards;
-    opacity: 0;
     letter-spacing: 1.2px;
+    opacity: 0; /* Starts invisible for animation */
+    animation: fadeInUp 0.8s ease-out forwards;
 }
 
-/* Animación de entrada */
+/* Animation for h2 entrance */
 @keyframes fadeInUp {
     0% {
-        transform: translateY(20px);
+        transform: translateY(1.25rem); /* 20px */
         opacity: 0;
     }
     100% {
@@ -60,36 +68,26 @@ h2 {
     }
 }
 
-/* Animación del subrayado */
-@keyframes underlineGrow {
-    to {
-        width: 80px;
-    }
-}
-
-
-
 h3 {
     font-size: 1.4rem;
-    color: #2e7d32;
+    color: #2e7d32; /* Dark green */
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 1rem;
     text-transform: capitalize;
-    border-left: 6px solid #a5d6a7;
+    border-left: 6px solid #a5d6a7; /* Lighter green border */
     padding-left: 1rem;
     transition: all 0.3s ease;
 }
 
 h3:hover {
-    color: #1b5e20;
-    border-left-color: #66bb6a;
+    color: #1b5e20; /* Even darker green on hover */
+    border-left-color: #66bb6a; /* Medium green on hover */
 }
 
-/* H4 - Para subtítulos importantes */
 h4 {
     font-size: 1.25rem;
-    color: #388e3c;
+    color: #388e3c; /* Another shade of green */
     font-weight: 600;
     text-transform: uppercase;
     margin: 1.5rem 0 0.5rem;
@@ -98,21 +96,19 @@ h4 {
     letter-spacing: 1px;
 }
 
-/* H5 - Para secciones secundarias o notas */
 h5 {
     font-size: 1.1rem;
-    color: #4caf50;
+    color: #4caf50; /* Medium green */
     font-weight: 500;
     margin: 1.2rem 0 0.5rem;
     padding-left: 0.5rem;
-    border-left: 3px dashed #c8e6c9;
+    border-left: 3px dashed #c8e6c9; /* Very light green dashed border */
     text-transform: capitalize;
 }
 
-/* H6 - Para aclaraciones, detalles o mini títulos */
 h6 {
     font-size: 1rem;
-    color: #66bb6a;
+    color: #66bb6a; /* Lighter green */
     font-weight: 400;
     font-style: italic;
     margin: 1rem 0 0.5rem;
@@ -120,277 +116,218 @@ h6 {
     letter-spacing: 0.5px;
 }
 
-
 p {
-    /* Propiedades compatibles con todos los navegadores */
     hyphens: auto;
-    word-wrap: break-word;
-    
-    /* Nueva propiedad con prefijo para Chrome/Edge */
-    text-wrap: pretty; 
-    
-    /* Alternativa para Firefox */
-    @supports not (text-wrap: pretty) {
+    word-wrap: break-word; /* Old property, kept for wider compatibility */
+    text-wrap: pretty; /* Modern property for better text wrapping */
+}
+
+/* Fallback for browsers not supporting text-wrap: pretty */
+@supports not (text-wrap: pretty) {
+    p {
         text-align: justify;
     }
 }
 
-a {
-    text-decoration: none;
-}
-
-/* HEADER */
-
+/* --- Header Section --- */
 .header {
-    background-color: #003800;
+    background-color: #003800; /* Very dark green */
     position: sticky;
     top: 0;
     z-index: 10;
-    box-shadow: 0 .5rem 2.5rem #000;
-    position: sticky;
-    
+    box-shadow: 0 0.5rem 2.5rem rgba(0, 0, 0, 0.5); /* Stronger shadow */
+    width: 100%; /* Ensures it spans full width */
+    padding: 0 1rem; /* Added padding for smaller screens */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Space out logo and nav */
+    align-items: center;
+    max-width: 75rem; /* Limit width for larger screens */
+    margin: 0 auto; /* Center content */
+    padding: 0.5rem 0; /* Vertical padding */
 }
 
 .header-content__logo-container {
     width: 6.1rem;
     height: 5rem;
     display: flex;
-    position: relative;
     justify-content: center;
-    padding: 0;
-    margin: 0
+    align-items: center; /* Center logo image vertically */
+    flex-shrink: 0; /* Prevents logo from shrinking */
+    margin: 0;
 }
 
 .header-content__logo-container img {
     width: 100%;
     height: auto;
-    margin: 0;
+    display: block; /* Removes extra space below image */
 }
 
 .main-navbar ul {
     display: flex;
+    justify-content: flex-end; /* Align items to the right by default */
+    align-items: center;
     padding: 0;
-    justify-content: start;
     margin: 0;
-    align-items: center;
-    /* justify-content:space-evenly; checar esta entre todos*/
+    list-style: none;
 }
-
-.main-navbar ul li:first-child {
-    margin-left: 5rem;
-    margin-right: 18rem;
-}
-
 
 .main-navbar li {
-    list-style: none;
-    margin: 0.25rem .95rem;
+    margin: 0 1rem; /* Consistent spacing between items */
     position: relative;
-    margin-right: 4rem;
 }
 
-.main-navbar li:hover a{
-    color: #6B8E23; 
-}
-
-.main-navbar a {
-    color: #e5dede;
-    display: inline-block;
-    padding: 0.375rem 0.5625rem;
-    transition: color 300ms;
-    font-size: 1.1rem;
-}
-
-nav a {
-    text-decoration: none;
-}
-
-.main-navbar  .blog-selected {
-    color: #6B8E23;
-}
-
-.blog-selected::before{
-    content: '';
-    width: 100%;
-    height: .25rem;
-    background-color: #54b324;
-    position: absolute;
-    top: -1.27rem;
-    left: 0;
-}
-
-.menu nav ul li a i {
-    display: inline;
-    font-size: 1.8rem;
-}
-
-#icon-search {
-font-size: 1.75rem;
-display: none;
-}
-
-#icon-menu {
-    width: 2.75rem;
-    height: 2.75rem;
-    position: fixed;
-    right: 2rem;
-    top: .85rem;
-    color: #e5dede;
-    background-color: #388E3C;
-    border-radius: 100%;
-    justify-content:center;
-    align-items: center;
-    display: none;
-    cursor: pointer;
-    padding: 1rem;
-
-}
-
-#icon-menu:hover {
-    background-color: #2E7D32;
-}
-
-/*BUSQUEDA SECCION*/
-
+/* Specific adjustment for the search icon, if it's a list item */
 .main-navbar li[title="Busquedas"] {
-    color: #ffffff; /* Cambia el color del texto a blanco */
-}
-
-.main-navbar li {
-    list-style: none;
-    margin: 0.25rem 2.5rem;
-    position: relative;
-}
-
-.main-navbar li:hover a{
-    color: #6B8E23; 
+    margin-left: 2rem; /* Add more space before search icon */
 }
 
 .main-navbar a {
-    color: #e5dede;
+    color: #e5dede; /* Light grey */
     display: inline-block;
     padding: 0.375rem 0.5625rem;
-    transition: color 300ms;
+    transition: color 300ms ease;
+    font-size: 1.1rem;
+    white-space: nowrap; /* Prevent menu items from wrapping */
 }
 
-nav a {
-    text-decoration: none;
+.main-navbar li:hover a {
+    color: #6B8E23; /* Olive green on hover */
 }
 
-.main-navbar  .blog-selected {
-    color: #6B8E23;
+.main-navbar .blog-selected {
+    color: #6B8E23; /* Olive green for selected item */
 }
 
-.blog-selected::before{
+.blog-selected::before {
     content: '';
     width: 100%;
-    height: .25rem;
-    background-color: #54b324;
+    height: 0.25rem;
+    background-color: #54b324; /* Green underline */
     position: absolute;
     top: -1.27rem;
     left: 0;
 }
 
-.menu nav ul li a i {
-    display: inline;
-    font-size: 1.8rem;
-}
-
+/* Icon styles (assuming Font Awesome or similar) */
+.menu nav ul li a i,
 #icon-search {
-font-size: 1.75rem;
+    font-size: 1.75rem;
+    display: inline-block; /* Ensure icons behave correctly */
+    vertical-align: middle; /* Align icons with text */
 }
 
+/* Mobile menu icon */
 #icon-menu {
     width: 2.75rem;
     height: 2.75rem;
-    position: fixed;
+    position: fixed; /* Keep it fixed on screen */
     right: 2rem;
-    top: .85rem;
+    top: 0.85rem;
     color: #e5dede;
-    background-color: #388E3C;
+    background-color: #388E3C; /* Green */
     border-radius: 100%;
-    justify-content:center;
+    display: flex; /* Use flex to center icon */
+    justify-content: center;
     align-items: center;
-    display: none;
     cursor: pointer;
-    padding: 1rem;
-
+    padding: 0; /* Remove padding as content is centered by flex */
+    z-index: 15; /* Ensure it's above other elements */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 #icon-menu:hover {
-    background-color: #2E7D32;
+    background-color: #2E7D32; /* Darker green on hover */
 }
 
-
-/* BUSQUEDAS SECTION */
-
-.main-navbar li {
-    list-style: none;
+/* Hide desktop search icon by default on smaller screens */
+#icon-search {
+    display: none; /* Will be shown in specific media queries */
 }
 
-.main-navbar li:not(:first-child) {
-    margin: 0.25rem 2.5rem; /* Ajusta el margen según la separación deseada */
-    position: relative;
-}
-
-.main-navbar--ctn-icon-search {
-    margin-top: .45rem;
-    margin-left: 5rem;
-    cursor: pointer;
-
-}
-
+/* --- Search Section --- */
 #ctn-icon-search {
-    position: absolute;
-    right: 2rem;
-    height: 6rem;
+    position: absolute; /* Relative to its parent, usually header */
+    right: 2rem; /* Aligned to the right */
+    height: 6rem; /* Adjust height as needed */
     display: flex;
     justify-content: center;
+    align-items: center; /* Center search icon vertically */
 }
 
 #ctn-icon-search i {
     font-size: 2rem;
     cursor: pointer;
-    transition: all 300ms;
+    transition: all 300ms ease;
+    color: #e5dede; /* Color for the search icon */
+}
+
+#ctn-icon-search i:hover {
+    color: #6B8E23; /* Hover color for search icon */
 }
 
 #ctn-bars-search {
     position: fixed;
-    top: -10rem;
-    width: 64rem;
+    top: -10rem; /* Off-screen by default */
+    width: 64rem; /* Fixed width */
+    max-width: 90%; /* Max width for responsiveness */
     background-color: #fff;
-    padding: 2rem;
+    padding: 1.5rem; /* Adjusted padding */
     z-index: 9;
-    transition: all 600ms;
+    transition: all 600ms ease;
+    border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
+}
+
+#ctn-bars-search.show-search {
+    top: 4rem; /* Adjust based on header height */
 }
 
 #ctn-bars-search input {
     display: block;
-    width: 50rem;
-    margin: auto;
-    padding: .5rem;
-    font-size: .7rem;
-    outline: 0;
+    width: calc(100% - 2rem); /* Adjusted width to account for padding */
+    margin: 0 auto; /* Center input */
+    padding: 0.8rem 1rem; /* Increased padding for better usability */
+    font-size: 1rem;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+#ctn-bars-search input:focus {
+    border-color: #66bb6a;
+    box-shadow: 0 0 0 2px #d1f0d3;
 }
 
 #box-search {
     position: fixed;
-    top: 10rem;
-    list-style: none;
-    width: 64rem;
+    top: 10rem; /* Adjusted to be below the search bar */
+    width: 64rem; /* Fixed width */
+    max-width: 90%; /* Max width for responsiveness */
     background-color: #fff;
     z-index: 8;
     overflow: hidden;
     padding-bottom: 1rem;
-    display: none;
-    
+    display: none; /* Hidden by default */
+    list-style: none; /* Remove list bullets */
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
 }
 
 #box-search li a {
     display: block;
-    width: 64rem;
+    width: 100%; /* Occupy full width of its container */
     color: #777777;
-    padding: .8rem 2rem;
+    padding: 0.8rem 2rem;
+    transition: background 300ms ease;
 }
 
 #box-search li a:hover {
@@ -406,95 +343,291 @@ font-size: 1.75rem;
     width: 100%;
     height: 100vh;
     position: fixed;
-    left: 0; 
-    background: rgb(255, 255, 255);
-    z-index: 7;
+    left: 0;
     top: 0;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent white overlay */
+    z-index: 7;
     display: none;
 }
 
-/* MAIN SECTION */
-
-.container-del-container-editor {
-    text-align: center;
-}
-.editor--container {
+/* --- Main Content Layout --- */
+.main-wrapper {
+    width: 100%; /* Full width */
+    max-width: 75rem; /* Max width for content area */
+    padding: 1rem; /* General padding for content wrapper */
     display: flex;
+    flex-grow: 1; /* Allows it to grow and fill space */
+    flex-wrap: wrap; /* Allows columns to wrap on smaller screens */
     justify-content: center;
-    align-items: center;
-    text-align: start;
-    width: 90%;
-    display:inline-block;
-    height: 20rem;
-    margin: 1rem 6rem;
+    gap: 1.25rem; /* Consistent gap between columns */
+    margin: 2rem auto; /* Center the wrapper and add vertical margin */
 }
 
-.mensaje-autor--container {
+/* Assuming a 2-column or 3-column layout structure */
+aside, main {
+    padding: 1.25rem; /* Consistent padding inside main/aside */
+    background-color: #E8F0E8; /* Light greenish-gray */
+    border-radius: 8px; /* Soft rounded corners */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow */
+    flex-shrink: 0; /* Prevent shrinking */
+    flex-grow: 1; /* Allow growing */
+}
+
+main {
+    min-width: 18.75rem; /* Minimum width for main content */
+    flex-basis: 60%; /* Main content takes more space */
+    padding: 2rem; /* More generous padding for main content */
+}
+
+aside {
+    flex-basis: 30%; /* Aside takes less space */
+    min-width: 15rem; /* Minimum width for aside */
+}
+
+/* --- Formulario de Publicación Moderno (Admin/Editor Section) --- */
+.main-wrapper__content form {
+    background-color: #ffffff;
+    padding: 3rem;
+    margin: 2rem auto;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 65rem; /* Increased max-width for forms */
+    width: 90%; /* Responsive width */
+}
+
+.main-wrapper__content h2 {
     text-align: center;
-    margin: 0 auto;
-    width: 100%;
+    font-size: 2.2rem;
+    color: #2E7D32;
+    margin-bottom: 2rem;
+    background: none; /* Override gradient for form h2 */
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #2E7D32;
+    animation: none; /* No animation for form h2 */
+    opacity: 1;
 }
 
-
-.container-del-container-mensaje-autor {
-    width: 90%;
-    height: 10rem;
+.main-wrapper__content h3 {
+    font-size: 1.3rem;
+    color: #4CAF50;
+    margin: 1.5rem 0 0.5rem 0;
+    border-left: 6px solid #a5d6a7; /* Re-apply border for consistency */
+    padding-left: 1rem;
 }
 
-.referencias--container textarea {
-    margin-left: 6rem;
+#postForm input[type="text"],
+#postForm textarea,
+#postForm input[name="tags"] { /* Targeting Tagify input by name */
+    width: calc(100% - 8rem); /* 100% minus 4rem margin on each side */
+    margin: 1rem 4rem; /* Top/bottom 1rem, left/right 4rem */
+    padding: 0.9rem 1.2rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9; /* Unified light background */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
+#postForm input:focus,
+#postForm textarea:focus {
+    border-color: #66bb6a;
+    box-shadow: 0 0 0 2px #d1f0d3;
+    outline: none;
+}
+
+/* Quill Editor Specific Styles */
+.editor--container {
+    width: calc(100% - 8rem); /* Consistent width with other inputs */
+    margin: 1rem 4rem; /* Consistent margins */
+    padding: 0; /* Quill handles its own padding */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    overflow: hidden; /* Ensures Quill's content stays within bounds */
+    min-height: 25rem; /* Set a min-height for the container */
+    display: flex;
+    flex-direction: column; /* To stack toolbar and editor content */
+}
+
+.editor--container:focus-within { /* Styles when any part of the editor is focused */
+    border: 1px solid #66bb6a;
+    box-shadow: 0 0 0 2px #d1f0d3;
+}
+
+.ql-toolbar {
+    background-color: #f9f9f9 !important; /* Keep your desired background */
+    border: none !important; /* Remove Quill's default border */
+    border-bottom: 1px solid #e0e0e0; /* Subtle separator */
+    border-radius: 8px 8px 0 0; /* Match container border-radius */
+    padding: 0.5rem 1rem; /* Adjust padding for toolbar */
+}
+
+.ql-container {
+    background-color: #ffffff !important; /* White background for editing area */
+    border: none !important; /* Remove Quill's default border */
+    border-radius: 0 0 8px 8px; /* Match container border-radius */
+    flex-grow: 1; /* Allow editor content to fill remaining space */
+}
+
+.ql-editor {
+    min-height: 20rem; /* Adjusted min-height for editor */
+    max-height: 40rem; /* Optional: max-height with scroll */
+    overflow-y: auto; /* Enable scrolling if content exceeds max-height */
+    padding: 1rem;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+    line-height: 1.6; /* Improve readability of text */
+}
+
+/* File Input Button & Display */
 .real-input {
-    display: none; /* Oculta el input original */
-}
-
-.img-autor--container {
-    text-align: center;
+    display: none; /* Hide original file input */
 }
 
 .boton-img-autor--container {
+    text-align: center;
     margin-bottom: 1rem;
 }
 
 .img-autor {
-    padding: 10px 15px;
-    background: #4CAF50;
-    color: white;
+    background-color: #2e8b57; /* Forest green */
     border: none;
-    border-radius: 5px;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
-    display: inline-block;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.img-autor--container span {
-    margin-top: 10rem;
+.img-autor:hover {
+    background-color: #1e6b41; /* Darker green on hover */
 }
+
 .file-name {
-    margin-left: 10px;
-    color: #666;
+    display: block; /* Display as block for better spacing */
+    margin-top: 0.8rem;
+    color: #555;
     font-style: italic;
+    text-align: center; /* Center the file name */
 }
 
+/* Preview & Publish Buttons */
+.boton-preview--container,
 .boton-publicar--container {
     text-align: center;
-    margin: 3rem 0;
-}.boton-publicar--container button {
-    background-color: rebeccapurple;
+    margin-top: 2rem;
 }
 
+#btn-preview,
+.btn-post,
+#btn-close-preview,
+#btn-confirm-publish {
+    background-color: #2e8b57;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0.5rem; /* Add some margin between buttons */
+}
+
+#btn-preview:hover,
+.btn-post:hover,
+#btn-close-preview:hover,
+#btn-confirm-publish:hover {
+    background-color: #1e6b41;
+}
+
+/* Modal for Preview */
+#preview-modal {
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 2rem; /* More padding for modal content */
+    overflow-y: auto; /* Enable scrolling for long preview content */
+    max-height: 80vh; /* Limit modal height */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Stronger shadow for modal */
+    position: fixed; /* Make it fixed */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100; /* High z-index */
+    display: none; /* Hidden by default */
+}
+
+/* Tagify Specific Styles */
+.tagify {
+    width: calc(100% - 8rem); /* Consistent width */
+    margin: 1rem 4rem; /* Consistent margins */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.tagify--focus {
+    border-color: #66bb6a !important;
+    box-shadow: 0 0 0 2px #d1f0d3;
+}
+
+.tagify__dropdown {
+    border-radius: 0 0 12px 12px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.tagify__dropdown__item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tagify__dropdown__item:hover {
+    background-color: #e0f5e4; /* Lighter green on hover */
+    color: #2E7D32;
+}
+
+.tagify__tag {
+    background-color: #e0f5e4;
+    color: #2E7D32;
+    border-radius: 8px;
+    padding: 0.3rem 0.8rem;
+    margin: 0.25rem;
+    font-weight: 500;
+}
+
+/* --- Post Card Styles (if used elsewhere for displaying posts) --- */
 .post-card {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
     background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .post-image {
     max-width: 100%;
+    height: auto; /* Ensure image scales proportionally */
     border-radius: 4px;
     margin: 10px 0;
+    display: block; /* Prevent extra space below image */
 }
 
 .post-meta {
@@ -510,893 +643,426 @@ font-size: 1.75rem;
     border-left: 3px solid #ccc;
 }
 
-.main-wrapper {
-    min-width: 64rem;
-    padding: 0 0.625rem;
-    display: flex;
-    flex-grow: 1;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.625rem;
-}
-
-.main-wrapper__content {
-    background-color: #E8F0E8;
-    height: auto;
-    margin-top: 0rem;
-}
-
-.main-wrapper__content h2 {
-    scroll-margin-top: 4rem;
-}
-
-.main-wrapper__content input {
-    margin-left: 6rem;
-}
-
-.referencias--container {
-    margin: 20px 0;
-}
-
-aside, main {
-    padding: 0.625rem 1.25rem;
-    flex-basis: 0;
-    background-color: #E8F0E8 ;
-}
-
-main {
-    min-width: 18.75rem;
-    flex-grow: 2;
-    padding: 0;
-}
-
-/* FORMULARIO DE PUBLICACIÓN MODERNO */
-.main-wrapper__content form {
-    background-color: #ffffff;
-    padding: 3rem;
-    margin: 2rem auto;
-    border-radius: 18px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    max-width: 65%;
-}
-
-.main-wrapper__content h2 {
-    text-align: center;
-    font-size: 2.2rem;
-    color: #2E7D32;
-    margin-bottom: 2rem;
-}
-
-.main-wrapper__content h3 {
-    font-size: 1.3rem;
-    color: #4CAF50;
-    margin: 1.5rem 0 0.5rem 0;
-}
-
-#postForm input[type="text"],
-#postForm textarea,
-#postForm input[type="file"],
-#postForm input[name="tags"] {
-    width: 86%;
-     background-color: #f9f9f9 !important; /* ← Color unificado */
-    margin: 1rem 4rem;
-    padding: 0.9rem 1.2rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
-}
-
-#postForm input:focus,
-#postForm textarea:focus {
-    border-color: #66bb6a;
-    box-shadow: 0 0 0 2px #d1f0d3; /* Sombra sutil tipo highlight */
-    outline: none;
-}
-
-.editor--container {
-    margin: 1rem auto;
-    border-radius:8px;
-    padding: 1rem;
-    height: 25rem;
-    width: 90%;
-}
-
-/* Contenedor visual del editor (la caja completa) */
-.editor--container {
-    width: 86%;
-    margin: 1rem 4rem;
-    padding: 0;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-/* Estilo del área de edición de Quill */
-.ql-container {
-    background-color: #f9f9f9 !important;
-    border: none !important;
-    border-radius: 0 0 8px 8px;
-}
-
-/* Estilo de la barra de herramientas */
-.ql-toolbar {
-    background-color: #f9f9f9 !important;
-    border: none !important;
-    border-bottom: 1px solid #ccc;
-    border-radius: 8px 8px 0 0;
-}
-
-/* Borde verde cuando el editor está enfocado (truco con .ql-container focus-within) */
-.editor--container:focus-within {
-    border: 1px solid #66bb6a;
-    box-shadow: 0 0 0 2px #d1f0d3; /* Sombra sutil tipo highlight */
-}
-
-
-/* Área donde se escribe */
-.ql-editor {
-    min-height: 250px;
-    padding: 1rem;
-    font-size: 1rem;
-    color: #333;
-    box-sizing: border-box;
-}
-
-
-.img-autor {
-    background-color: #2e8b57;
-    border: none;
-    padding: 0.75rem 2rem;
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.img-autor:hover {
-    background-color:  #1e6b41;
-}
-
-
-.file-name {
-    display: inline-block;
-    margin-top: 0.8rem;
-    color: #555;
-    font-style: italic;
-}
-
-.boton-preview--container,
-.boton-publicar--container {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-
-#btn-preview,
-.btn-post {
-    background-color: #2e8b57;
-    border: none;
-    padding: 0.75rem 2rem;
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#btn-preview:hover,
-.btn-post:hover {
-    background-color:#1e6b41;
-}
-
-#preview-modal {
-    background-color: white;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 1rem;
-    overflow: hidden;
-}
-
-#btn-close-preview,
-#btn-confirm-publish {
-    background-color: #2e8b57;
-    color: white;
-    border: none;
-    padding: 0.7rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-#btn-close-preview:hover,
-#btn-confirm-publish:hover {
-    background-color:  #1e6b41;
-}
-
-#postForm textarea {
-    min-height: 5rem;
-    max-height: auto;
-    resize: none;
-    background-color: #f3fdf4;
-    border: 1px solid #cce1d0;
-    border-radius: 8px;
-    padding: 1rem;
-    font-size: 1rem;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-    overflow-y: auto;
-}
-
-#postForm textarea:focus {
-    border-color: #66bb6a;
-    box-shadow: 0 0 0 2px #d1f0d3; /* Sombra sutil tipo highlight */
-    background-color: #ecfaee;
-    outline: none;
-}
-
-/* Contenedor del campo Tagify */
-.tagify {
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 0.5rem;
-    width: 70%;
-    margin: 1rem 4rem;
-    font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
-}
-
-/* Foco (cuando estás escribiendo en el campo) */
-.tagify--focus {
-    border-color: #66bb6a !important;
-    box-shadow: 0 0 0 2px #d1f0d3;
-}
-
-/* Texto sugerido (el dropdown) */
-.tagify__dropdown {
-    border-radius: 0 0 12px 12px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-}
-
-/* Elementos individuales de sugerencia */
-.tagify__dropdown__item {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-}
-
-.tagify__dropdown__item:hover {
-    background-color: #3b6e43;
-}
-
-/* Tags ya seleccionados */
-.tagify__tag {
-    background-color: #e0f5e4;
-    color: #2E7D32;
-    border-radius: 8px;
-    padding: 0.3rem 0.8rem;
-    margin: 0.25rem;
-    font-weight: 500;
-}
-
-
-/* FOOTER */
-
-.footer{
+/* --- Footer Section --- */
+.footer {
     width: 100%;
-    background-color:#0a141d ;
-
+    background-color: #0a141d; /* Very dark blue/black */
+    color: #efefef; /* Light grey text */
+    padding: 4.5rem 1rem 1.5rem; /* Top padding, then standard */
+    box-sizing: border-box; /* Ensures padding is included in width */
 }
 
-.footer .footer__grupo1{
+.footer__grupo1 {
     width: 100%;
     max-width: 75rem;
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-gap: 5rem;
-    padding: 4.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); /* Responsive grid */
+    gap: 3rem; /* Adjusted gap */
+    padding-bottom: 3rem;
 }
-.footer .footer__grupo1 .box figure{
+
+.footer__grupo1 .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content in each box */
+    text-align: center; /* Center text */
+}
+
+.footer__grupo1 .box figure {
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 1.5rem; /* Space below logo */
 }
 
-.footer .footer__grupo1 .box figure img{
+.footer__grupo1 .box figure img {
     width: 10rem;
-
+    max-width: 80%; /* Ensure logo scales down */
+    height: auto;
 }
 
-.footer .footer__grupo1 .box h2{
-
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    border-bottom: none;
+.footer__grupo1 .box h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem; /* Slightly smaller for footer */
+    color: #ffffff; /* White color for footer headings */
+    text-align: center;
+    background: none; /* Override any gradient */
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    animation: none;
+    opacity: 1;
 }
 
-.footer .footer__grupo1 .box p{
+.footer__grupo1 .box p {
     color: #efefef;
     margin-bottom: 1rem;
+    line-height: 1.5; /* Improve readability */
 }
 
-.footer .footer__grupo1 .red-social a{
-    display: inline-block;
-    text-decoration: none;
+.footer__grupo1 .red-social {
+    display: flex;
+    justify-content: center; /* Center social icons */
+    gap: 1rem; /* Space between icons */
+    flex-wrap: wrap;
+}
+
+.footer__grupo1 .red-social a {
+    display: inline-flex; /* Use inline-flex for centering icon */
+    justify-content: center;
+    align-items: center;
     width: 2.5rem;
     height: 2.5rem;
-    line-height: 2.5rem;
     color: #fff;
-    margin-right: 1rem;
-    background-color: #0d2033;
-    text-align: center;
-    transition: all 300ms ease;
+    background-color: #0d2033; /* Darker blue/black */
+    border-radius: 50%; /* Make them circular */
+    transition: background-color 300ms ease, color 300ms ease;
 }
 
-.footer .footer__grupo1 .red-social a:hover{
-    color:aquamarine;
+.footer__grupo1 .red-social a:hover {
+    background-color: #2e7d32; /* Green on hover */
+    color: #fff;
 }
 
-.footer .footer__grupo2{
-    background-color: #0a1a2a;
+.footer__grupo2 {
+    background-color: #0a1a2a; /* Slightly lighter dark blue/black */
     padding: 1.5rem 1rem;
     text-align: center;
     color: #fff;
+    font-size: 0.9rem;
 }
 
-.footer .footer__grupo2 small{
-    font-size: .9rem;
+.footer__grupo2 small {
+    font-size: inherit; /* Inherit font size from parent */
 }
 
-/* Importando fuentes */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
-
-@media screen and (max-width: 1220px) {
-    /* Header y navbar */
-    .header {
-        padding: 0 1rem; /* Añadimos padding lateral */
-    }
-    
-    .main-navbar ul {
-        flex-wrap: wrap; /* Permite que los items se ajusten */
-        justify-content: space-between; /* Distribución uniforme */
-        padding: 0; /* Espaciado vertical */
-    }
-    
-    .main-navbar ul li:first-child {
-        margin-left: 3rem !important; /* Reducimos margen */
-        margin-right: auto !important; /* Empuja otros items a la derecha */
-    }
-    
-    .main-navbar li {
-        margin: 0.25rem 0.5rem !important; /* Reducimos márgenes */
-        
-    }
-    
-    /* Ajuste para el icono de búsqueda */
-    #ctn-icon-search {
-        right: 1rem;
-    }
-
-
-    /* Asegurar que el contenedor ocupe el 100% */
-    .header-content {
-        width: 100%;
-        max-width: 100%;
-        padding: 0;
-    }
-    
-    /* Ajuste para el logo */
-    .header-content__logo-container {
-        margin-left: 1rem;
-    }
-
-    .main-navbar ul li:first-child {
-        margin-left: 5rem;
-        margin-right: 1rem !important;
-    }
-
-    #icon-search {
-        margin-right: 8rem;
-    }
-    
-    
-}
-
-
-@media screen and (max-width: 1020px) {
-    .main-navbar ul li:first-child {
-        margin-left: 5rem;
-        margin-right: 2rem !important;
-    }
-
-    #icon-search {
-        margin-left: -3rem!important;
-        
-    }
-    .main-wrapper__center-content {
-        width: 100%;
-        flex-direction: column;
-
-    }
-
-    article {
-        width: 90%;
-        /* padding: 3rem; */
-        padding-bottom: 5rem;
-        border-radius: .5rem;
-    }
-    .main-navbar {
-        width: 100%;
-    }
-
-    .main-wrapper__contenido-relacionado {
-        transform: translateX(  -5rem);
-    }
-
-    .main-wrapper__center-content h2{
-        margin-left: -4rem;
-    }
-
-    .contenido-relacionado-content {
-        display: flex;
-        justify-content: center;
-    }
-
-    .contenido-relacionado-content aside {
-        max-width: 28rem;
-        margin: 0rem;
-    }
-    .main-navbar ul li:first-child {
-        margin-left: 5rem;
-        margin-right:1rem !important;
-    }
-
-    #icon-search {
-        margin-left: 0rem ;
-    }
-
-    .main-wrapper__secondary-navbar {
-        margin-left: 5.5rem;
-    }
-
-    article {
-        width: 100%;
-        padding: 0;
-        padding-bottom: 5rem;
-        border-radius: .5rem;
-        margin: 0;
-        transform: translateX(-3.1rem) !important;
-    }
-    article h2 {
-        margin-left: 3rem;
-        margin-top: 5cqi;
-    }
-
-}
-
-@media screen and (max-width: 800px) {
-    
-    .main-navbar {
-        flex-direction: column; /* Cambiar la dirección de los elementos en pantallas pequeñas */
-        align-items: flex-start; /* Alinea los elementos a la izquierda */
-    }
-
-    .main-wrapper__secondary-navbar {
-        width: .1rem;
-        margin: 0;
-        padding: 0;
-        /* background-color: #2E7D32;  BUSCAR EL COLOR PARA QUE SEA EL MISMO COLOR DE FONDO Y NO SE NOTE */
-    }
-
-    .main-wrapper__contenido-relacionado {
-        transform: translateX(2.75rem);
-    }
-
-    .cotainer-all {
-        transition: all 300ms cubic-bezier(1,0,0,1);
-    }
-
-    .move-conainer-all {
-        transform: translateX(20rem);
-
-    }
-    .menu {
-        width: 20rem;
-        height: 100vh;
-        position: fixed;
-        background-color: #c9c5c5; 
-        color: #0a141d; 
-        left: 0;
-        overflow: hidden;
-        transform: translateX(-20rem);
-        transition: all 300ms cubic-bezier(1,0,0,1);
-    }
-
-    .menu.show-lateral {
-        transform: translateX(0);
-        box-shadow: 0 .5rem 2.5rem #000;
-        z-index: 11;
-    }
-
-    .show-lateral {
-        width: 17rem;
-        transform: translateX(0rem);
-
-    
-    }
-    
-    .menu nav ul{
-        flex-direction: column;
-    }
-    
-    .menu nav ul li {
-        max-width: 18rem;
-        height: 5rem;
-        justify-content: flex-start;
-    }
-
-    .menu ul:first-child {
-        margin-top: -3rem;
-    }
-    .blog-selected::before {
-        width: 0;
-    }
-    .menu nav ul li a{
-        margin-top: 4rem;
-        color : #2b2a2a;
-    }
-    
-    .menu nav ul li a i {
-        width: 1.3rem;
-        display: inline-block;
-        margin-right: .7rem;
-        color:#0a141d;
-    }
-
-    #icon-menu {
-        display: flex;
-    }
-
-    .main-wrapper__center-content {
-        flex-wrap: wrap;
-    }
-
-    #icon-search {
-        display: flex;
-        color:#0a141d;
-        margin-top: 4rem;
-        margin-right:4.5rem;
-    }
-
-    #box-search, #ctn-bars-search, #inputSearch {
-        width: 80% !important;
-    }
-
-
-    .header-content__logo-container {    
-        display: none;
-    }
-    
-    .main-wrapper__center-content {
-        display: flex ;
-        flex-direction: column ;
-        width: 100% ;
-        gap: 1rem; /* Espacio entre elementos */
-    }
-    
-    /* Resetear cualquier propiedad que pueda interferir */
-    main,
-    .main-wrapper__secondary-navbar,
-    .main-wrapper__contenido-relacionado {
-        width: 100% ;
-        max-width: 100% ;
-        flex: 0 0 auto ; /* Evita que crezcan o se encogan */
-        order: initial ;
-        transform: none ;
-        margin: 0 ;
-        padding: 1rem ;
-        float: none ; /* Por si hay floats */
-        position: relative ; /* Resetear posicionamiento */
-        left: auto ;
-        right: auto ;
-    }
-    
-    article {
-        padding: .3rem !important;
-        transform: translateX(3.1rem) !important;
-    }
-
-    /* Si hay elementos hijos con display inline */
-    .main-wrapper__center-content > * {
-        display: block ;
-    }
-    
-    /* Orden específico (ajusta según necesites) */
-    .main-wrapper__secondary-navbar {
-        order: 2 ;
-    }
-    
-    main {
-        order: 1 ;
-    }
-    
-    .main-wrapper__contenido-relacionado {
-        order: 3 ;
-    }
-    
-    /* Contenido relacionado - asegurar apilamiento */
-    .contenido-relacionado-content {
-        display: flex ;
-        flex-direction: column ;
-    }
-    
-    .contenido-relacionado-content aside {
-        width: 100% ;
-        margin: 0.5rem 0 ;
-
-    }
-
-    .main-wrapper {
-        min-width: 100% ; /* Eliminamos el ancho mínimo fijo */
-        padding: 0;
-        background-color: #E8F0E8; 
-    }
-
-    .main-wrapper__center-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centramos horizontalmente */
-        width: 100%;
-        gap: 2rem; /* Espacio entre secciones */
-        padding: 1rem; /* Padding general */
-    }
-
-    main, 
-    .main-wrapper__secondary-navbar,
-    .main-wrapper__contenido-relacionado {
-        width: 90% ; /* 90% del padre (para dejar margen) */
-        max-width: 600px ; /* Máximo para no estirarse mucho */
-        margin: 0 auto ; /* Centrado horizontal */
-        padding: 1.5rem !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Sombra suave para mejor visual */
-        border-radius: 8px; /* Bordes redondeados */
-
-
-    }
-
-    /* Contenido relacionado - ajustes específicos */
-    .contenido-relacionado-content {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        width: 100%;
-    }
-
-    .contenido-relacionado-content aside {
-        width: 100% ;
-        padding: 1.2rem;
-    }
-
-    /* Ajustes para el contenido dentro de los artículos */
-    article {
-        width: 100% ;
-        padding: 1.5rem ;
-    }
-
-    article p {
-        padding: 0 0.5rem ; /* Reducimos el padding interno */
-        padding-right: 0 !important; /* Para evitar conflicto con el padding de la clase */
-    }
-
-    article img {
-        margin: 1.5rem auto; /* Centramos imágenes */
-        max-width: 100%;
-    }
-
-    .main-wrapper__center-content {
-        padding-right: 2rem !important;
-    }
-    
-    main, 
-    .main-wrapper__secondary-navbar,
-    .main-wrapper__contenido-relacionado {
-        padding-right: 2.5rem !important; /* Aumenté el padding derecho */
-        padding-left: 1.5rem !important;
-    }
-
-    /* Ajustes específicos para artículos con más padding derecho */
-    article {
-        width: 100% !important;
-        padding: 1.5rem 2rem 1.5rem 1.5rem !important; /* Top Right Bottom Left */
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        overflow-x: hidden;
-        box-sizing: border-box;
-    }
-    
-    /* Padding adicional para párrafos */
-    article p {
-        max-width: 100%;
-        word-break: break-word;
-        hyphens: auto;
-        padding-right: 0.5rem !important; /* Extra padding derecho para texto */
-    }
-    
-    /* Contenido relacionado - más padding derecho */
-    .contenido-relacionado-content aside {
-        padding: 1.2rem 2rem 1.2rem 1.2rem !important;
-    }
-
-    /* Menú lateral - ajuste de padding */
-    .menu.show-lateral {
-        padding-right: 1rem !important;
-    }
-
-    /* Ajuste para el contenedor principal */
-    .cotainer-all, .move-conainer-all {
-        padding-right: 1rem !important;
-    }
-    
-    /* Elementos de búsqueda */
-    #box-search, #ctn-bars-search, #inputSearch {
-        padding-right: 1.5rem !important;
-    }
-}
-
-@media screen and (max-width: 800px) {
-
-    .box {
-        width: 10rem;
-        height: 10rem;
-    }
-    /* FOOTER RESPONSIVE */
-    .footer .footer__grupo1 {
-        grid-template-columns: 1fr; /* Cambia a una sola columna */
-        grid-gap: 2rem; /* Reduce el espacio entre elementos */
-        padding: 2rem 0rem !important; /* Padding más compacto */
-    }
-
-    .footer .footer__grupo1 .box {
-        text-align: center; /* Centra el contenido */
-        margin-bottom: 1.5rem;
-    }
-
-    .footer .footer__grupo1 .box figure {
-        justify-content: center;
-    }
-
-    .footer .footer__grupo1 .box h2 {
-        font-size: 1.5rem; /* Reduce tamaño de títulos */
-        margin-bottom: 1rem;
-    }
-
-    .footer .footer__grupo1 .red-social {
-        justify-content: center; /* Centra redes sociales */
-        flex-wrap: wrap; /* Permite que se envuelvan */
-    }
-
-    .footer .footer__grupo1 .red-social a {
-        margin: 0.5rem; /* Espaciado uniforme */
-    }
-
-    .footer .footer__grupo2 {
-        padding-top: 1rem; /* Padding más compacto */
-    }
-
-    .footer-content {
-        display: flex;
-        flex-direction: column;
-        gap: 4rem; /* Espacio uniforme entre elementos */
-    }
-}
-
-@media screen and (max-width: 600px) {
-    
-    /* Elimina las transformaciones que desplazan el contenido */
-    .main-wrapper__secondary-navbar, 
-    .contenido-relacionado--contenedor {
-        transform: none !important;
-    }
-
-    
-    /* Ajustes para el footer */
-    .footer .footer__grupo1 {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centra horizontalmente */
-        text-align: center; /* Centra el texto */
-        margin-left: 0 !important; /* Elimina el margen izquierdo */
-        padding: 2rem 1rem !important; /* Ajusta el padding */
-    }
-
-    .footer .footer__grupo1 .box {
-        width: 100%;
-        max-width: 300px; /* Ancho máximo para mejor legibilidad */
-        margin-bottom: 2rem;
-    }
-
-    .footer .footer__grupo1 .box:first-child {
-        display: flex !important; /* Muestra el primer box */
-        justify-content: center;
-    }
-
-    .footer .footer__grupo1 .box figure img {
-        width: 80%; /* Reduce el tamaño del logo */
-    }
-
-    .footer .footer__grupo1 .red-social {
-        justify-content: center; /* Centra las redes sociales */
-    }
-
-    .footer .footer__grupo2 {
-        text-align: center;
-        padding: 1rem;
-    }
-
-    /* Ajustes adicionales para el contenido principal */
-    article {
-        width: 100% !important;
-        padding: 1rem !important;
-    }
-
-        
-    article {
-        padding: .3rem !important;
-        transform: translateX(.8rem) !important;
-    }
-
-    .contenido-relacionado--contenedor, 
-    .secondary-navbar--contenedor {
-        width: 100% !important;
-    }
-
-
-}
-
-@media screen and (max-width: 415px) {
-
-    .main-wrapper__secondary-navbar, .contenido-relacionado--contenedor {
-        transform: translateX(8rem);
-    }
-
-    article {
-        transform: translate(8rem)!important;
-    }
-    
-}
+/* --- User Info (Header Right) --- */
 .usuario-info {
-    color: #ffffff !important;
+    color: #ffffff;
     font-weight: 400;
-    margin-left: auto;
+    margin-left: auto; /* Pushes it to the right */
     padding: 0.3rem 0.8rem;
     font-size: 1.1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    border: 1px solid #ffffff;  /* Borde blanco */
-    border-radius: 8px;          /* Bordes redondeados */
-    background-color: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    white-space: nowrap; /* Prevent wrapping */
+    cursor: default; /* Indicates it's not clickable by default */
 }
-.user-button {
+
+.user-button { /* This seems to be a duplicate or for specific user action. Clarify its purpose. */
     background-color: #fff;
     border: none;
     border-radius: 10px;
     padding: 5px 10px;
     font-weight: bold;
-    cursor: default;
+    cursor: pointer; /* Changed to pointer as it's a button */
     display: flex;
     align-items: center;
     gap: 5px;
+    color: #2E7D32; /* Make text green for contrast */
+    transition: background-color 0.3s ease;
+}
+
+.user-button:hover {
+    background-color: #f0f0f0;
+}
+
+/* --- Responsive Design (Media Queries) --- */
+
+/* For screens smaller than 1220px */
+@media screen and (max-width: 1220px) {
+    .header-content {
+        padding: 0.5rem 1.5rem; /* More generous padding */
+    }
+
+    .main-navbar ul {
+        justify-content: flex-end;
+    }
+
+    .main-navbar li {
+        margin: 0 0.8rem; /* Slightly reduced margins */
+    }
+
+    .main-navbar ul li:first-child {
+        margin-left: 2rem; /* Adjusted logo margin for smaller screens */
+        margin-right: auto; /* Pushes other items to the right */
+    }
+
+    #ctn-icon-search {
+        right: 1.5rem; /* Adjusted position */
+    }
+
+    /* Form specific adjustments */
+    #postForm input[type="text"],
+    #postForm textarea,
+    #postForm input[name="tags"],
+    .editor--container,
+    .tagify {
+        width: calc(100% - 4rem); /* Reduce side margins for forms */
+        margin: 1rem 2rem;
+    }
+}
+
+/* For screens smaller than 1020px */
+@media screen and (max-width: 1020px) {
+    .header-content__logo-container {
+        margin-left: 1rem;
+    }
+
+    .main-navbar ul li:first-child {
+        margin-left: 3rem; /* More space for logo */
+    }
+
+    /* Main layout adapts to single column or flex-wrap */
+    .main-wrapper {
+        flex-direction: column; /* Stack main content and asides */
+        align-items: center; /* Center stacked items */
+        gap: 2rem; /* More space between stacked sections */
+    }
+
+    main, aside {
+        width: 90%; /* Occupy most of the width */
+        max-width: 65rem; /* Limit maximum width */
+        margin: 0 auto; /* Center horizontally */
+        flex-basis: auto; /* Let content dictate height */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Add shadow to stacked sections */
+    }
+
+    /* Adjust specific sections that might have transforms */
+    .main-wrapper__secondary-navbar,
+    .main-wrapper__contenido-relacionado {
+        transform: none !important; /* Remove any previous transforms */
+        width: 90% !important;
+        margin: 0 auto;
+        padding: 1.5rem !important; /* Ensure consistent padding */
+    }
+
+    .contenido-relacionado-content {
+        display: flex;
+        flex-direction: column; /* Stack related content items */
+        gap: 1.5rem;
+    }
+
+    .contenido-relacionado-content aside {
+        width: 100%; /* Make related content aside full width */
+        padding: 1.2rem;
+    }
+}
+
+/* For screens smaller than 800px (Mobile-first navigation) */
+@media screen and (max-width: 800px) {
+    /* Hide desktop navigation and show mobile menu icon */
+    .main-navbar {
+        display: none; /* Hide desktop navbar */
+    }
+    .header-content__logo-container {
+        display: none; /* Hide logo in header for mobile */
+    }
+
+    #icon-menu {
+        display: flex; /* Show mobile menu icon */
+    }
+
+    #ctn-icon-search {
+        display: flex; /* Ensure search icon is visible */
+        right: 6rem; /* Adjust position to not overlap with menu icon */
+    }
+    #ctn-icon-search i {
+        color: #e5dede; /* White search icon in header */
+    }
+
+    /* Mobile Menu (Sidebar) */
+    .menu {
+        width: 17rem; /* Width of the mobile menu */
+        height: 100vh;
+        position: fixed;
+        background-color: #c9c5c5; /* Light grey background */
+        color: #0a141d; /* Dark text color */
+        left: 0;
+        top: 0; /* Align to top */
+        overflow-y: auto; /* Enable scrolling for long menus */
+        transform: translateX(-17rem); /* Hidden by default */
+        transition: transform 300ms cubic-bezier(1,0,0,1);
+        z-index: 20; /* Higher z-index than search */
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2); /* Shadow on the side */
+    }
+
+    .menu.show-lateral {
+        transform: translateX(0); /* Show menu */
+    }
+
+    .menu nav ul {
+        flex-direction: column; /* Stack menu items vertically */
+        align-items: flex-start; /* Align text to the left */
+        padding-top: 5rem; /* Space for fixed header/icon */
+    }
+
+    .menu nav ul li {
+        width: 100%; /* Full width items */
+        margin: 0; /* Remove horizontal margins */
+    }
+
+    .menu nav ul li a {
+        padding: 1rem 1.5rem; /* More generous padding for touch targets */
+        color: #2b2a2a; /* Darker text for menu items */
+        display: flex; /* Use flex to align icon and text */
+        align-items: center;
+        gap: 0.7rem; /* Space between icon and text */
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .menu nav ul li a:hover {
+        background-color: #e0e0e0;
+        color: #1a1a1a;
+    }
+
+    .menu nav ul li a i {
+        font-size: 1.5rem;
+        color: #0a141d; /* Dark icon color */
+    }
+
+    /* Remove specific first-child margin for mobile menu */
+    .main-navbar ul li:first-child {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .blog-selected::before {
+        display: none; /* Hide underline on mobile menu */
+    }
+
+    /* Push main content when menu is open */
+    .cotainer-all.move-conainer-all {
+        transform: translateX(17rem); /* Moves content right when menu is open */
+        transition: transform 300ms cubic-bezier(1,0,0,1);
+    }
+    .cotainer-all {
+        transition: all 300ms cubic-bezier(1,0,0,1);
+    }
+
+    /* Search bar and box adjustments for smaller screens */
+    #box-search, #ctn-bars-search {
+        width: 95% !important; /* Make search bar wider */
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #ctn-bars-search input {
+        width: calc(100% - 2rem);
+    }
+
+    /* Footer adjustments for very small screens */
+    .footer .footer__grupo1 {
+        grid-template-columns: 1fr; /* Single column layout for footer */
+        gap: 2rem;
+        padding: 2rem 1rem !important; /* Adjusted padding */
+    }
+
+    .footer .footer__grupo1 .box {
+        text-align: center;
+    }
+
+    .footer .footer__grupo1 .red-social {
+        justify-content: center;
+    }
+
+    .footer .footer__grupo1 .box figure {
+        margin-bottom: 1rem;
+    }
+
+    .footer .footer__grupo1 .box h2 {
+        font-size: 1.3rem; /* Smaller heading */
+    }
+
+    .footer .footer__grupo1 .box p {
+        padding: 0 0.5rem; /* Some horizontal padding for paragraphs */
+    }
+
+    /* Form adjustments for smaller screens */
+    .main-wrapper__content form {
+        padding: 1.5rem; /* Reduced form padding */
+        max-width: 95%; /* Wider form on small screens */
+    }
+
+    #postForm input[type="text"],
+    #postForm textarea,
+    #postForm input[name="tags"],
+    .editor--container,
+    .tagify {
+        width: calc(100% - 2rem); /* Even less margin */
+        margin: 1rem; /* Consistent margin */
+    }
+}
+
+/* For screens smaller than 600px */
+@media screen and (max-width: 600px) {
+    /* Ensure all main content sections are full width and centered */
+    main,
+    .main-wrapper__secondary-navbar,
+    .main-wrapper__contenido-relacionado {
+        width: 95% !important;
+        margin: 0 auto !important; /* Ensure centering */
+        padding: 1.2rem !important; /* Slightly reduced padding */
+    }
+
+    article {
+        padding: 1rem !important; /* Article content padding */
+        transform: none !important; /* Remove any lingering transforms */
+        width: 100% !important; /* Full width for articles */
+    }
+
+    article p {
+        padding-right: 0 !important; /* Remove extra padding on paragraphs */
+    }
+
+    .contenido-relacionado-content aside {
+        padding: 1rem !important; /* Reduced padding for related content aside */
+    }
+
+    /* Footer adjustments */
+    .footer .footer__grupo1 .box {
+        max-width: none; /* Allow boxes to take full available width */
+    }
+}
+
+/* For screens smaller than 415px (very small phones) */
+@media screen and (max-width: 415px) {
+    #icon-menu {
+        right: 1rem; /* Adjust menu icon position */
+    }
+    #ctn-icon-search {
+        right: 4rem; /* Adjust search icon position */
+    }
+
+    /* Re-evaluate if these transforms are still necessary or desirable.
+       They might cause content to go off-screen.
+       I've removed them in previous media queries, so they might not be needed. */
+    /* .main-wrapper__secondary-navbar, .contenido-relacionado--contenedor {
+        transform: translateX(8rem);
+    }
+    article {
+        transform: translate(8rem)!important;
+    } */
+}
+
+/* --- Utility/Helper Classes (Optional, but good practice) --- */
+.hidden {
+    display: none !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }
