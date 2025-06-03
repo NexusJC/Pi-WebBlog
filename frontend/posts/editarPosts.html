@@ -14,15 +14,10 @@
     <div class="header-content">
       <div class="menu">
         <nav class="main-navbar">
-          <ul>
-            <li><div class="header-content__logo-container"><img src="/img/logo-ecolima.png" alt=""></div></li>
-            <li title="Menú Principal"><a href="/menu/index.html"><i class="fa-solid fa-house"></i></a></li>
-            <li title="¿Quiénes somos?"><a href="/about-us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
-            <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
-            <li class="blog-selected" title="¡Publica tu post!"><a href="/publicaciones/publicaciones.html"><i class="fa-solid fa-file-pen"></i></a></li>
-            <li title="¡Inicia sesión!"><a href="/login/login.html"><i class="fa-solid fa-circle-user"></i></a></li>
-          </ul>
-        </nav>
+                    <ul>
+                       <ul id="dynamic-menu"></ul> 
+                    </ul>
+                </nav> 
       </div>
       <div id="icon-menu"><i class="fa-solid fa-bars"></i></div>
     </div>
@@ -93,6 +88,7 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="../menu/rolRender.js"></script>
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
   <script src="scriptsEditar.js"></script>
