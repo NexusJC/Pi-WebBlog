@@ -14,43 +14,6 @@
 </head>
 <body>
     <a href="../menu/index.html" class="boton_regresar">⬅ Regresar al menú</a>
-    <div class="container-form login hide">
-        <div class="information">
-            <div class="info_childs">
-                <img src="../img/logo-ecolima.png" alt="Logo Ecolima" class="logo-login">
-                <h2>¡¡Bienvenido Nuevamente!!</h2>
-                <p>Inicia sesión con tus datos para acceder</p>
-                <input type="button" value="Registrarse" id="sign-up">
-            </div>
-        </div>
-        <div class="form-information">
-            <div class="form-information-childs">
-                <h2>Iniciar Sesión</h2>
-                <p>Inicia Sesión con tu cuenta</p>
-                <form class="form form-login" novalidate>
-                    <div>
-                        <label >
-                            <i class='bx bx-envelope' ></i>
-                            <input type="email" placeholder="Correo Electronico" name="userEmail">
-                        </label>
-                    </div>
-                   <div class="form-group">
-                        <div class="password-wrapper">
-                            <i class='bx bx-lock-alt'></i>
-                            <input type="password" placeholder="Contraseña" name="userPassword" id="loginPasswordInput">
-                            <i class='bx bx-show toggle-password' id="toggleLoginPassword"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <a href="../login/Olvidé_contraseña.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
-                    </div>
-                    <input type="submit" value="Iniciar Sesión">
-                    <div class="alerta-error" style="display: none;"></div>
-                    <div class="alerta-exito" style="display: none;"></div>
-                </form> 
-                <div id="loader" class="hide">Iniciando sesión...</div>
-        </div>
-    </div>
     <div class="container-form register">
         <div class="information">
             <div class="info_childs">
@@ -95,6 +58,44 @@
             </a>
             </div>
             </div>
+        </div>
+    </div>
+    
+    <div class="container-form login hide">
+        <div class="information">
+            <div class="info_childs">
+                <img src="../img/logo-ecolima.png" alt="Logo Ecolima" class="logo-login">
+                <h2>¡¡Bienvenido Nuevamente!!</h2>
+                <p>Inicia sesión con tus datos para acceder</p>
+                <input type="button" value="Registrarse" id="sign-up">
+            </div>
+        </div>
+        <div class="form-information">
+            <div class="form-information-childs">
+                <h2>Iniciar Sesión</h2>
+                <p>Inicia Sesión con tu cuenta</p>
+                <form class="form form-login" novalidate>
+                    <div>
+                        <label >
+                            <i class='bx bx-envelope' ></i>
+                            <input type="email" placeholder="Correo Electronico" name="userEmail">
+                        </label>
+                    </div>
+                   <div class="form-group">
+                        <div class="password-wrapper">
+                            <i class='bx bx-lock-alt'></i>
+                            <input type="password" placeholder="Contraseña" name="userPassword" id="loginPasswordInput">
+                            <i class='bx bx-show toggle-password' id="toggleLoginPassword"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="../login/Olvidé_contraseña.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <input type="submit" value="Iniciar Sesión">
+                    <div class="alerta-error" style="display: none;"></div>
+                    <div class="alerta-exito" style="display: none;"></div>
+                </form> 
+                <div id="loader" class="hide">Iniciando sesión...</div>
         </div>
     </div>
     <script src="js/script.js"></script>
