@@ -1193,3 +1193,29 @@ main {
     }
     
 }
+.crear-post-container {
+  text-align: center;
+  margin: 2rem auto;
+}
+
+.crear-post-msg {
+  font-size: 1.25rem;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.crear-post-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #388e3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.crear-post-btn:hover {
+  background-color: #2e7d32;
+}
