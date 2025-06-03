@@ -1261,5 +1261,45 @@ main {
 .crear-post-btn:hover {
   background-color: #2e7d32;
 }
+.crear-post-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: #f0f9f0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: 2rem;
+}
+
+.crear-post-card span {
+  font-weight: 500;
+  color: #2e7d32;
+  font-size: 1rem;
+}
+
+.crear-post-card button {
+  background-color: #388e3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.crear-post-card button:hover {
+  background-color: #2e7d32;
+  transform: scale(1.03);
+}
 
 
