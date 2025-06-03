@@ -413,8 +413,8 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                 <button class="pretty-like-button">
                   <i class="fa-regular fa-heart"></i>
                   <span class="like-text">Me gusta</span>
+                  <span class="like-count">0</span>
                 </button>
-                <span class="like-count">0</span>
               </div>
 
             </div>
@@ -789,8 +789,9 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
               <button class="pretty-like-button">
                 <i class="fa-regular fa-heart"></i>
                 <span class="like-text">Me gusta</span>
+                <span class="like-count">0</span>
               </button>
-              <span class="like-count">0</span>
+
             </div>
 
             </div>
