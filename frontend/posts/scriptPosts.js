@@ -136,7 +136,10 @@ function manejarLikes() {
 
       if (yaLeDioLike) {
           likeButton.classList.add("liked");
-          likeButton.innerHTML = `<i class="fa-solid fa-heart"></i><span class="like-count">${likes}</span>`;
+          likeButton.innerHTML = liked
+  ? `<i class="fa-solid fa-heart"></i> Quitar like <span class="like-count">${likes}</span>`
+  : `<i class="fa-regular fa-heart"></i> Me gusta <span class="like-count">${likes}</span>`;
+
         } else {
           likeButton.classList.remove("liked");
           likeButton.innerHTML = `<i class="fa-regular fa-heart"></i><span class="like-count">${likes}</span>`;
@@ -187,6 +190,8 @@ function manejarLikes() {
       });
   });
 }
+likeCountSpan.classList.add("animate");
+setTimeout(() => likeCountSpan.classList.remove("animate"), 300);
 
 // 📌 COMENTARIOS
 function manejarComentarios() {

@@ -1815,19 +1815,17 @@ main {
   background-color: #81C784;
 }
 .like-button {
+  background-color: #A5D6A7;
+  color: #1B5E20;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background-color: #A5D6A7; /* Verde claro */
-  color: #1B5E20;            /* Verde oscuro */
-  border: none;
-  padding: 0.5rem 1.1rem;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  gap: 0.4rem;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .like-button:hover {
@@ -1841,5 +1839,21 @@ main {
 }
 
 .like-button i {
-  font-size: 1rem;
+  font-size: 1.1rem;
+}
+.like-button.liked i {
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+.like-count {
+  transition: transform 0.2s ease;
+}
+
+.like-count.animate {
+  transform: scale(1.3);
 }
