@@ -691,11 +691,10 @@ main {
 }
 
 .ctn-tags {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 16px;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* opcional, alinea las etiquetas a la izquierda */
+  gap: 0.3rem; /* espacio entre etiquetas */
 }
 
 .ctn-tags li {
