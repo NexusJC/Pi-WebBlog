@@ -1851,8 +1851,13 @@ main {
   100% { transform: scale(1); }
 }
 .like-count {
-  transition: transform 0.2s ease;
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: #333;
 }
+
 
 .like-count.animate {
   transform: scale(1.3);
@@ -1862,3 +1867,4 @@ main {
   flex-direction: column;
   align-items: center;
 }
+
