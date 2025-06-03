@@ -405,7 +405,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                 <p>${title}</p>
                 <h3>Etiquetas</h3>
                   <div class="ctn-tags">
-                    ${parsedTags.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag}</span>`).join("")}
+                    ${parsedTags.map(tag => `<span class="post-tag">${tag}</span>`).join("")}
                   </div>
                 <h3>Mensaje</h3>
                 <p>${mensaje_autor}</p>
@@ -776,7 +776,7 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
                 <p>${title}</p>
                 <h3>Etiquetas</h3>
                   <div class="ctn-tags">
-                    ${parsedTags.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag}</span>`).join("")}
+                    ${parsedTags.map(tag => `<span class="post-tag">${tag}</span>`).join("")}
                   </div>
                 <h3>Mensaje</h3>
                 <p>${mensaje_autor}</p>
