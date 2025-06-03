@@ -1551,7 +1551,16 @@ main {
     // Manejador de selección de archivos
     if (fileInput) {
         fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
+    const file = e.target.files[0];
+
+    if (file && !file.type.startsWith('image/')) {
+        showAlert("⚠️ Solo se permiten archivos de imagen (jpg, png, etc.)", "error");
+        fileInput.value = ''; // Limpiar selección
+        fileNameElement.textContent = 'No hay imagen seleccionada';
+        const preview = document.getElementById('preview');
+        if (preview) preview.style.display = 'none';
+        return;
+    }
             
             if (file) {
                 fileNameElement.textContent = file.name;
