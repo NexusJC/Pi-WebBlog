@@ -1913,22 +1913,13 @@ main {
     background-color: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
 }
 .user-button {
-  background-color: #fff;
-  border: 2px solid #388E3C;
-  border-radius: 12px;
-  padding: 6px 14px;
-  font-size: 0.95rem;
-  font-weight: bold;
-  color: #003800;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
-
-.user-button:hover {
-  background-color: #388E3C;
-  color: white;
-}
-
-
