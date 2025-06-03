@@ -1562,7 +1562,7 @@ main {
         return;
     }
             
-            if (file) {
+            if (file) { 
                 fileNameElement.textContent = file.name;
                 
                 // Vista previa de imagen
@@ -1654,7 +1654,6 @@ document.querySelector('.btn-post').addEventListener('click', () => {
         return;
     }
 
-    
     if (!fileInput.files || fileInput.files.length === 0) {
         showAlert("⚠️ Debes seleccionar una imagen antes de publicar.", "error");
         fileInput.classList.add("shake");
@@ -1662,9 +1661,18 @@ document.querySelector('.btn-post').addEventListener('click', () => {
         return;
     }
 
+    const plainText = quill.getText().trim();
+    if (!plainText || plainText.split(/\s+/).length < 1) {
+        showAlert("⚠️ El contenido debe tener al menos una palabra.", "error");
+        document.getElementById("editor").classList.add("shake");
+        setTimeout(() => document.getElementById("editor").classList.remove("shake"), 500);
+        return;
+    }
+
     permitirPublicar = true;
     postForm.requestSubmit();
 });
+
 
       
     
