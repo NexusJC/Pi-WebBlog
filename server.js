@@ -351,11 +351,18 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
     <header class="header">
         <div class="header-content">
             <div class="menu">
+                <div class="menu">
                 <nav class="main-navbar">
-                    <ul>
-                       <ul id="dynamic-menu"></ul> 
-                    </ul>
-                </nav>   
+    <ul id="dynamic-menu">
+        <li><a href="#" id="abrirLogoutModal">Cerrar sesión</a></li>
+             <li title="Busquedas">
+                <a href="#" id="icon-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
+        </li>
+            </ul>
+        </nav>
+            </div>  
             </div>
             <div id="icon-menu">
                 <i class="fa-solid fa-bars"></i>
@@ -712,11 +719,18 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
     <header class="header">
         <div class="header-content">
             <div class="menu">
+                <div class="menu">
                 <nav class="main-navbar">
-                    <ul>
-                       <ul id="dynamic-menu"></ul> 
-                    </ul>
-                </nav>  
+    <ul id="dynamic-menu">
+        <li><a href="#" id="abrirLogoutModal">Cerrar sesión</a></li>
+             <li title="Busquedas">
+                <a href="#" id="icon-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
+        </li>
+            </ul>
+        </nav>
+            </div>  
             </div>
             <div id="icon-menu">
                 <i class="fa-solid fa-bars"></i>
