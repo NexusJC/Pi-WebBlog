@@ -1857,3 +1857,8 @@ main {
 .like-count.animate {
   transform: scale(1.3);
 }
+.like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

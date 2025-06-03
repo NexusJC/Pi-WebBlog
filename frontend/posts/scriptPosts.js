@@ -118,40 +118,34 @@ async function cargarContenidoRelacionado() {
 function manejarLikes() {
   const postDiv = document.querySelector(".post");
   const postId = postDiv?.dataset?.id;
-  const likeButton = postDiv?.querySelector(".like-button");
+  const likeButton = postDiv?.querySelector(".pretty-like-button");
+  const likeCount = postDiv?.querySelector(".like-count");
 
-  if (!postDiv || !likeButton) return;
+  if (!postDiv || !likeButton || !likeCount) return;
 
   const userId = localStorage.getItem("userId");
-  const likeCountSpan = likeButton.querySelector(".like-count");
-
   const likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
   const yaLeDioLike = likedPosts.includes(postId);
 
+  // Inicial: obtener conteo de likes
   fetch(`${API_BASE_URL}/api/posts/${postId}/likes`)
     .then(res => res.json())
     .then(data => {
       const likes = data.likes || 0;
-      likeCountSpan.textContent = likes;
-
+      likeCount.textContent = likes;
       if (yaLeDioLike) {
-          likeButton.classList.add("liked");
-          likeButton.innerHTML = liked
-  ? `<i class="fa-solid fa-heart"></i> Quitar like <span class="like-count">${likes}</span>`
-  : `<i class="fa-regular fa-heart"></i> Me gusta <span class="like-count">${likes}</span>`;
-
-        } else {
-          likeButton.classList.remove("liked");
-          likeButton.innerHTML = `<i class="fa-regular fa-heart"></i><span class="like-count">${likes}</span>`;
-        }
-
+        likeButton.classList.add("liked");
+        likeButton.innerHTML = `
+          <i class="fa-solid fa-heart"></i>
+          <span class="like-text">Quitar like</span>
+        `;
+      }
     });
 
-  likeButton.addEventListener("click", () => {
+  likeButton.addEventListener("click", async () => {
     if (!userId) {
       const modal = document.getElementById("likeModal");
       modal.style.display = "flex";
-
       document.getElementById("goToLoginLike").onclick = () => {
         window.location.href = "/login/login.html";
       };
@@ -164,34 +158,46 @@ function manejarLikes() {
     const liked = likeButton.classList.contains("liked");
     const method = liked ? "DELETE" : "POST";
 
-    fetch(`${API_BASE_URL}/like/${postId}`, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId })
-    })
-      .then(res => res.json())
-      .then(data => {
-        const likes = typeof data.likes === "number" ? data.likes : 0;
-        likeCountSpan.textContent = likes;
-
-        let likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
-
-        if (liked) {
-          likeButton.classList.remove("liked");
-          likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likes}</span>`;
-          likedPosts = likedPosts.filter(id => id !== postId);
-        } else {
-          likeButton.classList.add("liked");
-          likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likes}</span>`;
-          likedPosts.push(postId);
-        }
-
-        localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+    try {
+      const res = await fetch(`${API_BASE_URL}/like/${postId}`, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId })
       });
+
+      const data = await res.json();
+      const likes = typeof data.likes === "number" ? data.likes : 0;
+      likeCount.textContent = likes;
+
+      let likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
+
+      if (liked) {
+        likeButton.classList.remove("liked");
+        likeButton.innerHTML = `
+          <i class="fa-regular fa-heart"></i>
+          <span class="like-text">Me gusta</span>
+        `;
+        likedPosts = likedPosts.filter(id => id !== postId);
+      } else {
+        likeButton.classList.add("liked");
+        likeButton.innerHTML = `
+          <i class="fa-solid fa-heart"></i>
+          <span class="like-text">Quitar like</span>
+        `;
+        likedPosts.push(postId);
+      }
+
+      localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+
+      likeCount.classList.add("animate");
+      setTimeout(() => likeCount.classList.remove("animate"), 300);
+
+    } catch (err) {
+      console.error("❌ Error al dar like:", err);
+    }
   });
 }
-likeCountSpan.classList.add("animate");
-setTimeout(() => likeCountSpan.classList.remove("animate"), 300);
+// hehehe
 
 // 📌 COMENTARIOS
 function manejarComentarios() {
