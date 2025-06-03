@@ -1230,7 +1230,15 @@ main {
 .crear-post-btn-wrapper {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
   padding: 1rem 2rem 0 2rem;
+}
+
+.crear-post-msg {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2e7d32;
 }
 
 .crear-post-btn {
@@ -1252,4 +1260,5 @@ main {
 .crear-post-btn:hover {
   background-color: #2e7d32;
 }
+
 
