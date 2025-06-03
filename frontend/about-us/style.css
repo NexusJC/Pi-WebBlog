@@ -571,7 +571,7 @@ article img {
 }
 
 /* --- Animaciones --- */
-.about-us-container, .about-us-values, .team-section {
+.about-us-container, .about-us-values, .team-section, .ods-section {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 1s ease-in-out forwards;
@@ -650,6 +650,82 @@ article img {
 .footer .footer__grupo2 small {
     font-size: .9rem;
 }
+
+/* --- Sección ODS (Contáctanos y Descripción) - Integrado --- */
+.ods-section {
+    padding: 2rem; /* Añade un poco de espacio alrededor de la sección */
+    margin-bottom: 2rem; /* Espacio con la siguiente sección */
+    background-color: #f9f9f9; /* Un fondo claro para destacar */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centra los elementos internos por defecto */
+}
+
+.ods-icons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap; /* Permite que los iconos se envuelvan en pantallas pequeñas */
+}
+
+.ods-icons div {
+    text-align: center;
+    margin: 0.5rem; /* Espacio entre los iconos */
+}
+
+.ods-icons i {
+    font-size: 2rem;
+    color: #4CAF50; /* Un color verde */
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.ods-icons p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Contenedor principal del texto y el botón */
+.ods-main-content {
+    display: flex;
+    flex-direction: row; /* Elementos en fila por defecto */
+    gap: 2rem; /* Espacio entre el texto y el botón */
+    align-items: center; /* Alinea verticalmente el texto y el botón */
+    padding: 1rem; /* Espacio interno para el contenido principal */
+}
+
+.ods-description {
+    flex-grow: 1; /* Permite que el texto ocupe todo el espacio disponible */
+    text-align: justify; /* Justifica el texto para que ocupe todo el ancho */
+}
+
+.ods-description p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+    margin: 0; /* Elimina márgenes innecesarios del párrafo */
+}
+
+.btn-contact {
+    background-color: #4CAF50; /* Color verde para el botón */
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0; /* Evita que el botón se encoja si el texto es muy largo */
+}
+
+.btn-contact:hover {
+    background-color: #388E3C;
+}
+
 
 /* --- Media Queries (Diseño Responsivo) --- */
 @media screen and (max-width: 1220px) {
@@ -1111,6 +1187,21 @@ article img {
         grid-column: 1 / 2; /* Volver a la primera columna */
         margin-left: auto; /* Quitar márgenes específicos de triángulo invertido */
         margin-right: auto;
+    }
+
+    /* Media Queries para la sección ODS */
+    .ods-main-content {
+        flex-direction: column; /* Apila el texto y el botón en pantallas pequeñas */
+        gap: 1.5rem; /* Ajusta el espacio para la disposición en columna */
+    }
+
+    .ods-description {
+        text-align: center; /* Centra el texto cuando está apilado */
+    }
+
+    .btn-contact {
+        width: 100%; /* El botón ocupa todo el ancho disponible */
+        max-width: 300px; /* Limita el ancho máximo del botón para que no se vea demasiado grande */
     }
 }
 
