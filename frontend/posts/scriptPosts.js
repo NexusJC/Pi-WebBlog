@@ -198,8 +198,6 @@ function manejarLikes() {
   });
 }
 
-likeCountSpan.classList.add("animate");
-setTimeout(() => likeCountSpan.classList.remove("animate"), 300);
 
 // 📌 COMENTARIOS
 function manejarComentarios() {
