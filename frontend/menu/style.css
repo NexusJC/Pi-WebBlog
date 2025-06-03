@@ -1422,6 +1422,27 @@ main {
     font-size: .9rem;
 }
 
+.btn-read-more {
+  background-color: #2e7d32; /* Verde */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Arial', sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.btn-read-more:hover {
+  background-color: #1b5e20;
+}
+
+
 /* Importando fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
 @media screen and (max-width: 1220px) {
