@@ -197,7 +197,7 @@ function manejarLikes() {
     }
   });
 }
-
+// hehehe
 
 // 📌 COMENTARIOS
 function manejarComentarios() {
