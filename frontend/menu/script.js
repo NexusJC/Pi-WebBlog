@@ -382,7 +382,7 @@ if (success) {
                   ${etiquetas.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
                 </div>
                   <a href="/posts/blog${post.id}.html">
-                      <button class="btn-read-more">Leer más</button>
+                      <button class="btn-read-more btn-read-more-small">Leer más</button>
 
                   </a>
             </div>
