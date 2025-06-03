@@ -1375,3 +1375,14 @@ main {
     }
     
 }
+.user-button {
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
