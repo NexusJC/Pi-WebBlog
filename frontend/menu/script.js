@@ -164,7 +164,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                         <p>❤️ ${post.likes || 0}</p>
                         <a href="/posts/blog${post.id}.html">
-                            <button>Leer más</button>
+                            <button class="btn-read-more">Leer más</button>
+
                         </a>
                     </div>
                 `;
@@ -345,7 +346,8 @@ if (success) {
                   ${etiquetas.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
                 </div>
                 <a href="/posts/blog${post.id}.html">
-                    <button>Leer más</button>
+                    <button class="btn-read-more">Leer más</button>
+
                 </a>
             </div>
         `;
@@ -379,9 +381,10 @@ if (success) {
                 <div class="ctn-tags">
                   ${etiquetas.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
                 </div>
-                <a href="/posts/blog${post.id}.html">
-                    <button>Leer más</button>
-                </a>
+                  <a href="/posts/blog${post.id}.html">
+                      <button class="btn-read-more btn-read-more-small">Leer más</button>
+
+                  </a>
             </div>
         `;
     }).join('');
