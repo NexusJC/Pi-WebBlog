@@ -404,9 +404,9 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
                 <h3>Tema</h3>
                 <p>${title}</p>
                 <h3>Etiquetas</h3>
-                <ul>
-                ${parsedTags.map(tag => `<li>${tag}</li>`).join("")}
-                </ul>
+                  <div class="ctn-tags">
+                    ${parsedTags.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag}</span>`).join("")}
+                  </div>
                 <h3>Mensaje</h3>
                 <p>${mensaje_autor}</p>
                 <button class="like-button">
@@ -775,9 +775,9 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
                 <h3>Tema</h3>
                 <p>${title}</p>
                 <h3>Etiquetas</h3>
-                <ul>
-                ${parsedTags.map(tag => `<li>${tag}</li>`).join("")}
-                </ul>
+                  <div class="ctn-tags">
+                    ${parsedTags.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag}</span>`).join("")}
+                  </div>
                 <h3>Mensaje</h3>
                 <p>${mensaje_autor}</p>
                 <button class="like-button">
