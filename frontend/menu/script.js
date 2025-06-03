@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <h3>${post.title || 'Sin título'}</h3>
                         <span>${new Date(post.created_at).toLocaleDateString()}</span>
                         <div class="ctn-tags">
-                      ${etiquetas.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag.trim()}</span>`).join('')}
+                      ${etiquetas.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
                     </div>
                         <p>❤️ ${post.likes || 0}</p>
                         <a href="/posts/blog${post.id}.html">
@@ -342,7 +342,7 @@ if (success) {
                 <h3>${post.title || 'Sin título'}</h3>
                 <span>${new Date(post.created_at).toLocaleDateString()}</span>
                 <div class="ctn-tags">
-                  ${etiquetas.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag.trim()}</span>`).join('')}
+                  ${etiquetas.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
                 </div>
                 <a href="/posts/blog${post.id}.html">
                     <button>Leer más</button>
@@ -377,7 +377,7 @@ if (success) {
                 <h3>${post.title || 'Sin título'}</h3>
                 <span>${new Date(post.created_at).toLocaleDateString()}</span>
                 <div class="ctn-tags">
-                  ${etiquetas.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag.trim()}</span>`).join('')}
+                  ${etiquetas.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
                 </div>
                 <a href="/posts/blog${post.id}.html">
                     <button>Leer más</button>
