@@ -159,9 +159,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>
                         <h3>${post.title || 'Sin título'}</h3>
                         <span>${new Date(post.created_at).toLocaleDateString()}</span>
-                        <ul class="ctn-tags">
-                            ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
-                        </ul>
+                        <div class="ctn-tags">
+                      ${etiquetas.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag.trim()}</span>`).join('')}
+                    </div>
                         <p>❤️ ${post.likes || 0}</p>
                         <a href="/posts/blog${post.id}.html">
                             <button>Leer más</button>
@@ -341,9 +341,9 @@ if (success) {
                 </div>
                 <h3>${post.title || 'Sin título'}</h3>
                 <span>${new Date(post.created_at).toLocaleDateString()}</span>
-                <ul class="ctn-tags">
-                    ${etiquetas.map(tag => `<li>${tag.trim()}</li>`).join('')}
-                </ul>
+                <div class="ctn-tags">
+                  ${etiquetas.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag.trim()}</span>`).join('')}
+                </div>
                 <a href="/posts/blog${post.id}.html">
                     <button>Leer más</button>
                 </a>
@@ -376,9 +376,9 @@ if (success) {
                 <img src="${post.imageUrl || '../img/default.jpg'}" alt="${post.title || 'Post'}">
                 <h3>${post.title || 'Sin título'}</h3>
                 <span>${new Date(post.created_at).toLocaleDateString()}</span>
-                <ul class="ctn-tags">
-                    ${etiquetas.map(tag => `<li>${tag}</li>`).join('')}
-                </ul>
+                <div class="ctn-tags">
+                  ${etiquetas.map(tag => `<span class="post-tag"><i class="fa fa-leaf"></i> ${tag.trim()}</span>`).join('')}
+                </div>
                 <a href="/posts/blog${post.id}.html">
                     <button>Leer más</button>
                 </a>
