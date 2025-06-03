@@ -1106,31 +1106,58 @@ main {
 }
 
 #logoutModal .modal-content {
-  background: #fff;
+  background: #ffffff;
   padding: 2rem;
-  border-radius: 10px;
-  max-width: 400px;
+  border-radius: 16px;
+  max-width: 420px;
+  width: 90%;
+  margin: auto;
   text-align: center;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  font-family: 'Montserrat', sans-serif;
+  color: #2E7D32;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease;
+}
+
+#logoutModal .modal-content p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
 }
 
 #logoutModal button {
   margin: 0.5rem;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 1rem;
 }
 
 #confirmLogout {
-  background-color: #e74c3c;
+  background-color: #388E3C;
   color: white;
-  border: none;
+}
+
+#confirmLogout:hover {
+  background-color: #2E7D32;
 }
 
 #cancelLogout {
-  background-color: #2ecc71;
-  color: white;
-  border: none;
+  background-color: #E0E0E0;
+  color: #333;
 }
+
+#cancelLogout:hover {
+  background-color: #BDBDBD;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 
 
 .comments-section {
