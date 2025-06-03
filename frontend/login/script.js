@@ -77,3 +77,12 @@ function validarEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const modo = params.get("modo");
+
+  if (modo === "login") {
+    containerFormRegister.classList.add("hide");
+    containerFormLogin.classList.remove("hide");
+  }
+});
