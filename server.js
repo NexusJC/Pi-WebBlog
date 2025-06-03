@@ -353,25 +353,9 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
             <div class="menu">
                 <nav class="main-navbar">
                     <ul>
-                        <li>
-                            <div class="header-content__logo-container">
-                                <img src="/img/logo-ecolima.png" alt="">
-                            </div>
-                        </li>
-                        <li title="Menú Principal"><a href="/menu/index.html"><i class="fa-solid fa-house"></i></a></li>
-                        <li title="Blog" class="blog-selected"><a class="blog-selected" href="#"><i class="fa-solid fa-newspaper"></i></a></li>
-                        <li title="¿Quiénes somos?"><a href="/about-us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
-                        <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
-                        <li title="Usuario" id="userMenuItem">
-                          <li><button class="user-button" id="userDisplay"><i class="fa-solid fa-user"></i> Iniciar sesión</button></li>
-                        </li>
-                        <li title="Búsquedas">
-                            <div class="main-navbar--ctn-icon-search">
-                                <i class="fa-solid fa-magnifying-glass" id="icon-search"></i>
-                            </div>
-                        </li>
+                       <ul id="dynamic-menu"></ul> 
                     </ul>
-                </nav>  
+                </nav>   
             </div>
             <div id="icon-menu">
                 <i class="fa-solid fa-bars"></i>
@@ -512,7 +496,7 @@ const [result] = await pool.promise().execute(query, [user_id, content, mensaje_
     </div>
   </div>
 </div>
-
+        <script src="../menu/rolRender.js"></script>
     <script src="/posts/scriptPosts.js"></script>
         <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -730,23 +714,7 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
             <div class="menu">
                 <nav class="main-navbar">
                     <ul>
-                        <li>
-                            <div class="header-content__logo-container">
-                                <img src="/img/logo-ecolima.png" alt="">
-                            </div>
-                        </li>
-                        <li title="Menú Principal"><a href="/menu/index.html"><i class="fa-solid fa-house"></i></a></li>
-                        <li title="Blog" class="blog-selected"><a class="blog-selected" href="#"><i class="fa-solid fa-newspaper"></i></a></li>
-                        <li title="¿Quiénes somos?"><a href="/about-us/aboutUs.html"><i class="fa-solid fa-people-group"></i></a></li>
-                        <li title="¡Contáctanos!"><a href="/contact/contact.html"><i class="fa-solid fa-envelope"></i></a></li>
-
-
-
-                        <li title="Búsquedas">
-                            <div class="main-navbar--ctn-icon-search">
-                                <i class="fa-solid fa-magnifying-glass" id="icon-search"></i>
-                            </div>
-                        </li>
+                       <ul id="dynamic-menu"></ul> 
                     </ul>
                 </nav>  
             </div>
@@ -889,6 +857,7 @@ const { title, content, referencias, mensaje_autor, tags } = fields;
     </div>
   </div>
 </div>
+<script src="../menu/rolRender.js"></script>
   <script src="/posts/scriptPosts.js"></script>
 
 </body>
