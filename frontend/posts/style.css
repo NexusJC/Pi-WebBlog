@@ -1899,6 +1899,19 @@ main {
   flex-direction: column;
   align-items: center;
 }
+}.usuario-info {
+    color: #ffffff !important;
+    font-weight: 400;
+    margin-left: auto;
+    padding: 0.3rem 0.8rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #ffffff;  /* Borde blanco */
+    border-radius: 8px;          /* Bordes redondeados */
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
+}
 .user-button {
     background-color: #fff;
     border: none;
@@ -1910,7 +1923,5 @@ main {
     align-items: center;
     gap: 5px;
 }
-.fa-user {
-    --fa: "\f007";
-}
+
 
