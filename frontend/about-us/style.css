@@ -397,50 +397,36 @@ main {
 }
 
 .team-container {
-    display: grid; /* CAMBIO CLAVE: Volvemos a grid para el diseño de 3 y 2 */
-    grid-template-columns: repeat(3, minmax(200px, 1fr)); /* 3 columnas, cada una de mínimo 200px */
-    gap: 2.5rem; /* Espacio entre los miembros del equipo */
+    display: grid; /* Mantenemos grid */
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas con ancho flexible */
+    gap: 2.5rem; /* Espacio entre las tarjetas */
     margin-top: 2rem;
-    justify-content: center; /* Centra los elementos dentro del grid */
-    max-width: 900px; /* Limita el ancho del contenedor para controlar el diseño */
-    margin-left: auto; /* Centrar el contenedor del grid */
-    margin-right: auto; /* Centrar el contenedor del grid */
-    padding: 0 1rem; /* Pequeño padding para los bordes */
-    overflow-x: hidden; /* Asegura que no haya scroll horizontal no deseado */
+    justify-content: center; /* Centra la fila superior */
+    justify-items: center; /* Centra los elementos horizontalmente en cada celda */
+    align-items: start; /* Alinea los elementos verticalmente al inicio de la celda */
+    max-width: 900px; /* Ancho máximo del contenedor */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+    overflow-x: hidden;
 }
-
-/* Reglas específicas para las 2 últimas tarjetas (4 y 5) */
-.team-member:nth-child(4),
-.team-member:nth-child(5) {
-    grid-column: span 1; /* Ocupan 1 columna cada una */
-    /* Para centrar estas dos últimas en la fila de abajo */
-    justify-self: center; /* Centra horizontalmente la tarjeta dentro de su celda */
-}
-
-/* Ajuste para que las últimas dos queden centradas si solo hay 5 */
-.team-container::after {
-    content: ''; /* Elemento vacío para ocupar espacio */
-    grid-column: span 1; /* Ocupa 1 columna para centrar las dos del medio */
-}
-
 
 .team-member {
     text-align: center;
-    background-color: #fff; /* Fondo blanco para las tarjetas */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    padding: 2rem; /* Espaciado interno, un poco más grande */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     /* ELIMINADAS: Transición y transform para el hover */
-    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
-}
 
-.team-member:hover {
-    /* ELIMINADAS: Efectos de hover */
-    /* transform: translateY(-5px); */
-    /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); */
+    /* NUEVO: Asegura que todas las tarjetas tengan el mismo tamaño */
+    width: 250px; /* Puedes ajustar este ancho según sea necesario */
+    height: 350px; /* Puedes ajustar esta altura según sea necesario */
+    box-sizing: border-box; /* Asegura que padding y border se incluyan en width/height */
+    justify-content: space-between; /* Distribuye el contenido verticalmente */
 }
 
 .team-member img {
@@ -450,6 +436,7 @@ main {
     object-fit: cover;
     margin-bottom: 1.2rem; /* Espacio entre la imagen y el nombre */
     border: 4px solid #A5D6A7; /* Borde un poco más grueso */
+    flex-shrink: 0; /* Evita que la imagen se encoja */
 }
 
 .team-member h4 {
@@ -469,9 +456,28 @@ main {
     font-weight: 400;
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    margin-top: 0.7rem; /* Más espacio superior para el cargo */
+    margin-top: 0.7rem;
     line-height: 1.5;
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio restante */
 }
+
+/* Ajuste para las dos últimas tarjetas para el triángulo invertido */
+.team-member:nth-child(4) {
+    grid-row: 2 / 3; /* Asegura que la 4ª tarjeta esté en la segunda fila */
+    grid-column: 1 / 3; /* Ocupa las dos primeras columnas en la segunda fila */
+    margin-left: auto; /* Empuja a la derecha */
+    margin-right: -125px; /* Ajusta este valor para el espaciado y centrado */
+    /* Este valor de píxeles es más preciso cuando el ancho es fijo */
+}
+
+.team-member:nth-child(5) {
+    grid-row: 2 / 3; /* Asegura que la 5ª tarjeta esté en la segunda fila */
+    grid-column: 2 / 4; /* Ocupa las dos últimas columnas en la segunda fila */
+    margin-left: -125px; /* Ajusta este valor para el espaciado y centrado */
+    /* Este valor de píxeles es más preciso cuando el ancho es fijo */
+    margin-right: auto; /* Empuja a la izquierda */
+}
+
 
 /* --- Artículos --- */
 article {
@@ -702,20 +708,30 @@ article img {
 
     /* Ajuste de columnas del equipo para pantallas medianas */
     .team-container {
-        grid-template-columns: repeat(2, minmax(180px, 1fr)); /* 2 columnas en lugar de 3 */
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en lugar de 3 */
         max-width: 600px; /* Ajusta el ancho para que quepan 2 */
+        gap: 1.5rem; /* Ajusta el espacio entre tarjetas */
     }
 
-    /* Las últimas 2 tarjetas se centran en 2 columnas */
-    .team-member:nth-child(4),
+    /* Las tarjetas 4 y 5 se distribuyen en 2 columnas, reseteando márgenes */
+    .team-member:nth-child(4) {
+        grid-row: auto;
+        grid-column: 1 / 2;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .team-member:nth-child(5) {
-        grid-column: span 1; /* Ocupan una columna cada una */
-        justify-self: center;
+        grid-row: auto;
+        grid-column: 2 / 3;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    /* Eliminar el pseudo-elemento que crea un espacio adicional en 3 columnas */
-    .team-container::after {
-        content: none;
+    /* Asegura que las tarjetas mantengan un tamaño consistente */
+    .team-member {
+        width: 250px; /* Mantener ancho consistente */
+        height: 350px; /* Mantener altura consistente */
+        margin: 0 auto; /* Centrar las tarjetas si el ancho de columna lo permite */
     }
 }
 
@@ -1064,8 +1080,9 @@ article img {
     }
 
     .team-member {
-        /* min-width: 160px; */ /* Ya no es tan crítico con 1 columna */
         padding: 1.5rem; /* Reducir padding */
+        width: 250px; /* Mantener ancho consistente */
+        height: 350px; /* Mantener altura consistente */
     }
 
     .team-member img {
@@ -1087,14 +1104,13 @@ article img {
         max-width: 300px; /* Limita el ancho para que no se extienda demasiado */
     }
 
-    /* Eliminar el pseudo-elemento que crea un espacio adicional */
-    .team-container::after {
-        content: none;
-    }
-
+    /* Resetear la posición de las tarjetas 4 y 5 para la columna única */
     .team-member:nth-child(4),
     .team-member:nth-child(5) {
-        grid-column: span 1; /* Asegurar que no se estiren */
+        grid-row: auto;
+        grid-column: 1 / 2; /* Volver a la primera columna */
+        margin-left: auto; /* Quitar márgenes específicos de triángulo invertido */
+        margin-right: auto;
     }
 }
 
@@ -1191,8 +1207,9 @@ article img {
     }
 
     .team-member {
-        /* min-width: 140px; */ /* No tan crítico con 1 columna */
         padding: 1rem;
+        width: 220px; /* Reducir el ancho de la tarjeta para pantallas muy pequeñas */
+        height: 320px; /* Reducir la altura de la tarjeta */
     }
 
     .team-member img {
