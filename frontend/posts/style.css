@@ -1175,18 +1175,23 @@ main {
 }
 
 .modal-content {
-  background-color: white;
-  margin: auto;
+  background: #ffffff;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 16px;
+  max-width: 420px;
   width: 90%;
-  max-width: 400px;
+  margin: auto;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  font-family: 'Montserrat', sans-serif;
+  color: #2E7D32;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease;
 }
 
 .modal-content h3 {
+  font-size: 1.2rem;
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .modal-buttons {
@@ -1197,11 +1202,38 @@ main {
 }
 
 .modal-buttons button {
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 1.3rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
+
+#btnLogin {
+  background-color: #388E3C;
+  color: white;
+}
+
+#btnLogin:hover {
+  background-color: #2E7D32;
+}
+
+#btnContinue {
+  background-color: #E0E0E0;
+  color: #333;
+}
+
+#btnContinue:hover {
+  background-color: #BDBDBD;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 
 #btnLogin {
   background-color: #4caf50;
