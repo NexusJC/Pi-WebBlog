@@ -1813,3 +1813,32 @@ main {
 .post-tag:hover {
   background-color: #81C784;
 }
+.like-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #A5D6A7; /* Verde claro */
+  color: #1B5E20;            /* Verde oscuro */
+  border: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.like-button:hover {
+  background-color: #81C784;
+  transform: scale(1.05);
+}
+
+.like-button.liked {
+  background-color: #C62828;
+  color: white;
+}
+
+.like-button i {
+  font-size: 1rem;
+}

@@ -135,12 +135,13 @@ function manejarLikes() {
       likeCountSpan.textContent = likes;
 
       if (yaLeDioLike) {
-        likeButton.classList.add("liked");
-        likeButton.innerHTML = `💔 Quitar like <span class="like-count">${likes}</span>`;
-      } else {
-        likeButton.classList.remove("liked");
-        likeButton.innerHTML = `❤️ Me gusta <span class="like-count">${likes}</span>`;
-      }
+          likeButton.classList.add("liked");
+          likeButton.innerHTML = `<i class="fa-solid fa-heart"></i><span class="like-count">${likes}</span>`;
+        } else {
+          likeButton.classList.remove("liked");
+          likeButton.innerHTML = `<i class="fa-regular fa-heart"></i><span class="like-count">${likes}</span>`;
+        }
+
     });
 
   likeButton.addEventListener("click", () => {
