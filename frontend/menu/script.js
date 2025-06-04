@@ -162,7 +162,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="ctn-tags">
                       ${etiquetas.map(tag => `<span class="post-tag">${tag}</span>`).join('')}
                     </div>
-                        <p>❤️ ${post.likes || 0}</p>
+                        <div class="like-display">
+                          <button class="pretty-like-button static" title="Me gusta">
+                            <i class="fa-solid fa-heart"></i>
+                          </button>
+                          <span class="like-count">${post.likes || 0}</span>
+                        </div>
+
                         <a href="/posts/blog${post.id}.html">
                             <button class="btn-read-more">Leer más</button>
 
