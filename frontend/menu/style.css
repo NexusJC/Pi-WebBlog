@@ -233,16 +233,16 @@ a {
 
 .main-navbar ul {
     display: flex;
-    padding: 0;
-    justify-content: space-between;
-    margin: 0;
+    flex-wrap: wrap; /* ✅ permite que el contenido baje de línea si es necesario */
+    justify-content: flex-start;
     align-items: center;
-    /* justify-content:space-evenly; checar esta entre todos*/
+    gap: 1.5rem; /* Espaciado entre elementos */
 }
+
 
 .main-navbar ul li:first-child {
     margin-left: 5rem;
-    margin-right: 10rem;
+    margin-right: auto;
 }
 
 
@@ -2041,6 +2041,16 @@ main {
 .pretty-like-icon:hover {
   transform: scale(1.1);
   color: #1b5e20;
+}
+@media screen and (max-width: 1020px) {
+  .main-navbar ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .main-navbar li {
+    margin: 0.5rem;
+  }
 }
 
 
