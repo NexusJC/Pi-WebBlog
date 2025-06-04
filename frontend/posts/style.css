@@ -634,7 +634,7 @@ main {
 }
 
 .post button:hover {
-  background-color: #C62828; /* Cambiar color al pasar el mouse */
+    background-color: #0056b3; /* Cambiar color al pasar el mouse */
 }
 
 .container-post + h2, .container-post h2 {
