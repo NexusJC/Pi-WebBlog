@@ -135,10 +135,6 @@ function manejarLikes() {
       likeCount.textContent = likes;
       if (yaLeDioLike) {
         likeButton.classList.add("liked");
-        likeButton.innerHTML = `
-          <i class="fa-solid fa-heart"></i>
-          <span class="like-text">Quitar like</span>
-        `;
       }
     });
 
@@ -173,17 +169,9 @@ function manejarLikes() {
 
       if (liked) {
         likeButton.classList.remove("liked");
-        likeButton.innerHTML = `
-          <i class="fa-regular fa-heart"></i>
-          <span class="like-text">Me gusta</span>
-        `;
         likedPosts = likedPosts.filter(id => id !== postId);
       } else {
         likeButton.classList.add("liked");
-        likeButton.innerHTML = `
-          <i class="fa-solid fa-heart"></i>
-          <span class="like-text">Quitar like</span>
-        `;
         likedPosts.push(postId);
       }
 
@@ -197,6 +185,7 @@ function manejarLikes() {
     }
   });
 }
+
 // hehehe
 
 // 📌 COMENTARIOS
