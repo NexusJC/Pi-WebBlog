@@ -625,7 +625,7 @@ main {
 .post button {
     margin: 10px auto; /* Centrar el botón horizontalmente */
     display: block; /* Asegurar que el botón sea tratado como un bloque */
-    padding: 10px 20px; /* Espaciado interno del botón */
+    padding: 10px 0px; /* Espaciado interno del botón */
     background-color: #007BFF; /* Color de fondo */
     color: white; /* Color del texto */
     border: none; /* Sin bordes */
