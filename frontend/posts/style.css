@@ -1976,4 +1976,8 @@ main {
   align-items: center;
   justify-content: center;
 }
+.pretty-like-button.liked:hover {
+  background-color: #c62828; /* mantiene el rojo */
+  color: #fff; /* asegura que el ícono siga blanco */
+}
 
