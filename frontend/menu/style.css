@@ -684,7 +684,7 @@ main {
 
 .post span {
     font-size: 0.8rem; /* Ajusta el tamaño del texto */
-    color: #555; /* Cambia el color si es necesario */
+    color: #2e7d32; /* Cambia el color si es necesario */
     display: block; /* Asegura que se mantenga en bloque */
     margin-top: 10px; /* Espaciado superior */
     padding: 0 px; /* Espaciado interno opcional */
