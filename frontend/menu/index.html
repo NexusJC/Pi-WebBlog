@@ -13,7 +13,50 @@
 
 </head>
 <body>
-<button id="script">Traducir al Inglés</button>
+
+    <button onclick="traducirPagina('es')">Traducir al Español</button>
+<button onclick="traducirPagina('en')">Traducir al Inglés</button>
+
+<script>
+  const azureConfig = {
+    key: "Cb7KlEYQsNXF7fAfB8R24AoCGdOj5GajTu7gXPz4XK1FLnwriekkJQQJ99BFACLArgHXJ3w3AAAbACOGiO17",
+    region: "southcentralus",
+    endpoint: "https://api.cognitive.microsofttranslator.com"
+  };
+
+  async function traducirTexto(texto, idiomaDestino) {
+    const response = await fetch(`${azureConfig.endpoint}/translate?api-version=3.0&to=${idiomaDestino}`, {
+      method: "POST",
+      headers: {
+        "Ocp-Apim-Subscription-Key": azureConfig.key,
+        "Ocp-Apim-Subscription-Region": azureConfig.region,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify([{ Text: texto }])
+    });
+
+    const data = await response.json();
+    return data[0]?.translations[0]?.text || texto;
+  }
+
+  async function traducirPagina(idiomaDestino) {
+    const elementos = document.body.querySelectorAll("*:not(script):not(style):not(noscript)");
+    
+    for (const el of elementos) {
+      if (el.children.length === 0 && el.textContent.trim().length > 0) {
+        const textoOriginal = el.textContent.trim();
+
+        try {
+          const textoTraducido = await traducirTexto(textoOriginal, idiomaDestino);
+          el.textContent = textoTraducido;
+        } catch (error) {
+          console.warn("Error traduciendo:", textoOriginal, error);
+        }
+      }
+    }
+  }
+</script>
+
     <header class="header">
         <!-- Navbar principal -->
         <div class="header-content">
@@ -196,9 +239,6 @@
                 </div>
             </footer>
     </div>
-    <p id="text">Hello, how are you today?</p>
-    <button id="translateBtn">Traducir al Español</button>
-
     <script src="/menu/script.js"></script>
     <script src="/menu/rolRender.js"></script>
     <div id="logoutModal">
