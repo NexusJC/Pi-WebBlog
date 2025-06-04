@@ -1959,4 +1959,10 @@ main {
   background-color: #C62828;
   color: #fff;
 }
+.pretty-like-button.liked:hover::before {
+  content: "\f00d"; /* ícono de X */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  transition: content 0.3s ease;
+}
 
