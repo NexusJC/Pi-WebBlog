@@ -1965,4 +1965,21 @@ main {
   font-weight: 900;
   transition: content 0.3s ease;
 }
+.pretty-like-button.liked::after {
+  content: "\f00d"; /* equis */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: white;
+  font-size: 0.7rem;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #c62828;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
