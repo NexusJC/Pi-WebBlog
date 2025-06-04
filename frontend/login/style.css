@@ -345,15 +345,7 @@ body {
 .boton_regresar:hover {
   background-color: #45a049;
 }
-.logo_encabezado {
-  width: 120px;
-  height: auto; /* ← Esto evita que se deforme */
-  aspect-ratio: 1 / 1; /* ← Asegura que siempre tenga forma cuadrada si es necesario */
-  object-fit: contain; /* ← Acomoda la imagen sin recortarla ni estirarla */
-  display: block;
-  margin: 0 auto 1.2rem;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
-}
+
 
 
 
