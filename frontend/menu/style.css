@@ -2029,6 +2029,29 @@ main {
   font-size: 0.95rem;
   color: #333;
 }
+.pretty-like-button {
+  background-color: #fff;
+  color: #C62828;
+  border: 2px solid #C62828;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 3rem;
+  height: 3rem;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pretty-like-button::before {
+  content: "\f004"; /* Ícono de corazón */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
 
 
 
