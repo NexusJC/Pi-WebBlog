@@ -1885,10 +1885,12 @@ main {
 .like-count {
   display: block;
   text-align: center;
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
+  margin-top: 0.3rem;
+  font-size: 1rem;
   color: #333;
+  font-weight: 500;
 }
+
 
 
 .like-count.animate {
@@ -1923,3 +1925,38 @@ main {
     align-items: center;
     gap: 5px;
 }
+.pretty-like-button {
+  background-color: #fff;
+  color: #C62828;
+  border: 2px solid #C62828;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 3rem;
+  height: 3rem;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pretty-like-button:hover {
+  background-color: #C62828;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.pretty-like-button::before {
+  content: "\f004";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+.pretty-like-button.liked {
+  background-color: #C62828;
+  color: #fff;
+}
+
