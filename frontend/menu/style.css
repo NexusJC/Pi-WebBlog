@@ -648,7 +648,7 @@ main {
 /* Texto del span */
 .post span {
     font-size: 0.9rem; /* Tamaño más pequeño */
-    color: #555; /* Color gris */
+    color: #2e7d32; /* Color gris */
     margin-bottom: 10px; /* Espaciado inferior */
 }
 /* Centrar el botón dentro del post */
