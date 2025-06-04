@@ -626,7 +626,7 @@ main {
     margin: 10px auto; /* Centrar el botón horizontalmente */
     display: block; /* Asegurar que el botón sea tratado como un bloque */
     padding: 10px 0px; /* Espaciado interno del botón */
-    background-color: #007BFF; /* Color de fondo */
+    background-color: #2e7d32; /* Color de fondo */
     color: white; /* Color del texto */
     border: none; /* Sin bordes */
     border-radius: 5px; /* Bordes redondeados */
@@ -634,7 +634,8 @@ main {
 }
 
 .post button:hover {
-    background-color: #0056b3; /* Cambiar color al pasar el mouse */
+    background-color: #1b5e20; 
+ /* Cambiar color al pasar el mouse */
 }
 
 .container-post + h2, .container-post h2 {
