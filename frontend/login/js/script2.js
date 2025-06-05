@@ -22,9 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
                 console.log('Respuesta del servidor:', result);
 
-                if (result.success) {
-                    alert('Usuario registrado con éxito');
-                } else {
+               if (result.success) {
+                 alert('Usuario registrado con éxito');
+                 window.location.href = "login.html"; // ✅ Redirige al login
+                 } else {
                     alert('Error al registrar usuario: ' + result.message);
                 }
             } catch (error) {
