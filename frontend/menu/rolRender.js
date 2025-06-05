@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const role = localStorage.getItem("userRole") || "invitado";
     const name = localStorage.getItem("userName") || "Invitado";
     const menu = document.getElementById("dynamic-menu");
-    const isMenuPage = window.location.pathname.includes("/menu/index.html");
 
     const menuItems = {
         logo: `
@@ -59,10 +58,17 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        // ✅ Ocultar el botón de cerrar sesión fuera del index
+        // ✅ Ocultar el botón "Cerrar sesión" si no estamos en /menu/index.html
+        const isMenuPage = window.location.pathname.includes("/menu/index.html");
         if (!isMenuPage) {
-            const logout = document.getElementById("abrirLogoutModal");
-            if (logout) logout.style.display = "none";
+            const observer = new MutationObserver(() => {
+                const logout = document.getElementById("abrirLogoutModal");
+                if (logout) {
+                    logout.style.display = "none";
+                    observer.disconnect();
+                }
+            });
+            observer.observe(menu, { childList: true });
         }
     }
 });
@@ -77,7 +83,6 @@ function cerrarSesion() {
 document.addEventListener("DOMContentLoaded", () => {
     const currentPath = window.location.pathname;
     const showSearchOnlyOn = ["/menu/index.html"];
-
     const searchItem = document.querySelector('.search-item');
     if (searchItem && !showSearchOnlyOn.includes(currentPath)) {
         searchItem.style.display = "none";
