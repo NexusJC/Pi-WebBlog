@@ -109,14 +109,13 @@ export function enviarFormulario(form, alertaError, alertaExito) {
     estadoValidacionCampos.userEmail = false;
     estadoValidacionCampos.userPassword = false;
 
-    // ⏳ Espera 2 segundos y redirige al login
+    // Redirigir después de mostrar el mensaje de éxito
     setTimeout(() => {
         alertaExito.classList.remove("alertaExito");
         alertaExito.style.display = "none";
-        window.location.href = "login.html"; // 🔁 Redirección al login
+        window.location.href = "../login.html"; // ✅ Ruta corregida
     }, 2000);
-}
-else {
+} else {
             mostrarError(data.message || "Error al registrarse");
         }
     })
