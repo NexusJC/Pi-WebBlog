@@ -58,17 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-const isMenuPage = window.location.pathname.includes("/menu/index.html");
-if (!isMenuPage) {
-    const hideLogout = setInterval(() => {
-        const logout = document.getElementById("abrirLogoutModal");
-        if (logout) {
-            logout.style.display = "none";
-            clearInterval(hideLogout); // Detiene la búsqueda cuando lo encuentra
+        
+ if (!isMenuPage) {
+            const logout = document.getElementById("abrirLogoutModal");
+            if (logout) logout.style.display = "none";
         }
-    }, 100); // Revisa cada 100ms hasta encontrarlo
-}
-
     }
 });
 
