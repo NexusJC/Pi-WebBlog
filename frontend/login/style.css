@@ -345,6 +345,16 @@ body {
 .boton_regresar:hover {
   background-color: #45a049;
 }
+.error-message {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: none;
+}
+
+.error-visible {
+  display: block;
+}
 
 
 

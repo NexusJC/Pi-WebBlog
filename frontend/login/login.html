@@ -33,22 +33,24 @@
                     <div>
                         <label>
                             <i class='bx bx-user'></i>
-                            <input type="text" placeholder="Nombre Usuario" name="userName">
+                            <input type="text" placeholder="Nombre Usuario" name="userName" id="userName">
                         </label>
+                        <span class="error-message" id="userNameError">Debe tener entre 4 y 16 caracteres.</span>
                     </div>
                     <div>
                         <label>
                             <i class='bx bx-envelope'></i>
-                            <input type="email" placeholder="Correo Electronico" name="userEmail">
+                            <input type="email" placeholder="Correo Electronico" name="userEmail" id="userEmail">
                         </label>
+                        <span class="error-message" id="userEmailError">Correo no válido.</span>
                     </div>
                     <div>
                         <div class="password-wrapper">
                             <i class='bx bx-lock-alt'></i>
-                            <input type="password" placeholder="Contraseña" name="userPassword" id="passwordInput">
+                            <input type="password" placeholder="Contraseña" name="userPassword" id="userPass">
                             <i class='bx bx-show toggle-password' id="togglePassword"></i>
                         </div>
-                        <p class="mensaje-error" id="errorPassword" style="display: none;">La contraseña debe tener entre 4 y 12 caracteres.</p>
+                        <span class="error-message" id="userPassError">La contraseña debe tener entre 4 y 12 caracteres.</span>
                     </div>
                     <input type="submit" value="Registrarse">
                     <div class="alerta-error" style="display: none;"></div>
@@ -101,6 +103,48 @@
                 <div id="loader" class="hide">Iniciando sesión...</div>
         </div>
     </div>
+    <script>
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    let valid = true;
+
+    const userName = document.getElementById("userName");
+    const userNameError = document.getElementById("userNameError");
+
+    if (!userName || userName.value.length < 4 || userName.value.length > 16) {
+      userNameError.classList.add("error-visible");
+      valid = false;
+    } else {
+      userNameError.classList.remove("error-visible");
+    }
+
+    const email = document.getElementById("userEmail");
+    const emailError = document.getElementById("userEmailError");
+    const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+
+    if (!email || !emailPattern.test(email.value)) {
+      emailError.classList.add("error-visible");
+      valid = false;
+    } else {
+      emailError.classList.remove("error-visible");
+    }
+
+    const password = document.getElementById("userPass");
+    const passwordError = document.getElementById("userPassError");
+
+    if (!password || password.value.length < 4 || password.value.length > 12) {
+      passwordError.classList.add("error-visible");
+      valid = false;
+    } else {
+      passwordError.classList.remove("error-visible");
+    }
+
+    if (valid) {
+      this.submit(); // Solo si todo está bien
+    }
+  });
+</script>
+
     <script src="js/script.js"></script>
     <script src="js/register.js" type="module"></script>
     <script src="js/login_modulo.js" type="module"></script>
