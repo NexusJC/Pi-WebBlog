@@ -231,7 +231,7 @@ body {
 }
 .form-information-childs {
   padding: 0 30px;
-  text-align: center; /* Alinea todos los hijos al centro */
+  text-align: center;
 }
 
 .form-information-childs p {
@@ -262,7 +262,7 @@ body {
   height: 500px;
   max-width: 900px;
   margin: 10px;
-  transition: all 0.8s ease; /* ✅ transiciones suaves */
+  transition: all 0.8s ease;
   opacity: 1;
   transform: scale(1);
 }
@@ -279,16 +279,16 @@ body {
   margin: 4px 0 0 40px;
   padding: 0;
   line-height: 1.2;
-  min-height: 18px; /* ✅ RESERVA espacio constante */
+  min-height: 18px; 
   max-width: 100%;
   word-wrap: break-word;
-  display: block; /* ✅ Que siempre exista en el layout */
-  visibility: hidden; /* 👈 Oculta visualmente pero no colapsa */
+  display: block; 
+  visibility: hidden; 
 }
 
 .mensaje-error.activo {
   display: none;
-  visibility: visible; /* 👈 Solo visible si hay error */
+  visibility: visible; 
 }
 
 

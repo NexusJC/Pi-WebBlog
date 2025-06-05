@@ -182,14 +182,14 @@ h6 {
 
 
 p {
-    /* Propiedades compatibles con todos los navegadores */
+    
     hyphens: auto;
     word-wrap: break-word;
     
-    /* Nueva propiedad con prefijo para Chrome/Edge */
+ 
     text-wrap: pretty; 
     
-    /* Alternativa para Firefox */
+    
     @supports not (text-wrap: pretty) {
         text-align: justify;
     }
@@ -233,10 +233,10 @@ a {
 
 .main-navbar ul {
     display: flex;
-    flex-wrap: wrap; /* ✅ permite que el contenido baje de línea si es necesario */
+    flex-wrap: wrap; 
     justify-content: flex-start;
     align-items: center;
-    gap: 1.5rem; /* Espaciado entre elementos */
+    gap: 1.5rem;
 }
 
 
@@ -313,10 +313,8 @@ font-size: 1.75rem;
 }
 
 
-/* BUSQUEDAS SECTION */
-
 .main-navbar li[title="Busquedas"] {
-    color: #ffffff; /* Cambia el color del texto a blanco */
+    color: #ffffff; 
 }
 
 .main-navbar li {
@@ -385,14 +383,13 @@ font-size: 1.75rem;
 }
 
 
-/* BUSQUEDAS SECTION */
 
 .main-navbar li {
     list-style: none;
 }
 
 .main-navbar li:not(:first-child) {
-    margin: 0.25rem 2.5rem; /* Ajusta el margen según la separación deseada */
+    margin: 0.25rem 2.5rem; 
     position: relative;
 }
 
@@ -470,7 +467,7 @@ font-size: 1.75rem;
     height: 100vh;
     position: fixed;
     left: 0; 
-    background: rgba(0,0,0, 0.5); /* blanco con 80% de opacidad */
+    background: rgba(0,0,0, 0.5); 
 
     z-index: 7;
     top: 0;
@@ -560,7 +557,6 @@ font-size: 1.75rem;
     text-align: start;
 }
 
-/* MAIN SECTION */
 
 .main-wrapper {
     min-width: 64rem;
@@ -585,7 +581,7 @@ main {
 }
 
 
-/* Centrar el contenedor principal */
+
 .container-post {
     display: flex; /* Activar flexbox */
     justify-content: center; /* Centrar horizontalmente */
@@ -596,8 +592,8 @@ main {
     max-width: 60rem; /* Limitar el ancho del contenedor */
     text-align: center; /* Centrar el texto */
     position: relative; /* Posicionar elementos hijos absolutamente */
-    overflow: visible   ; /* Evitar que el contenido se desborde */
-    padding: 20px; /* Espaciado interno */
+    overflow: visible   ; 
+    padding: 20px; 
 }
 
 /* Contenedor de los posts con desplazamiento infinito */
