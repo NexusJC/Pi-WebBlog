@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // ✅ Ocultar el botón "Cerrar sesión" si no estamos en /menu/index.html
-        const isMenuPage = window.location.pathname.includes("/menu/index.html");
+        const isMenuPage = window.location.pathname.includes("../menu/index.html");
         if (!isMenuPage) {
             const observer = new MutationObserver(() => {
                 const logout = document.getElementById("abrirLogoutModal");
@@ -76,13 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
 // Función para cerrar sesión
 function cerrarSesion() {
     localStorage.clear();
-    location.href = "/menu/index.html";
+    location.href = "../menu/index.html";
 }
 
 // Ocultar ítem de búsqueda fuera del index
 document.addEventListener("DOMContentLoaded", () => {
     const currentPath = window.location.pathname;
-    const showSearchOnlyOn = ["/menu/index.html"];
+    const showSearchOnlyOn = ["../menu/index.html"];
     const searchItem = document.querySelector('.search-item');
     if (searchItem && !showSearchOnlyOn.includes(currentPath)) {
         searchItem.style.display = "none";
