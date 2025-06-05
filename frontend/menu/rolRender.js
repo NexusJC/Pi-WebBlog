@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.publish}
                 ${menuItems.admin}
                 ${menuItems.userName}
-                ${menuItems.logout}
+                ${isMenuPage ? menuItems.logout : ""}
                 ${menuItems.search}
             `;
             mostrarBienvenida(`Te damos la ecobienvenida, ${name}`);
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.about}
                 ${menuItems.contact}
                 ${menuItems.userName}
-                ${menuItems.logout}
+                ${isMenuPage ? menuItems.logout : ""}
                 ${menuItems.search}
             `;
             mostrarBienvenida(`¡Hola ${name}, te damos una ecobienvenida!`);
@@ -58,8 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        // ✅ Ocultar el botón "Cerrar sesión" si no estamos en /menu/index.html
-        // ✅ Ocultar el botón "Cerrar sesión" si no estamos en /menu/index.html
 const isMenuPage = window.location.pathname.includes("/menu/index.html");
 if (!isMenuPage) {
     const hideLogout = setInterval(() => {
