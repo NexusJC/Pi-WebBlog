@@ -59,17 +59,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // ✅ Ocultar el botón "Cerrar sesión" si no estamos en /menu/index.html
-        const isMenuPage = window.location.pathname.includes("../menu/index.html");
-        if (!isMenuPage) {
-            const observer = new MutationObserver(() => {
-                const logout = document.getElementById("abrirLogoutModal");
-                if (logout) {
-                    logout.style.display = "none";
-                    observer.disconnect();
-                }
-            });
-            observer.observe(menu, { childList: true });
+        // ✅ Ocultar el botón "Cerrar sesión" si no estamos en /menu/index.html
+const isMenuPage = window.location.pathname.includes("/menu/index.html");
+if (!isMenuPage) {
+    const hideLogout = setInterval(() => {
+        const logout = document.getElementById("abrirLogoutModal");
+        if (logout) {
+            logout.style.display = "none";
+            clearInterval(hideLogout); // Detiene la búsqueda cuando lo encuentra
         }
+    }, 100); // Revisa cada 100ms hasta encontrarlo
+}
+
     }
 });
 
