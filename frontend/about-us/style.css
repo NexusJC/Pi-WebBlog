@@ -526,7 +526,6 @@ article img {
     height: auto;
 }
 
-/* --- Botones --- */
 .btn-action {
   display: block;
   margin: 0 auto;
@@ -572,7 +571,6 @@ article img {
     gap: 5px;
 }
 
-/* --- Animaciones --- */
 .about-us-container, .about-us-values, .team-section, .ods-section {
     opacity: 0;
     transform: translateY(20px);
@@ -586,7 +584,6 @@ article img {
     }
 }
 
-/* --- Footer --- */
 .footer {
     width: 100%;
     background-color:#0a141d;
@@ -653,7 +650,6 @@ article img {
     font-size: .9rem;
 }
 
-/* --- Sección ODS (Contáctanos y Descripción) - Integrado --- */
 .ods-section {
     padding: 2rem;
     margin-bottom: 2rem;
@@ -687,17 +683,16 @@ article img {
     color: #555;
 }
 
-/* Contenedor principal del texto y los botones (UPDATED) */
 .ods-main-content {
     display: flex;
-    flex-direction: column; /* Default: Stack elements on small screens */
-    align-items: center;   /* Center items horizontally */
-    gap: 1.5rem; /* Space between description and button group */
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem; 
     padding: 1rem;
 }
 
 .ods-description {
-    width: 100%; /* Ensure text takes full width in column layout */
+    width: 100%; 
     text-align: justify;
 }
 
@@ -708,16 +703,15 @@ article img {
     margin: 0;
 }
 
-/* NEW: Container for the buttons to keep them together */
+
 .ods-buttons-container {
-    display: flex; /* Use flexbox for the buttons themselves */
-    gap: 1rem; /* Space between the two buttons */
-    flex-wrap: wrap; /* Allow buttons to wrap to next line if space is limited */
-    justify-content: center; /* Center buttons horizontally within their container */
-    margin-top: 1rem; /* Add some space above the buttons, below the description */
+    display: flex; 
+    gap: 1rem;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    margin-top: 1rem; 
 }
 
-/* Styles for the "Contáctanos" button (existing, adjusted for flex container) */
 .btn-contact {
     background-color: #4CAF50;
     color: white;
@@ -729,30 +723,29 @@ article img {
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    display: inline-block; /* Ensure it behaves well in flex */
+    display: inline-block; 
     transition: background-color 0.3s ease;
-    flex-shrink: 0; /* Prevents button from shrinking */
+    flex-shrink: 0;
 }
 
 .btn-contact:hover {
     background-color: #388E3C;
 }
 
-/* NEW: Styles for the "Fuerza" button */
 .btn-contact-fuerza {
-    background-color: #050705; /* A dark color for contrast */
+    background-color: #050705; 
     color: white;
     padding: 1rem 2rem;
-    border: 2px solid #333; /* A subtle border */
+    border: 2px solid #333; 
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.1rem;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    display: inline-block; /* Ensure it behaves well in flex */
+    display: inline-block; 
     transition: background-color 0.3s ease, border-color 0.3s ease;
-    flex-shrink: 0; /* Prevents button from shrinking */
+    flex-shrink: 0; 
 }
 
 .btn-contact-fuerza:hover {
@@ -760,8 +753,6 @@ article img {
     border-color: #555;
 }
 
-
-/* --- Media Queries (Diseño Responsivo) --- */
 @media screen and (max-width: 1220px) {
     .main-wrapper {
         flex-direction: row;
@@ -816,14 +807,12 @@ article img {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* Ajuste de columnas del equipo para pantallas medianas */
     .team-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en lugar de 3 */
-        max-width: 600px; /* Ajusta el ancho para que quepan 2 */
-        gap: 1.5rem; /* Ajusta el espacio entre tarjetas */
+        grid-template-columns: repeat(2, 1fr); 
+        max-width: 600px; 
+        gap: 1.5rem; 
     }
 
-    /* Las tarjetas 4 y 5 se distribuyen en 2 columnas, reseteando márgenes */
     .team-member:nth-child(4) {
         grid-row: auto;
         grid-column: 1 / 2;
@@ -837,11 +826,10 @@ article img {
         margin-right: auto;
     }
 
-    /* Asegura que las tarjetas mantengan un tamaño consistente */
     .team-member {
-        width: 250px; /* Mantener ancho consistente */
-        height: 350px; /* Mantener altura consistente */
-        margin: 0 auto; /* Centrar las tarjetas si el ancho de columna lo permite */
+        width: 250px; 
+        height: 350px; 
+        margin: 0 auto; 
     }
 }
 
@@ -865,7 +853,7 @@ article img {
 
     .main-navbar {
         padding: 0 1rem;
-        width: 100%; /* Asegurar que la barra de navegación ocupe todo el ancho */
+        width: 100%; 
     }
 
     .main-navbar ul li:first-child {
@@ -919,8 +907,7 @@ article img {
         transform: translateX(-3.1rem) !important;
     }
 
-    /* Ajustes específicos para el equipo en pantallas más pequeñas */
-    .team-section h3 { /* Ajustar el tamaño del título del equipo para pantallas medianas */
+    .team-section h3 { 
         font-size: 2.5rem;
     }
 }
@@ -928,14 +915,14 @@ article img {
 @media screen and (max-width: 800px) {
     .main-wrapper {
         padding: 0.5rem;
-        min-width: 100%; /* Eliminamos el ancho mínimo fijo */
+        min-width: 100%; 
         background-color: #E8F0E8;
     }
 
     .footer .footer__grupo1 {
         grid-template-columns: 1fr;
         grid-gap: 2rem;
-        padding: 2rem 0rem !important; /* Padding más compacto */
+        padding: 2rem 0rem !important; 
     }
 
     .main-navbar {
@@ -1184,64 +1171,62 @@ article img {
         gap: 4rem;
     }
 
-    /* Ajustes para el equipo en pantallas pequeñas */
-    .team-section h3 { /* Ajustar el tamaño del título del equipo para pantallas pequeñas */
+    .team-section h3 { 
         font-size: 2rem;
     }
 
     .team-member {
-        padding: 1.5rem; /* Reducir padding */
-        width: 250px; /* Mantener ancho consistente */
-        height: 350px; /* Mantener altura consistente */
+        padding: 1.5rem; 
+        width: 250px; 
+        height: 350px; 
     }
 
     .team-member img {
-        width: 130px; /* Reducir un poco el tamaño de la imagen */
+        width: 130px; 
         height: 130px;
     }
 
     .team-member h4 {
-        font-size: 1.2rem; /* Reducir el tamaño del nombre */
+        font-size: 1.2rem; 
     }
 
     .team-member p {
-        font-size: 0.9rem; /* Reducir el tamaño del cargo */
+        font-size: 0.9rem; 
     }
 
-    /* Para móviles, una sola columna */
     .team-container {
-        grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
-        max-width: 300px; /* Limita el ancho para que no se extienda demasiado */
+        grid-template-columns: 1fr; 
+        max-width: 300px; 
     }
 
-    /* Resetear la posición de las tarjetas 4 y 5 para la columna única */
+    
     .team-member:nth-child(4),
     .team-member:nth-child(5) {
         grid-row: auto;
-        grid-column: 1 / 2; /* Volver a la primera columna */
-        margin-left: auto; /* Quitar márgenes específicos de triángulo invertido */
+        grid-column: 1 / 2; 
+        margin-left: auto;
         margin-right: auto;
     }
 
-    /* Media Queries para la sección ODS (UPDATED) */
+   
     .ods-main-content {
-        flex-direction: column; /* Apila el texto y el botón en pantallas pequeñas */
-        gap: 1.5rem; /* Ajusta el espacio para la disposición en columna */
+        flex-direction: column; 
+        gap: 1.5rem; 
     }
 
     .ods-description {
-        text-align: center; /* Centra el texto cuando está apilado */
+        text-align: center; 
     }
 
-    .ods-buttons-container { /* Ensure the container centers the buttons */
+    .ods-buttons-container { 
         width: 100%;
         justify-content: center;
     }
 
-    .btn-contact, .btn-contact-fuerza { /* Apply to both buttons for consistency */
-        width: 100%; /* The button takes full width available in its container */
-        max-width: 300px; /* Limits the max width of the button for better aesthetics */
-        margin: 0 auto; /* Centers the button if its width is less than container */
+    .btn-contact, .btn-contact-fuerza { 
+        width: 100%; 
+        max-width: 300px; 
+        margin: 0 auto; 
     }
 }
 
@@ -1263,21 +1248,21 @@ article img {
     }
 }
 
-@media screen and (min-width: 769px) { /* NEW: Specific for larger screens to make row layout */
+@media screen and (min-width: 769px) { 
     .ods-main-content {
-        flex-direction: row; /* Place description and button group side-by-side */
-        justify-content: space-between; /* Distribute space between them */
-        align-items: center; /* Vertically align items */
+        flex-direction: row; 
+        justify-content: space-between; 
+        align-items: center;
     }
 
     .ods-description {
-        flex-grow: 1; /* Allow description to take available space */
-        width: auto; /* Reset width for flex-grow to work */
-        margin-right: 2rem; /* Space between description and button group */
+        flex-grow: 1; 
+        width: auto; 
+        margin-right: 2rem; 
     }
 
     .ods-buttons-container {
-        margin-top: 0; /* Remove top margin when in row layout */
+        margin-top: 0; 
     }
 }
 
@@ -1341,10 +1326,10 @@ article img {
         transform: translateX(2.75rem);
     }
 
-    /* ODS button sizing for very small screens */
+    
     .btn-contact, .btn-contact-fuerza {
-        padding: 0.8rem 1.5rem; /* Slightly smaller padding */
-        font-size: 1rem; /* Slightly smaller font */
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem; 
     }
 }
 
@@ -1357,19 +1342,19 @@ article img {
         transform: translate(8rem)!important;
     }
 
-    /* Ajustes finales para el equipo en pantallas muy pequeñas */
+    
     .team-section h3 {
-        font-size: 1.75rem; /* Ajustar el tamaño del título del equipo para móviles */
+        font-size: 1.75rem; 
     }
 
     .team-member {
         padding: 1rem;
-        width: 220px; /* Reducir el ancho de la tarjeta para pantallas muy pequeñas */
-        height: 320px; /* Reducir la altura de la tarjeta */
+        width: 220px; 
+        height: 320px;
     }
 
     .team-member img {
-        width: 110px; /* Tamaño de imagen más pequeño */
+        width: 110px;
         height: 110px;
     }
 
