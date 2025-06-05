@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const role = localStorage.getItem("userRole") || "invitado";
     const name = localStorage.getItem("userName") || "Invitado";
     const menu = document.getElementById("dynamic-menu");
-
+    const isMenuPage = window.location.pathname.includes("/menu/index.html");
+    
     const menuItems = {
         logo: `
             <li>
