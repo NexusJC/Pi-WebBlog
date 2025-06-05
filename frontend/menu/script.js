@@ -23,7 +23,7 @@ inputSearch.addEventListener("keyup", buscador_interno);
 
 // Función que muestra el buscador
 function mostrar_buscador() {
-    bars_search.style.top = "5rem";
+    bars_search.style.top = "8rem";
     cover_ctn_search.style.display = "block";
     inputSearch.focus();
     if (inputSearch.value === "") {
