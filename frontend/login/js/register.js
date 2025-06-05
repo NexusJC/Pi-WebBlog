@@ -96,24 +96,27 @@ export function enviarFormulario(form, alertaError, alertaExito) {
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            alertaExito.textContent = "Te registraste correctamente";
-            alertaExito.classList.add("alertaExito");
-            alertaExito.style.display = "block";
+    alertaExito.textContent = "Te registraste correctamente";
+    alertaExito.classList.add("alertaExito");
+    alertaExito.style.display = "block";
 
-            alertaError.classList.remove("alertaError");
-            alertaError.style.display = "none";
+    alertaError.classList.remove("alertaError");
+    alertaError.style.display = "none";
 
-            form.reset();
+    form.reset();
 
-            estadoValidacionCampos.userName = false;
-            estadoValidacionCampos.userEmail = false;
-            estadoValidacionCampos.userPassword = false;
+    estadoValidacionCampos.userName = false;
+    estadoValidacionCampos.userEmail = false;
+    estadoValidacionCampos.userPassword = false;
 
-            setTimeout(() => {
-                alertaExito.classList.remove("alertaExito");
-                alertaExito.style.display = "none";
-            }, 3000);
-        } else {
+    // ⏳ Espera 2 segundos y redirige al login
+    setTimeout(() => {
+        alertaExito.classList.remove("alertaExito");
+        alertaExito.style.display = "none";
+        window.location.href = "login.html"; // 🔁 Redirección al login
+    }, 2000);
+}
+else {
             mostrarError(data.message || "Error al registrarse");
         }
     })
