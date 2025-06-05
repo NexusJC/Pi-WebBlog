@@ -27,3 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+// Ocultar el icono de menú solo en la página aboutUs.html
+document.addEventListener("DOMContentLoaded", function() {
+    const currentPath = window.location.pathname;
+    if (currentPath.includes("/about-us/aboutUs.html")) {
+        const iconMenu = document.getElementById("icon-menu");
+        if (iconMenu) {
+            iconMenu.style.display = "none";
+        }
+    }
+});
