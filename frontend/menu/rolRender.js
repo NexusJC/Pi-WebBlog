@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const menu = document.getElementById("dynamic-menu");
     const isMenuPage = window.location.pathname.includes("/menu/index.html");
 
-
     const menuItems = {
         logo: `
             <li>
@@ -59,13 +58,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${menuItems.search}
             `;
         }
+
+        // ✅ Ocultar el botón de cerrar sesión fuera del index
+        if (!isMenuPage) {
+            const logout = document.getElementById("abrirLogoutModal");
+            if (logout) logout.style.display = "none";
+        }
     }
 });
 
+// Función para cerrar sesión
 function cerrarSesion() {
     localStorage.clear();
     location.href = "/menu/index.html";
 }
+
+// Ocultar ítem de búsqueda fuera del index
 document.addEventListener("DOMContentLoaded", () => {
     const currentPath = window.location.pathname;
     const showSearchOnlyOn = ["/menu/index.html"];
@@ -75,4 +83,3 @@ document.addEventListener("DOMContentLoaded", () => {
         searchItem.style.display = "none";
     }
 });
-
