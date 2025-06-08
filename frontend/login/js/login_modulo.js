@@ -16,7 +16,7 @@ const alertaExitoLogin = formLogin.querySelector(".alerta-exito");
 const loader = document.getElementById("loader");
 const submitButton = formLogin.querySelector("input[type='submit']");
 
-// Mostrar/ocultar contraseña
+// ver y ocultar contraseña
 const togglePassword = document.getElementById("toggleLoginPassword");
 const passwordInput = document.getElementById("loginPasswordInput");
 
@@ -48,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
         validarCampo(passwordRegex, inputPass, "La contraseña debe tener entre 4 y 16 caracteres.");
 
         if (estadoValidacionCampos.userEmail && estadoValidacionCampos.userPassword) {
-            // 🔐 Bloquear botón y mostrar loader
             submitButton.disabled = true;
             const originalText = submitButton.value;
             submitButton.value = "Iniciando...";
@@ -87,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 mostrarMensajeError("Error al iniciar sesión");
             })
             .finally(() => {
-                // 🔓 Reactivar botón
                 submitButton.disabled = false;
                 submitButton.value = "Iniciar Sesión";
             });

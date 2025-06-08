@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formRegister.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // Validar en tiempo real ANTES de enviar
+    // Validacuion antes de que se envie
     validarCampo(userNameRegex, inputUser, "El usuario debe tener de 4 a 16 caracteres, solo letras, números, guiones y guiones bajos.");
     validarCampo(emailRegex, inputEmail, "El correo no es válido.");
     validarCampo(passwordRegex, inputPass, "La contraseña debe tener entre 4 y 12 caracteres.");
