@@ -347,3 +347,39 @@ body {
 .boton_regresar:hover {
   background-color: #45a049;
 }
+floating-translate {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#floating-translate button {
+  background-color: white;
+  border: 2px solid #388E3C;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+#floating-translate button:hover {
+  transform: scale(1.1);
+}
+
+#floating-translate button img {
+  width: 28px;
+  height: 20px;
+  object-fit: contain;
+}
+
+
