@@ -1366,6 +1366,16 @@ article img {
         font-size: 0.8rem;
     }
 }
+#floating-translate {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 #floating-translate button {
   background-color: white;
   border: 2px solid #388E3C;
@@ -1390,3 +1400,4 @@ article img {
   height: 20px;
   object-fit: contain;
 }
+

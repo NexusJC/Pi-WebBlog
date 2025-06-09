@@ -347,7 +347,7 @@ body {
 .boton_regresar:hover {
   background-color: #45a049;
 }
-floating-translate {
+#floating-translate {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -381,5 +381,3 @@ floating-translate {
   height: 20px;
   object-fit: contain;
 }
-
-
